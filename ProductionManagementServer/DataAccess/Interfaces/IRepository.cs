@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Interfaces
 {
     public interface IRepository<T>
-        where T : IEntity
+        where T : class, IEntity
     {
         void Insert(T entity);
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,

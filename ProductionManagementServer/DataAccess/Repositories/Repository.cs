@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T>
-        where T : IEntity
+        where T : class, IEntity
     {
         private readonly ProductionManagementDbContext _context;
         private readonly DbSet<T> _dbSet;
