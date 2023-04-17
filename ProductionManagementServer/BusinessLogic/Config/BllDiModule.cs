@@ -1,4 +1,6 @@
-﻿using DataAccess.DI;
+﻿using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
+using DataAccess.DI;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace BusinessLogic.Config
         public static void ConfigurateBll(this IServiceCollection service, string connectionString)
         {
             service.ConfigurateDal(connectionString);
+            service.AddScoped<ISalaryService, SalaryService>();
         }
     }
 }

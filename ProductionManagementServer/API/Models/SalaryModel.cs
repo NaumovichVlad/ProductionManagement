@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLogic.Dtos
+﻿namespace API.Models
 {
-    public class SalaryDto
+    public class SalaryModel
     {
         public int Id { get; set; }
         public int EmployeeId { get; set; }
@@ -14,6 +8,8 @@ namespace BusinessLogic.Dtos
         public double Accrued { get; set; }
         public double ToBePaid { get; set; }
         public double Paid { get; set; }
-        public EmployeeDto Employee { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeSurname { get; set; }
+        public string EmployeeMiddleName { get; set; }
     }
 }

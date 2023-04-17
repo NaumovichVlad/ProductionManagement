@@ -10,7 +10,10 @@ namespace DataAccess.Config
 {
     public class ProductionManagementDbContext : DbContext
     {
-        public ProductionManagementDbContext() => Database.EnsureCreated();
+        public ProductionManagementDbContext(DbContextOptions<ProductionManagementDbContext> options)
+            : base(options)
+        {
+        }
 
         public DbSet<Counteragent> Counteragents { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -29,12 +32,6 @@ namespace DataAccess.Config
         public DbSet<Salary> Salaries { get; set; }
         public DbSet<StoragePlace> StoragePlaces { get; set; }
         public DbSet<User> Users { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost;user=root;password=admin;database=production_management;",
-            new MySqlServerVersion(new Version(8, 0, 25)));
-        }
     }
 
 

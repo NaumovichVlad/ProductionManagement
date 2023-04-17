@@ -14,6 +14,7 @@ namespace DataAccess.Interfaces
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "");
+        IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties);
         T GetById(int id);
         void Update(T entity);
         void Delete(T entity);

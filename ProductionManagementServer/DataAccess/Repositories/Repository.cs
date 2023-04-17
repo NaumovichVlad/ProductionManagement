@@ -48,6 +48,12 @@ namespace DataAccess.Repositories
                 return query.ToList();
             }
         }
+
+        public virtual IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties)
+        {
+            return Include(includeProperties);
+        }
+
         public virtual T GetById(int id)
         {
             return _dbSet.Find(id);
@@ -76,5 +82,11 @@ namespace DataAccess.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
+        private IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = _dbSet.AsNoTracking();
+            return includeProperties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
     }
 }
