@@ -13,16 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient
+namespace ProductionManagementClient.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginWin : Window
     {
-        public MainWindow()
+        public LoginWin()
         {
             InitializeComponent();
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
