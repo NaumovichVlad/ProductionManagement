@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductionManagementClient.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,8 @@ namespace ProductionManagementClient.Views
         public LoginWin()
         {
             InitializeComponent();
-        }
 
-        private void EnterButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            DataContext = new LoginViewModel();
         }
     }
 }

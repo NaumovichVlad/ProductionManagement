@@ -8,10 +8,9 @@
         Title="Авторизация" Height="213" Width="346"
         ResizeMode="NoResize">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="61,37,0,0" TextWrapping="Wrap" Text="Имя пользователя" Width="205" Height="21" VerticalAlignment="Top"/>
-        <PasswordBox Password="Пароль" HorizontalAlignment="Left" Margin="61,70,0,0" VerticalAlignment="Top" Width="205" Height="21"/>
-        <Button Name="EnterButton" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27" Click="EnterButton_Click"/>
-        <Button x:Name="EnterButton_Copy" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27" Click="EnterButton_Click"/>
+        <TextBox Text="{Binding User.Login}"  HorizontalAlignment="Left" Margin="61,37,0,0" TextWrapping="Wrap" Width="205" Height="21" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding User.Password}" HorizontalAlignment="Left" Margin="61,70,0,0" VerticalAlignment="Top" Width="205" Height="21"/>
+        <Button Name="EnterButton" Command="{Binding LoginCommand}" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27"/>
 
     </Grid>
 </Window>
