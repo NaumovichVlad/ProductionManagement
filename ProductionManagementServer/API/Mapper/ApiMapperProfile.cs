@@ -13,6 +13,13 @@ namespace API.Mapper
                 .ForMember(model => model.EmployeeName, dto => dto.MapFrom(s => s.Employee.Name))
                 .ForMember(model => model.EmployeeMiddleName, dto => dto.MapFrom(s => s.Employee.MiddleName))
                 .ReverseMap();
+
+            CreateMap<UserDto, UserModel>()
+                .ForMember(model => model.Login, dto => dto.MapFrom(m => m.Login))
+                .ForMember(model => model.Password, dto => dto.MapFrom(m => m.Password))
+                .ReverseMap();
+
+            CreateMap<RoleDto, RoleModel>().ReverseMap();
         }
     }
 }

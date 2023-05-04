@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Models
 {
-    public class User : INotifyPropertyChanged
+    [Serializable]
+    public class UserModel : INotifyPropertyChanged
     {
         private string _login;
         private string _password;
-        private int _employeeId;
-
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
 
         public string Login
         {
@@ -41,6 +38,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged(nameof(Password));
             }
         }
+
+        public string Role { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

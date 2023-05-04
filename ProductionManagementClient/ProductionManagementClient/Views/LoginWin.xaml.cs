@@ -1,4 +1,5 @@
-﻿using ProductionManagementClient.ViewModels;
+﻿using ProductionManagementClient.Connection;
+using ProductionManagementClient.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace ProductionManagementClient.Views
         {
             InitializeComponent();
 
-            DataContext = new LoginViewModel();
+            DataContext = new LoginViewModel(new HttpApiClient());
         }
     }
 }

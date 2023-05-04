@@ -2,11 +2,13 @@
 
 namespace API.Models
 {
-    public class LoginModel
+    public class UserModel
     {
         [Required]
-        public string UserName { get; set; }
+        public string Login { get; set; }
         [Required]
         public string Password { get; set; }
+        [Required]
+        public string Role { get; set; }
     }
 }

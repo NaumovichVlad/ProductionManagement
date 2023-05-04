@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("salary/[action]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     public class SalaryController : ControllerBase
@@ -21,12 +21,12 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ActionName("GetSalaries")]
+        [ActionName("all")]
         public async Task<ActionResult<IEnumerable<SalaryModel>>> GetSalaries()
         {
             var items = _mapper.Map<List<SalaryModel>>(_salaryService.GetList());
 
-            return await System.Threading.Tasks.Task.FromResult(items);
+            return await Task.FromResult(items);
         }
     }
 }
