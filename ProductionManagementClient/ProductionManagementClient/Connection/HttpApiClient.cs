@@ -1,4 +1,4 @@
-﻿using ProductionManagementClient.Interfaces;
+﻿using ProductionManagementClient.Interfaces.Connection;
 using ProductionManagementClient.Models;
 using System;
 using System.Collections.Generic;

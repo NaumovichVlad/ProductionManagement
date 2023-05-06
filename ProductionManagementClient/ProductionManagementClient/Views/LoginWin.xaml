@@ -10,7 +10,8 @@
     <Grid>
         <TextBox Text="{Binding User.Login}"  HorizontalAlignment="Left" Margin="61,37,0,0" TextWrapping="Wrap" Width="205" Height="21" VerticalAlignment="Top"/>
         <TextBox Text="{Binding User.Password}" HorizontalAlignment="Left" Margin="61,70,0,0" VerticalAlignment="Top" Width="205" Height="21"/>
-        <Button Name="EnterButton" Command="{Binding LoginCommand}" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27"/>
+        <Button Name="EnterButton"  Command="{Binding LoginCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27"/>
 
     </Grid>
 </Window>

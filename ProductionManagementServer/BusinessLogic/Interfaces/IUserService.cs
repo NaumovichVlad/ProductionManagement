@@ -11,6 +11,5 @@ namespace BusinessLogic.Interfaces
     {
         bool CheckUser(UserDto userDto);
         UserDto GetUserByLogin(string login);
-        RoleDto GetRoleById(int id);
     }
 }

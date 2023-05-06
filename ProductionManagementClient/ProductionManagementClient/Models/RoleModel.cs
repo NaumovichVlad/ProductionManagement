@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Models
 {
-    public class RoleModel
+    public class RoleModel : ModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }

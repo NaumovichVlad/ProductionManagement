@@ -1,5 +1,4 @@
 ﻿using ProductionManagementClient.Connection;
-using ProductionManagementClient.Services;
 using ProductionManagementClient.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,21 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views
+namespace ProductionManagementClient.Views.Menus
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для AdminMainWin.xaml
     /// </summary>
-    public partial class LoginWin : Window
+    public partial class AdminMainWin : Window
     {
-        public LoginWin()
+        public AdminMainWin()
         {
             InitializeComponent();
-
-            DataContext = new LoginViewModel(new HttpApiClient(), new WindowService());
+            DataContext = new AdminMainViewModel(new HttpApiClient());
         }
     }
 }

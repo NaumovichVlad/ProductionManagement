@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ProductionManagementClient.Models
 {
     [Serializable]
-    public class UserModel : INotifyPropertyChanged
+    public class UserModel : ModelBase
     {
         private string _login;
         private string _password;
@@ -40,12 +40,5 @@ namespace ProductionManagementClient.Models
         }
 
         public string Role { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

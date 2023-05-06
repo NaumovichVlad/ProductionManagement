@@ -13,13 +13,11 @@ namespace BusinessLogic.Services
 {
     public class SalaryService : ISalaryService
     {
-        private readonly IRepository<Employee> _employeeRepository;
         private readonly IRepository<Salary> _salaryRepository;
         private readonly IMapper _mapper;
 
-        public SalaryService(IRepository<Employee> employeeRepository, IRepository<Salary> salaryRepository, IMapper mapper)
+        public SalaryService(IRepository<Salary> salaryRepository, IMapper mapper)
         {
-            _employeeRepository = employeeRepository;
             _salaryRepository = salaryRepository;
             _mapper = mapper;
         }

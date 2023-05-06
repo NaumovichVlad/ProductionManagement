@@ -17,6 +17,7 @@ namespace BusinessLogic.Config
             service.ConfigurateDal(connectionString);
             service.AddScoped<ISalaryService, SalaryService>();
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IRoleService, RoleService>();
         }
     }
 }

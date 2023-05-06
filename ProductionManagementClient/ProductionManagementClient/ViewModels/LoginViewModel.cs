@@ -1,7 +1,9 @@
 ﻿using ProductionManagementClient.Connection;
-using ProductionManagementClient.Interfaces;
+using ProductionManagementClient.Interfaces.Connection;
+using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
+using ProductionManagementClient.Views.Menus;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +16,14 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ProductionManagementClient.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
         private readonly IApiClient _client;
+        private readonly IWindowService _windowService;
         private UserModel _user;
         private RelayCommand _loginCommand;
         public UserModel User
@@ -48,6 +52,8 @@ namespace ProductionManagementClient.ViewModels
                         {
                             ApiConnection.Token = JsonNode.Parse(responce.Content.ReadAsStringAsync().Result)["token"].ToString();
                             ApiConnection.User = GetUser();
+                            OpenMainWindow();
+                            ((Window)obj).Close();
                         }
                     }));
                 
@@ -59,18 +65,20 @@ namespace ProductionManagementClient.ViewModels
             return _client.Get<UserModel>($"login/user/{User.Login}").Result;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OpenMainWindow()
         {
-            if (PropertyChanged != null)
+            switch (ApiConnection.User.Role) 
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                case "admin":
+                    _windowService.ShowWindow<AdminMainWin>();
+                    break;
             }
         }
 
-        public LoginViewModel(IApiClient client)
+        public LoginViewModel(IApiClient client, IWindowService windowService)
         {
             _client = client;
+            _windowService = windowService;
             _user = new UserModel();
             _user.Role = "empty";
         }

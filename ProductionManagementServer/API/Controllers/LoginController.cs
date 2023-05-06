@@ -3,7 +3,6 @@ using API.Models;
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -18,12 +17,14 @@ namespace API.Controllers
     {
         private IConfiguration _config;
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
-        public LoginController(IConfiguration config, IUserService userService, IMapper mapper)
+        public LoginController(IConfiguration config, IUserService userService, IRoleService roleService, IMapper mapper)
         {
             _config = config;
             _userService = userService;
+            _roleService = roleService;
             _mapper = mapper;
         }
 
@@ -54,7 +55,7 @@ namespace API.Controllers
         {
             var user = _userService.GetUserByLogin(login);
             var userModel = _mapper.Map<UserModel>(user);
-            userModel.Role = _userService.GetRoleById(user.RoleId).Name;
+            userModel.Role = _roleService.GetRoleById(user.RoleId).Name;
 
             return new ObjectResult(userModel);
         }

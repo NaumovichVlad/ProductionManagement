@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductionManagementClient.Interfaces
+namespace ProductionManagementClient.Interfaces.Connection
 {
     public interface IApiClient
     {

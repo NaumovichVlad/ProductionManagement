@@ -14,14 +14,12 @@ namespace BusinessLogic.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Role> _roleRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IRepository<User> userRepository,  IMapper mapper, IRepository<Role> roleRepository)
+        public UserService(IRepository<User> userRepository,  IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
-            _roleRepository = roleRepository;
         }
 
         public bool CheckUser(UserDto userDto)
@@ -45,9 +43,6 @@ namespace BusinessLogic.Services
             return _mapper.Map<UserDto>(_userRepository.Get(u => u.Login == login).First());
         }
 
-        public RoleDto GetRoleById(int id)
-        {
-            return _mapper.Map<RoleDto>(_roleRepository.GetById(id));
-        }
+        
     }
 }
