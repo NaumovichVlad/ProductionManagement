@@ -24,8 +24,7 @@
             </TreeView>
         </Grid>
         <Grid Margin="223,0,0,0">
-            <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,155,0,0"/>
+            <DataGrid ItemsSource="{Binding Table}" AutoGenerateColumns="True"  Margin="22,145,31,28"/>
         </Grid>
-
     </Grid>
 </Window>

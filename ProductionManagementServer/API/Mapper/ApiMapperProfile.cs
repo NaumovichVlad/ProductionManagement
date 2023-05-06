@@ -20,6 +20,7 @@ namespace API.Mapper
                 .ReverseMap();
 
             CreateMap<RoleDto, RoleModel>().ReverseMap();
+            CreateMap<EmployeeDto, EmployeeModel>().ReverseMap();
         }
     }
 }

@@ -43,6 +43,9 @@ namespace BusinessLogic.Services
             return _mapper.Map<UserDto>(_userRepository.Get(u => u.Login == login).First());
         }
 
-        
+        public List<UserDto> GetList()
+        {
+            return _mapper.Map<List<UserDto>>(_userRepository.Get());
+        }
     }
 }

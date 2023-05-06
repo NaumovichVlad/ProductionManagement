@@ -1,29 +1,31 @@
 ﻿using API.Models;
 using AutoMapper;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("role/[action]")]
+    [Route("employee/[action]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-    public class RoleController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
-        private readonly IRoleService _roleService;
+        private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
-        public RoleController(IRoleService roleService, IMapper mapper)
+
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
         {
-            _roleService = roleService;
+            _employeeService = employeeService;
             _mapper = mapper;
         }
 
         [HttpGet]
         [ActionName("all")]
-        public async Task<ActionResult<IEnumerable<RoleModel>>> GetRoles()
+        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployees()
         {
-            var items = _mapper.Map<List<RoleModel>>(_roleService.GetList());
+            var items = _mapper.Map<List<EmployeeModel>>(_employeeService.GetList());
 
             return await Task.FromResult(items);
         }

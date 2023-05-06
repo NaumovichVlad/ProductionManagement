@@ -11,5 +11,6 @@ namespace BusinessLogic.Interfaces
     {
         bool CheckUser(UserDto userDto);
         UserDto GetUserByLogin(string login);
+        List<UserDto> GetList();
     }
 }

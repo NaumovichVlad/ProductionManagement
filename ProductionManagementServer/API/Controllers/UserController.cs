@@ -6,24 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("role/[action]")]
+    [Route("user/[action]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-    public class RoleController : ControllerBase
+    public class UserController : ControllerBase
     {
+        private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
-        public RoleController(IRoleService roleService, IMapper mapper)
+
+        public UserController(IUserService userService, IRoleService roleService)
         {
+            _userService = userService;
             _roleService = roleService;
-            _mapper = mapper;
         }
 
         [HttpGet]
         [ActionName("all")]
-        public async Task<ActionResult<IEnumerable<RoleModel>>> GetRoles()
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
-            var items = _mapper.Map<List<RoleModel>>(_roleService.GetList());
+            var items = _userService.GetList().Select(u => new UserModel
+            {
+                Login = u.Login,
+                Password = u.Password,
+                Role = _roleService.GetRoleById(u.RoleId).Name
+            }).ToList();
 
             return await Task.FromResult(items);
         }
