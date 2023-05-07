@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AdminMainViewModel}"
         mc:Ignorable="d"
         Title="AdminMainWin" Height="450" Width="800">
     <Grid>
@@ -24,7 +24,20 @@
             </TreeView>
         </Grid>
         <Grid Margin="223,0,0,0">
-            <DataGrid ItemsSource="{Binding Table}" AutoGenerateColumns="True"  Margin="22,145,31,28"/>
+            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True"  Margin="22,60,31,82">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Sorting">
+                        <i:InvokeCommandAction 
+                         Command="{Binding SortCommand}"
+                         PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DataGrid>
+            <TextBox HorizontalAlignment="Left" Margin="372,27,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="506,25,0,0" VerticalAlignment="Top"/>
+            <Button Content="Предыдущая" Margin="343,372,0,0" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Top"/>
+            <Button Content="{Binding PageIndex}" Margin="432,372,0,0" HorizontalAlignment="Left" Width="34" Height="20" VerticalAlignment="Top"/>
+            <Button Content="Следующая" Margin="478,372,0,0" HorizontalAlignment="Left" Width="68" Height="20" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

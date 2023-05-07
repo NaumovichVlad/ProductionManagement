@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using AutoMapper;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,15 @@ namespace API.Controllers
             var items = _mapper.Map<List<RoleModel>>(_roleService.GetList());
 
             return await Task.FromResult(items);
+        }
+
+        [HttpGet("{sortDirection}/{sortParameter}/{size}")]
+        [ActionName("all/select")]
+        public async Task<ActionResult<List<RoleModel>>> GetSelection(int size, string sortDirection, string sortParameter)
+        {
+            var roles = _mapper.Map<List<RoleModel>>(_roleService.GetSelection(size, sortDirection, sortParameter));
+
+            return new ObjectResult(roles);
         }
     }
 }

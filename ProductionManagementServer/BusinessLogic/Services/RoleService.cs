@@ -27,9 +27,17 @@ namespace BusinessLogic.Services
             return _mapper.Map<List<RoleDto>>(_roleRepository.Get());
         }
 
+        public List<RoleDto> GetSelection(int size, string sortDirection, string sortParameter)
+        {
+            var type = typeof(Role);
+            var sortParameterProperty = type.GetProperty(sortParameter);
+            return _mapper.Map<List<RoleDto>>(_roleRepository.Get().OrderBy(r => sortParameterProperty.GetValue(r)).Take(size).ToList());
+        }
+
         public RoleDto GetRoleById(int id)
         {
             return _mapper.Map<RoleDto>(_roleRepository.GetById(id));
         }
+
     }
 }

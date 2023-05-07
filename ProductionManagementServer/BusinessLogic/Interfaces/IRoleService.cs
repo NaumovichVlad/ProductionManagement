@@ -6,5 +6,6 @@ namespace BusinessLogic.Interfaces
     {
         List<RoleDto> GetList();
         RoleDto GetRoleById(int id);
+        List<RoleDto> GetSelection(int size, string sortDirection, string sortParameter);
     }
 }

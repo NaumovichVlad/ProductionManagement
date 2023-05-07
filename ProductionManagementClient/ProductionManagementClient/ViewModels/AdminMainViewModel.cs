@@ -1,5 +1,6 @@
 ﻿using ProductionManagementClient.Interfaces.Connection;
 using ProductionManagementClient.Models;
+using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,29 @@ namespace ProductionManagementClient.ViewModels
 {
     public class AdminMainViewModel : ViewModelBase
     {
-        private DataTable _table;
+        private DataContainer _dataContainer;
+        private int _pageIndex;
         private readonly IApiClient _client;
 
-        public DataTable Table 
+        public DataContainer DataContainer 
         {
             get 
             { 
-                return _table; 
+                return _dataContainer; 
             }
             set
             {
-                _table = value;
+                _dataContainer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int PageIndex
+        {
+            get => _pageIndex + 1;
+            set
+            {
+                _pageIndex = value;
                 OnPropertyChanged();
             }
         }
@@ -36,32 +48,52 @@ namespace ProductionManagementClient.ViewModels
         public AdminMainViewModel(IApiClient client)
         {
             _client = client;
+            _dataContainer = new DataContainer();
+            _dataContainer.PageSize = 1;
+            PageIndex = 0;
         }
 
-        private ICommand _selectItemCommand;
-        public ICommand SelectItemCommand
+        private RelayCommand _selectItemCommand;
+        public RelayCommand SelectItemCommand
         {
             get
             {
                 return _selectItemCommand ??
                     (_selectItemCommand = new RelayCommand(param =>
                     {
-                        var item = (TreeViewItem)param;
+                        Enum.TryParse(typeof(DataTypes),((TreeViewItem)param).Name, out var item);
 
-                        switch (item.Name)
+                        switch (item)
                         {
-                            case "Roles":
-                                Table = CreateRoleTable(_client.Get<List<RoleModel>>("role/all").Result);
+                            case DataTypes.Roles:
+                                _dataContainer.Table = CreateRoleTable(_client.Get<List<RoleModel>>("role/all").Result);
                                 break;
-                            case "Users":
-                                Table = CreateUserTable(_client.Get<List<UserModel>>("user/all").Result);
+                            case DataTypes.Users:
+                                _dataContainer.Table = CreateUserTable(_client.Get<List<UserModel>>("user/all").Result);
                                 break;
-                            case "Employees":
-                                Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>("employee/all").Result);
+                            case DataTypes.Employees:
+                                _dataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>("employee/all").Result);
                                 break;
-                        }
+                        }                     
                     }
                     ));
+            }
+        }
+
+        private RelayCommand _sortCommand;
+
+        public RelayCommand SortCommand
+        {
+            get
+            {
+                return _sortCommand ??
+                    (_sortCommand = new RelayCommand(param =>
+                    {
+                        var column = ((DataGridSortingEventArgs)param).Column;
+                        var name = _dataContainer.Table.Columns[column.Header.ToString()].Caption;
+                        _dataContainer.SortParam = name;
+                        _dataContainer.SortDirection = column.SortDirection.Value.ToString();
+                    }));
             }
         }
 
@@ -69,7 +101,10 @@ namespace ProductionManagementClient.ViewModels
         {
             var table = new DataTable();
             var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+            
             var nameColumn = new DataColumn("Название");
+            nameColumn.Caption = "Name";
 
             table.Columns.Add(idColumn);
             table.Columns.Add(nameColumn);
