@@ -14,7 +14,7 @@ namespace ProductionManagementClient.Models
         private string _middleName;
         private string _passportNumber;
         private string _address;
-        private int _phoneNumber;
+        private string _phoneNumber;
 
         public int Id
         {
@@ -71,7 +71,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get => _phoneNumber;
             set

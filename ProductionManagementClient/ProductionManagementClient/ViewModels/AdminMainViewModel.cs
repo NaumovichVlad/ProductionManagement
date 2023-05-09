@@ -97,6 +97,33 @@ namespace ProductionManagementClient.ViewModels
             }
         }
 
+        private RelayCommand _nextPageCommand;
+        public RelayCommand NextPageCommand
+        {
+            get
+            {
+                return _nextPageCommand ??
+                    (_nextPageCommand = new RelayCommand(param =>
+                    {
+                        
+                    }
+                    ));
+            }
+        }
+        private RelayCommand _previousPageCommand;
+        public RelayCommand PreviousPageCommand
+        {
+            get
+            {
+                return _previousPageCommand ??
+                    (_previousPageCommand = new RelayCommand(param =>
+                    {
+
+                    }
+                    ));
+            }
+        }
+
         private DataTable CreateRoleTable(List<RoleModel> models)
         {
             var table = new DataTable();

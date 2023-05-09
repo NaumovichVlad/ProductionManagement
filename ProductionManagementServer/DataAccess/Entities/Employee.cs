@@ -16,6 +16,6 @@ namespace DataAccess.Entities
         public string MiddleName { get; set; }
         public string PassportNumber { get; set; }
         public string Address { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
