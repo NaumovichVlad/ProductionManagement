@@ -35,9 +35,9 @@
             </DataGrid>
             <TextBox HorizontalAlignment="Left" Margin="372,27,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
             <Button Content="Button" HorizontalAlignment="Left" Margin="506,25,0,0" VerticalAlignment="Top"/>
-            <Button Command="{Binding PreviousPageCommand}" Content="Предыдущая" Margin="343,372,0,0" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Top"/>
+            <Button Command="{Binding PreviousPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Предыдущая" Margin="343,372,0,0" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Top"/>
             <Button Content="{Binding PageIndex}" Margin="432,372,0,0" HorizontalAlignment="Left" Width="34" Height="20" VerticalAlignment="Top"/>
-            <Button Command="{Binding NextPageCommand}" Content="Следующая" Margin="478,372,0,0" HorizontalAlignment="Left" Width="68" Height="20" VerticalAlignment="Top"/>
+            <Button Command="{Binding NextPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Следующая" Margin="478,372,0,0" HorizontalAlignment="Left" Width="68" Height="20" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

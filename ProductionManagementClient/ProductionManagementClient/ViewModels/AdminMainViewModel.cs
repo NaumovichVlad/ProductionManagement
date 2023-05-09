@@ -18,9 +18,11 @@ namespace ProductionManagementClient.ViewModels
 {
     public class AdminMainViewModel : ViewModelBase
     {
+        private const int pageSize = 10;
         private DataContainer _dataContainer;
         private int _pageIndex;
         private readonly IApiClient _client;
+        private DataTypes _dataType;
 
         public DataContainer DataContainer 
         {
@@ -40,7 +42,7 @@ namespace ProductionManagementClient.ViewModels
             get => _pageIndex + 1;
             set
             {
-                _pageIndex = value;
+                _pageIndex = value - 1;
                 OnPropertyChanged();
             }
         }
@@ -49,8 +51,8 @@ namespace ProductionManagementClient.ViewModels
         {
             _client = client;
             _dataContainer = new DataContainer();
-            _dataContainer.PageSize = 1;
-            PageIndex = 0;
+
+            Clear();
         }
 
         private RelayCommand _selectItemCommand;
@@ -61,20 +63,11 @@ namespace ProductionManagementClient.ViewModels
                 return _selectItemCommand ??
                     (_selectItemCommand = new RelayCommand(param =>
                     {
-                        Enum.TryParse(typeof(DataTypes),((TreeViewItem)param).Name, out var item);
+                        Clear();
+                        Enum.TryParse<DataTypes>(((TreeViewItem)param).Name, out var item);
+                        _dataType = item;
 
-                        switch (item)
-                        {
-                            case DataTypes.Roles:
-                                _dataContainer.Table = CreateRoleTable(_client.Get<List<RoleModel>>("role/all").Result);
-                                break;
-                            case DataTypes.Users:
-                                _dataContainer.Table = CreateUserTable(_client.Get<List<UserModel>>("user/all").Result);
-                                break;
-                            case DataTypes.Employees:
-                                _dataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>("employee/all").Result);
-                                break;
-                        }                     
+                        GetServerEntities();               
                     }
                     ));
             }
@@ -89,10 +82,13 @@ namespace ProductionManagementClient.ViewModels
                 return _sortCommand ??
                     (_sortCommand = new RelayCommand(param =>
                     {
+                        PageIndex = 1;
                         var column = ((DataGridSortingEventArgs)param).Column;
                         var name = _dataContainer.Table.Columns[column.Header.ToString()].Caption;
                         _dataContainer.SortParam = name;
-                        _dataContainer.SortDirection = column.SortDirection.Value.ToString();
+                        _dataContainer.SortDirection = _dataContainer.SortDirection == "asc" ? "desc" : "asc";
+
+                        GetServerEntities();
                     }));
             }
         }
@@ -105,7 +101,10 @@ namespace ProductionManagementClient.ViewModels
                 return _nextPageCommand ??
                     (_nextPageCommand = new RelayCommand(param =>
                     {
-                        
+                        PageIndex++;
+                        Enum.TryParse(typeof(DataTypes), ((TreeViewItem)param).Name, out var item);
+
+                        GetServerEntities();
                     }
                     ));
             }
@@ -118,10 +117,41 @@ namespace ProductionManagementClient.ViewModels
                 return _previousPageCommand ??
                     (_previousPageCommand = new RelayCommand(param =>
                     {
+                        PageIndex--;
+                        Enum.TryParse(typeof(DataTypes), ((TreeViewItem)param).Name, out var item);
 
+                        GetServerEntities();
                     }
                     ));
             }
+        }
+
+        private void GetServerEntities()
+        {
+            switch (_dataType)
+            {
+                case DataTypes.Roles:
+                    _dataContainer.Table = CreateRoleTable(_client.Get<List<RoleModel>>(
+                        $"role/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Users:
+                    _dataContainer.Table = CreateUserTable(_client.Get<List<UserModel>>(
+                        $"user/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Employees:
+                    _dataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>(
+                        $"employee/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+            }
+        }
+
+        private void Clear()
+        {
+            PageIndex = 1;
+
+            _dataContainer.PageNumber = 1;
+            _dataContainer.SortDirection = "asc";
+            _dataContainer.SortParam = "Id";
         }
 
         private DataTable CreateRoleTable(List<RoleModel> models)
@@ -152,9 +182,15 @@ namespace ProductionManagementClient.ViewModels
         private DataTable CreateUserTable(List<UserModel> models)
         {
             var table = new DataTable();
+
             var loginColumn = new DataColumn("Логин");
+            loginColumn.Caption = "Login";
+
             var passwordColumn = new DataColumn("Пароль");
+            passwordColumn.Caption = "Password";
+
             var roleColumn = new DataColumn("Роль");
+            roleColumn.Caption = "Role";
 
             table.Columns.Add(loginColumn);
             table.Columns.Add(passwordColumn);
@@ -177,13 +213,27 @@ namespace ProductionManagementClient.ViewModels
         private DataTable CreateEmployeeTable(List<EmployeeModel> models)
         {
             var table = new DataTable();
+
             var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
             var surnameColumn = new DataColumn("Фамилия");
+            surnameColumn.Caption = "Surname";
+
             var nameColumn = new DataColumn("Имя");
+            nameColumn.Caption = "Name";
+
             var middleNameColumn = new DataColumn("Отчество");
+            middleNameColumn.Caption = "MiddleName";
+
             var passportColumn = new DataColumn("Номер паспорта");
+            passportColumn.Caption = "PassportNumber";
+
             var addressNameColumn = new DataColumn("Адрес");
+            addressNameColumn.Caption = "Address";
+
             var phoneColumn = new DataColumn("Телефон");
+            phoneColumn.Caption = "PhoneNumber";
 
             table.Columns.Add(idColumn);
             table.Columns.Add(surnameColumn);

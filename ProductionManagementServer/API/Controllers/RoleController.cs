@@ -29,11 +29,11 @@ namespace API.Controllers
             return await Task.FromResult(items);
         }
 
-        [HttpGet("{sortDirection}/{sortParameter}/{size}")]
+        [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<RoleModel>>> GetSelection(int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<RoleModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var roles = _mapper.Map<List<RoleModel>>(_roleService.GetSelection(size, sortDirection, sortParameter));
+            var roles = _mapper.Map<List<RoleModel>>(_roleService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
         }
