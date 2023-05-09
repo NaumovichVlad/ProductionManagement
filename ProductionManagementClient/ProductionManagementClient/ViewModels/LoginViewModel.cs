@@ -3,6 +3,7 @@ using ProductionManagementClient.Interfaces.Connection;
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
+using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Menus;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,21 @@ namespace ProductionManagementClient.ViewModels
                         }
                     }));
                 
+            }
+        }
+
+        private RelayCommand _settingsCommand;
+
+        public RelayCommand SettingsCommand
+        {
+            get
+            {
+                return _settingsCommand ??
+                    (_settingsCommand = new RelayCommand(obj =>
+                    {
+                        _windowService.ShowWindow<SettingsWin>();
+                    }));
+
             }
         }
 

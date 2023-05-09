@@ -7,13 +7,18 @@
         mc:Ignorable="d"
         Title="Авторизация" Height="213" Width="346"
         ResizeMode="NoResize">
+
     <Grid>
         <TextBox Text="{Binding User.Login}"  HorizontalAlignment="Left" Margin="106,37,0,0" TextWrapping="Wrap" Width="160" Height="21" VerticalAlignment="Top"/>
         <TextBox Text="{Binding User.Password}" HorizontalAlignment="Left" Margin="106,70,0,0" VerticalAlignment="Top" Width="160" Height="21"/>
         <Button Name="EnterButton"  Command="{Binding LoginCommand}"  CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-                           AncestorType={x:Type Window}}}" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205" Height="27"/>
+                           AncestorType={x:Type Window}}}" Content="Войти" Margin="61,106,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="162" Height="27"/>
         <Label Content="Логин:" HorizontalAlignment="Left" Margin="52,35,0,0" VerticalAlignment="Top"/>
         <Label Content="Пароль:" HorizontalAlignment="Left" Margin="52,63,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding SettingsCommand}" HorizontalAlignment="Left" Margin="237,106,0,0" VerticalAlignment="Top" Height="27" Width="29">
+            <Image Source="../Resources/gear.png"/>
+        </Button>
 
     </Grid>
+
 </Window>
