@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AdminMainViewModel}"
         mc:Ignorable="d"
-        Title="AdminMainWin" Height="450" Width="800">
+        Title="Окно администратора" Height="450" Width="800">
     <Grid>
         <Grid Margin="0,0,577,0">
             <TreeView Name="MainTreeView">
@@ -23,8 +23,8 @@
                 </i:Interaction.Triggers>
             </TreeView>
         </Grid>
-        <Grid Margin="223,0,0,0">
-            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True"  Margin="22,60,31,82">
+        <Grid Margin="223,0,0,0" HorizontalAlignment="Left" Width="577">
+            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True"  Margin="22,60,0,0" HorizontalAlignment="Left" Width="524" Height="292" VerticalAlignment="Top">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Sorting">
                         <i:InvokeCommandAction 
@@ -33,11 +33,14 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
-            <TextBox HorizontalAlignment="Left" Margin="372,27,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-            <Button Content="Button" HorizontalAlignment="Left" Margin="506,25,0,0" VerticalAlignment="Top"/>
-            <Button Command="{Binding PreviousPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Предыдущая" Margin="343,372,0,0" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Top"/>
-            <Button Content="{Binding PageIndex}" Margin="432,372,0,0" HorizontalAlignment="Left" Width="34" Height="20" VerticalAlignment="Top"/>
-            <Button Command="{Binding NextPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Следующая" Margin="478,372,0,0" HorizontalAlignment="Left" Width="68" Height="20" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Margin="250,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Height="20"/>
+            <Button Content="Поиск" HorizontalAlignment="Left" Margin="498,25,0,0" VerticalAlignment="Top" Width="48"/>
+            <Button Command="{Binding PreviousPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Предыдущая" Margin="326,372,0,0" HorizontalAlignment="Left" Width="86" Height="20" VerticalAlignment="Top"/>
+            <Button Content="{Binding PageIndex}" Margin="423,372,0,0" HorizontalAlignment="Left" Width="27" Height="20" VerticalAlignment="Top"/>
+            <Button Command="{Binding NextPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Следующая" Margin="460,372,0,0" HorizontalAlignment="Left" Width="86" Height="20" VerticalAlignment="Top"/>
+            <Button Command="{Binding AddCommand}" Content="Добавить" HorizontalAlignment="Left" Margin="22,372,0,0" VerticalAlignment="Top" Width="72"/>
+            <Button Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTable}" Content="Изменить" HorizontalAlignment="Left" Margin="103,372,0,0" VerticalAlignment="Top" Width="72"/>
+            <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTable}" Content="Удалить" HorizontalAlignment="Left" Margin="184,372,0,0" VerticalAlignment="Top" Width="72"/>
         </Grid>
     </Grid>
 </Window>

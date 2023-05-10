@@ -61,6 +61,8 @@ namespace DataAccess.Repositories
         public virtual void Insert(T entity)
         {
             _dbSet.Add(entity);
+
+            _context.SaveChanges();
         }
         public virtual void Delete(T entity)
         {
@@ -69,6 +71,8 @@ namespace DataAccess.Repositories
                 _dbSet.Attach(entity);
             }
             _dbSet.Remove(entity);
+
+            _context.SaveChanges();
         }
         public virtual void Delete(int id)
         {
@@ -80,6 +84,8 @@ namespace DataAccess.Repositories
         {
             _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+
+            _context.SaveChanges();
         }
 
         private IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)

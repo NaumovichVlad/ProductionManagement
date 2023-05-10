@@ -52,5 +52,37 @@ namespace ProductionManagementClient.Connection
                 return request;
             }
         }
+
+        public Task<HttpResponseMessage> Put<T>(T model, string uri)
+        {
+            uri = _apiUri + uri;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ApiConnection.Token);
+                var request = client.PutAsJsonAsync(uri, model);
+
+                request.Wait();
+
+                return request;
+            }
+        }
+
+        public Task<HttpResponseMessage> Delete(string uri)
+        {
+            uri = _apiUri + uri;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ApiConnection.Token);
+                var request = client.DeleteAsync(uri);
+
+                request.Wait();
+
+                return request;
+            }
+        }
     }
 }

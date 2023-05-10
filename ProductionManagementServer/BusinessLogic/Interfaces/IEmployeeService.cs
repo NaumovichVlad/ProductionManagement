@@ -1,10 +1,8 @@
 ﻿using BusinessLogic.Dtos;
+using DataAccess.Entities;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface IEmployeeService
-    {
-        List<EmployeeDto> GetList();
-        List<EmployeeDto> GetSelection(int start, int size, string sortDirection, string sortParameter);
-    }
+    public interface IEmployeeService : IService<EmployeeDto>
+    { }
 }

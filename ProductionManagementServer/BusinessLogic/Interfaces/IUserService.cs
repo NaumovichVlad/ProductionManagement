@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Dtos;
+using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IService<UserDto>
     {
         bool CheckUser(UserDto userDto);
         UserDto GetUserByLogin(string login);
-        List<UserDto> GetList();
-        List<UserDto> GetSelection(int start, int size, string sortDirection, string sortParameter);
     }
 }

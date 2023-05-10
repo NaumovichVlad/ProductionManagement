@@ -12,20 +12,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class UserService : IUserService
+    public class UserService : Service<User, UserDto>, IUserService
     {
-        private readonly IRepository<User> _userRepository;
-        private readonly IMapper _mapper;
-
-        public UserService(IRepository<User> userRepository,  IMapper mapper)
-        {
-            _userRepository = userRepository;
-            _mapper = mapper;
-        }
+        public UserService(IRepository<User> employeeRepository, IMapper mapper) : base(employeeRepository, mapper)
+        { }
 
         public bool CheckUser(UserDto userDto)
         {
-            var users = _userRepository.Get(u => u.Login == userDto.Login);
+            var users = _repository.Get(u => u.Login == userDto.Login);
 
             if (users.Any())
             {
@@ -41,26 +35,7 @@ namespace BusinessLogic.Services
 
         public UserDto GetUserByLogin(string login)
         {
-            return _mapper.Map<UserDto>(_userRepository.Get(u => u.Login == login).First());
-        }
-
-        public List<UserDto> GetList()
-        {
-            return _mapper.Map<List<UserDto>>(_userRepository.Get());
-        }
-
-        public List<UserDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
-        {
-            var type = typeof(Employee);
-            var sortParameterProperty = type.GetProperty(sortParameter);
-            if (sortDirection == "asc")
-            {
-                return _mapper.Map<List<UserDto>>(_userRepository.Get().OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
-            }
-            else
-            {
-                return _mapper.Map<List<UserDto>>(_userRepository.Get().OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
-            }
+            return _mapper.Map<UserDto>(_repository.Get(u => u.Login == login).First());
         }
     }
 }

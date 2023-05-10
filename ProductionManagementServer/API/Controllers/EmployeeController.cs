@@ -1,5 +1,7 @@
-﻿using API.Models;
+﻿using API.Jwt;
+using API.Models;
 using AutoMapper;
+using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -37,6 +39,48 @@ namespace API.Controllers
             var roles = _mapper.Map<List<EmployeeModel>>(_employeeService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
+        }
+
+        [HttpPost]
+        [ActionName("insert")]
+        public async Task<IActionResult> Insert([FromBody] EmployeeModel model)
+        {
+            _employeeService.Insert(_mapper.Map<EmployeeDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+            
+            return response;
+        }
+
+        [HttpPut]
+        [ActionName("edit")]
+        public async Task<IActionResult> Edit([FromBody] EmployeeModel model)
+        {
+            _employeeService.Edit(_mapper.Map<EmployeeDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("get")]
+        public async Task<ActionResult<RoleModel>> GetById(int id)
+        {
+            var model = _mapper.Map<EmployeeModel>(_employeeService.GetById(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpDelete("{id}")]
+        [ActionName("remove")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _employeeService.Delete(id);
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
         }
     }
 }

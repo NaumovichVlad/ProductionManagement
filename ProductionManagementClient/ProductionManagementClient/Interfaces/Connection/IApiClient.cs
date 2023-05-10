@@ -12,5 +12,7 @@ namespace ProductionManagementClient.Interfaces.Connection
     {
         Task<HttpResponseMessage> Post<T>(T model, string uri);
         Task<T> Get<T>(string uri);
+        Task<HttpResponseMessage> Put<T>(T model, string uri);
+        Task<HttpResponseMessage> Delete(string uri);
     }
 }

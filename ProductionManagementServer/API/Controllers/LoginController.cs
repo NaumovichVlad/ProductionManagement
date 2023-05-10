@@ -55,7 +55,7 @@ namespace API.Controllers
         {
             var user = _userService.GetUserByLogin(login);
             var userModel = _mapper.Map<UserModel>(user);
-            userModel.Role = _roleService.GetRoleById(user.RoleId).Name;
+            userModel.Role = _roleService.GetById(user.RoleId).Name;
 
             return new ObjectResult(userModel);
         }

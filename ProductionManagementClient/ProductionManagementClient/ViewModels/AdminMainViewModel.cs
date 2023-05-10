@@ -1,13 +1,16 @@
 ﻿using ProductionManagementClient.Interfaces.Connection;
+using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
+using ProductionManagementClient.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +26,7 @@ namespace ProductionManagementClient.ViewModels
         private int _pageIndex;
         private readonly IApiClient _client;
         private DataTypes _dataType;
+        private readonly IWindowService _windowService;
 
         public DataContainer DataContainer 
         {
@@ -47,10 +51,11 @@ namespace ProductionManagementClient.ViewModels
             }
         }
 
-        public AdminMainViewModel(IApiClient client)
+        public AdminMainViewModel(IApiClient client, IWindowService windowService)
         {
             _client = client;
             _dataContainer = new DataContainer();
+            _windowService = windowService;
 
             Clear();
         }
@@ -72,6 +77,51 @@ namespace ProductionManagementClient.ViewModels
                     ));
             }
         }
+
+        private RelayCommand _addCommand;
+
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return _addCommand ??
+                    (_addCommand = new RelayCommand(param =>
+                    {
+                        AddServerEntity();
+                    }));
+            }
+        }
+
+        private RelayCommand _editCommand;
+
+        public RelayCommand EditCommand
+        {
+            get
+            {
+                return _editCommand ??
+                    (_editCommand = new RelayCommand(param =>
+                    {
+                        var row = (DataRowView) param;
+                        EditServerEntity(row["Ид"]);
+                    }));
+            }
+        }
+
+        private RelayCommand _deleteCommand;
+
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                return _deleteCommand ??
+                    (_deleteCommand = new RelayCommand(param =>
+                    {
+                        var row = (DataRowView)param;
+                        DeleteServerEntity(row["Ид"]);
+                    }));
+            }
+        }
+
 
         private RelayCommand _sortCommand;
 
@@ -141,6 +191,36 @@ namespace ProductionManagementClient.ViewModels
                 case DataTypes.Employees:
                     _dataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>(
                         $"employee/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+            }
+        }
+
+        private void EditServerEntity(object id)
+        {
+            switch (_dataType)
+            {
+                case DataTypes.Employees:
+                    _windowService.ShowWindow<EmployeesEditWin>(id);
+                    break;
+            }
+        }
+
+        private void AddServerEntity()
+        {
+            switch (_dataType)
+            {
+                case DataTypes.Employees:
+                    _windowService.ShowWindow<EmployeesCreateWin>();
+                    break;
+            }
+        }
+
+        private void DeleteServerEntity(object id)
+        {
+            switch (_dataType)
+            {
+                case DataTypes.Employees:
+                    _client.Delete($"employee/remove/{id}");
                     break;
             }
         }

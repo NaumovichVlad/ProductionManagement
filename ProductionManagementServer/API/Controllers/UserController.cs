@@ -30,7 +30,7 @@ namespace API.Controllers
             {
                 Login = u.Login,
                 Password = u.Password,
-                Role = _roleService.GetRoleById(u.RoleId).Name
+                Role = _roleService.GetById(u.RoleId).Name
             }).ToList();
 
             return await Task.FromResult(items);
