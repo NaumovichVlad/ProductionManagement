@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace BusinessLogic.Dtos
         public int ProductId { get; set; }
         public int MaterialId { get; set; }
         public int Count { get; set; }
+        public ProductDto Product { get; set; }
+        public MaterialDto Material { get; set; }
     }
 }

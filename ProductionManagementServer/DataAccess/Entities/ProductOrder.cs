@@ -13,6 +13,7 @@ namespace DataAccess.Entities
         public int OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public int CounteragentId { get; set; }
+        public Counteragent Counteragent { get; set; }
 
     }
 }

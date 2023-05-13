@@ -12,5 +12,7 @@ namespace BusinessLogic.Dtos
         public int ProductId { get; set; }
         public int MaterialReserveId { get; set; }
         public int Count { get; set; }
+        public ProductDto Product { get; set; }
+        public MaterialReserveDto MaterialReserve { get; set; }
     }
 }

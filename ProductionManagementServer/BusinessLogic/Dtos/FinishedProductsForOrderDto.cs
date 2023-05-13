@@ -12,5 +12,7 @@ namespace BusinessLogic.Dtos
         public int ProductsForOrderId { get; set; }
         public int ProductsReserveId { get; set; }
         public int Count { get; set; }
+        public ProductsForOrderDto ProductsForOrder { get; set; }
+        public ProductsReserveDto ProductsReserve { get; set; }
     }
 }

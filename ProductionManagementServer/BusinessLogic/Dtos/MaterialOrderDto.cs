@@ -16,5 +16,7 @@ namespace BusinessLogic.Dtos
         public DateTime ManufactureDate { get; set; }
         public string ManufactureCountry { get; set; }
         public int CounteragentId { get; set; }
+        public MaterialDto Material { get; set; }
+        public CounteragentDto Counteragent { get; set; }
     }
 }

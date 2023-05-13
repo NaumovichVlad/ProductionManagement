@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface ICounteragentService : IService<CounteragentDto>
+    public interface IMaterialService : IService<MaterialDto>
     { }
 }

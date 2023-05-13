@@ -20,6 +20,18 @@ namespace BusinessLogic.Config
             service.AddScoped<IEmployeeService, EmployeeService>();
             service.AddScoped<IRoleService, RoleService>();
             service.AddScoped<ICounteragentService, CounteragentService>();
+            service.AddScoped<IFinishedProductForOrderService, FinishedProductForOrderService>();
+            service.AddScoped<IFinishedProductService, FinishedProductService>();
+            service.AddScoped<IMaterialOrderService, MaterialOrderService>();
+            service.AddScoped<IMaterialService, MaterialService>();
+            service.AddScoped<IMaterialsForFinishedProductsService, MaterialsForFinishedProductsService>();
+            service.AddScoped<IMaterialsForProductsService, MaterialsForProductsService>();
+            service.AddScoped<IMaterialsReserveService, MaterialsReserveService>();
+            service.AddScoped<IProductOrderService, ProductOrderService>();
+            service.AddScoped<IProductService, ProductService>();
+            service.AddScoped<IProductsForOrderService, ProductsForOrderService>();
+            service.AddScoped<IProductsReserveService, ProductsReserveService>();
+            service.AddScoped<IStoragePlaceService, StoragePlaceService>();
         }
     }
 }
