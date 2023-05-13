@@ -1,4 +1,5 @@
 ﻿using ProductionManagementClient.Interfaces.Connection;
+using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
 using System;
@@ -10,12 +11,14 @@ using System.Windows;
 
 namespace ProductionManagementClient.ViewModels
 {
-    public class EmployeesEditViewModel : ViewModelBase
+    public abstract class CreateViewModel<T> : ViewModelBase
+        where T : ModelBase, new()
     {
-        private EmployeeModel _model;
-        private IApiClient _client;
+        private T _model;
+        private protected IApiClient _client;
+        private protected IMessageBoxService _messageBoxService;
 
-        public EmployeeModel Model
+        public T Model
         {
             get => _model;
             set
@@ -25,26 +28,15 @@ namespace ProductionManagementClient.ViewModels
             }
         }
 
-        public EmployeesEditViewModel(string id, IApiClient client)
+        public CreateViewModel(IApiClient client, IMessageBoxService messageBoxService)
         {
             _client = client;
-            Model = GetModel(id);
+            _messageBoxService = messageBoxService;
+            Model = new T();
         }
 
-        private RelayCommand _confirmCommand;
-        public RelayCommand ConfirmCommand
-        {
-            get
-            {
-                return _confirmCommand ??
-                    (_confirmCommand = new RelayCommand(obj =>
-                    {
-                        _client.Put(Model, "employee/edit");
-                        ((Window)obj).Close();
-
-                    }));
-            }
-        }
+        private protected RelayCommand _confirmCommand;
+        public abstract RelayCommand ConfirmCommand { get; }
 
         private RelayCommand _cancelCommand;
         public RelayCommand CancelCommand
@@ -57,11 +49,6 @@ namespace ProductionManagementClient.ViewModels
                         ((Window)obj).Close();
                     }));
             }
-        }
-
-        public EmployeeModel GetModel(string id)
-        {
-            return _client.Get<EmployeeModel>($"employee/get/{id}").Result;
         }
     }
 }

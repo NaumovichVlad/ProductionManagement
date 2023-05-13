@@ -13,5 +13,7 @@ namespace BusinessLogic.Dtos
         public string Password { get; set; }
         public int EmployeeId { get; set; }
         public int RoleId { get; set; }
+        public RoleDto Role { get; set; }
+        public EmployeeDto Employee { get; set; }
     }
 }

@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AdminMainViewModel}"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels"
         mc:Ignorable="d"
         Title="Окно администратора" Height="450" Width="800">
     <Grid>
         <Grid Margin="0,0,577,0">
             <TreeView Name="MainTreeView">
-                <TreeViewItem Header="Таблицы">
-                    <TreeViewItem Name="Users" Header="Пользователи" />
+                <TreeViewItem IsExpanded="True" Header="Таблицы">
+                    <TreeViewItem IsSelected="True" Name="Users" Header="Пользователи" />
                     <TreeViewItem Name="Roles" Header="Роли" />
                     <TreeViewItem Name="Employees" Header="Сотрудники" />
+                    <TreeViewItem Name="Counteragents" Header="Контрагенты" />
                 </TreeViewItem>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">

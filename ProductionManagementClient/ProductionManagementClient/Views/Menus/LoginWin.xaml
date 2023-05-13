@@ -16,7 +16,7 @@
         <Label Content="Логин:" HorizontalAlignment="Left" Margin="52,35,0,0" VerticalAlignment="Top"/>
         <Label Content="Пароль:" HorizontalAlignment="Left" Margin="52,63,0,0" VerticalAlignment="Top"/>
         <Button Command="{Binding SettingsCommand}" HorizontalAlignment="Left" Margin="237,106,0,0" VerticalAlignment="Top" Height="27" Width="29">
-            <Image Source="../Resources/gear.png"/>
+            <Image Source="../../Resources/gear.png"/>
         </Button>
 
     </Grid>

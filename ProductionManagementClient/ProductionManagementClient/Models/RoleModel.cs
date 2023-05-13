@@ -35,5 +35,10 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

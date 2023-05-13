@@ -14,19 +14,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views.Menus
+namespace ProductionManagementClient.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AdminMainWin.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class AdminMainWin : Window
+    public partial class LoginWin : Window
     {
-        public AdminMainWin()
+        public LoginWin()
         {
             InitializeComponent();
-            DataContext = new AdminMainViewModel(new HttpApiClient(), new WindowService());
+
+            DataContext = new LoginViewModel(new HttpApiClient(), new WindowService());
         }
     }
 }

@@ -35,7 +35,24 @@ namespace BusinessLogic.Services
 
         public UserDto GetUserByLogin(string login)
         {
-            return _mapper.Map<UserDto>(_repository.Get(u => u.Login == login).First());
+            return _mapper.Map<UserDto>(_repository.Get(u => u.Login == login, null, "Role,Employee").First());
+        }
+
+        public new List<UserDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        {
+            var type = typeof(User);
+            var sortParameterProperty = type.GetProperty(sortParameter);
+            if (sortDirection == "asc")
+            {
+                return _mapper.Map<List<UserDto>>(_repository.Get(null, null, "Role,Employee")
+                    .OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
+            }
+            else
+            {
+                return _mapper.Map<List<UserDto>>(_repository.Get(null, null, "Role,Employee")
+                    .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
+            }
+
         }
     }
 }

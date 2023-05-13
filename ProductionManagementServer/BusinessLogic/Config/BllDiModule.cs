@@ -19,6 +19,7 @@ namespace BusinessLogic.Config
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IEmployeeService, EmployeeService>();
             service.AddScoped<IRoleService, RoleService>();
+            service.AddScoped<ICounteragentService, CounteragentService>();
         }
     }
 }

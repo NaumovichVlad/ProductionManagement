@@ -1,5 +1,4 @@
-﻿using ProductionManagementClient.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views
+namespace ProductionManagementClient.Views.Counteragents
 {
     /// <summary>
-    /// Логика взаимодействия для SettingsWin.xaml
+    /// Логика взаимодействия для CounteragentsEditWin.xaml
     /// </summary>
-    public partial class SettingsWin : Window
+    public partial class CounteragentsEditWin : Window
     {
-        public SettingsWin()
+        public CounteragentsEditWin()
         {
             InitializeComponent();
-
-            DataContext = new SettingsViewModel();
         }
     }
 }

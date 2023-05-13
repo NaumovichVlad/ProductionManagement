@@ -30,7 +30,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\EmployeesEditWin.xaml.cs">
+    <Compile Update="Views\Employees\EmployeesEditWin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

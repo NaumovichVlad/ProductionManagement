@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EmployeesCreateViewModel}"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels"
         mc:Ignorable="d"
-        Title="Редактирование данных о сотрудниках" Height="346" Width="353">
+        Title="Редактирование данных о сотрудниках" Height="346" Width="353" ResizeMode="NoResize">
     <Grid>
         <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="32,23,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="105,27,0,0" TextWrapping="Wrap" Text="{Binding Model.Surname}" VerticalAlignment="Top" Width="199"/>

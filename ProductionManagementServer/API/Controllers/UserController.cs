@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using AutoMapper;
+using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,25 +14,19 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IRoleService roleService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
-            _roleService = roleService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ActionName("all")]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
-            var items = _userService.GetList().Select(u => new UserModel
-            {
-                Login = u.Login,
-                Password = u.Password,
-                Role = _roleService.GetById(u.RoleId).Name
-            }).ToList();
+            var items = _mapper.Map<List<UserModel>>(_userService.GetList());
 
             return await Task.FromResult(items);
         }
@@ -43,6 +38,48 @@ namespace API.Controllers
             var roles = _mapper.Map<List<UserModel>>(_userService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
+        }
+
+        [HttpPost]
+        [ActionName("insert")]
+        public async Task<IActionResult> Insert([FromBody] UserModel model)
+        {
+            _userService.Insert(_mapper.Map<UserDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpPut]
+        [ActionName("edit")]
+        public async Task<IActionResult> Edit([FromBody] UserModel model)
+        {
+            _userService.Edit(_mapper.Map<UserDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("get")]
+        public async Task<ActionResult<UserModel>> GetById(int id)
+        {
+            var model = _mapper.Map<UserModel>(_userService.GetById(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpDelete("{id}")]
+        [ActionName("remove")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _userService.Delete(id);
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
         }
     }
 }

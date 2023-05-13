@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using AutoMapper;
+using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +37,48 @@ namespace API.Controllers
             var roles = _mapper.Map<List<RoleModel>>(_roleService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
+        }
+
+        [HttpPost]
+        [ActionName("insert")]
+        public async Task<IActionResult> Insert([FromBody] RoleModel model)
+        {
+            _roleService.Insert(_mapper.Map<RoleDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpPut]
+        [ActionName("edit")]
+        public async Task<IActionResult> Edit([FromBody] RoleModel model)
+        {
+            _roleService.Edit(_mapper.Map<RoleDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("get")]
+        public async Task<ActionResult<RoleModel>> GetById(int id)
+        {
+            var model = _mapper.Map<RoleModel>(_roleService.GetById(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpDelete("{id}")]
+        [ActionName("remove")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _roleService.Delete(id);
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
         }
     }
 }

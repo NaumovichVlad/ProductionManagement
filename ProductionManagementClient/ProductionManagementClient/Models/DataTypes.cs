@@ -10,6 +10,7 @@ namespace ProductionManagementClient.Models
     {
         Users,
         Employees,
-        Roles
+        Roles,
+        Counteragents
     }
 }

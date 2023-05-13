@@ -29,7 +29,7 @@ namespace BusinessLogic.Services
 
         public List<TDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var type = typeof(Employee);
+            var type = typeof(T);
             var sortParameterProperty = type.GetProperty(sortParameter);
             if (sortDirection == "asc")
             {

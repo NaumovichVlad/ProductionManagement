@@ -19,7 +19,7 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ProductionManagementClient.ViewModels
+namespace ProductionManagementClient.ViewModels.Menus
 {
     public class LoginViewModel : ViewModelBase
     {
@@ -49,7 +49,7 @@ namespace ProductionManagementClient.ViewModels
                     {
                         var responce = _client.Post(User, "login/autorize").Result;
 
-                        if (responce.StatusCode == HttpStatusCode.OK) 
+                        if (responce.StatusCode == HttpStatusCode.OK)
                         {
                             ApiConnection.Token = JsonNode.Parse(responce.Content.ReadAsStringAsync().Result)["token"].ToString();
                             ApiConnection.User = GetUser();
@@ -57,7 +57,7 @@ namespace ProductionManagementClient.ViewModels
                             ((Window)obj).Close();
                         }
                     }));
-                
+
             }
         }
 
@@ -83,7 +83,7 @@ namespace ProductionManagementClient.ViewModels
 
         private void OpenMainWindow()
         {
-            switch (ApiConnection.User.Role) 
+            switch (ApiConnection.User.RoleName)
             {
                 case "admin":
                     _windowService.ShowWindow<AdminMainWin>();
@@ -96,7 +96,10 @@ namespace ProductionManagementClient.ViewModels
             _client = client;
             _windowService = windowService;
             _user = new UserModel();
-            _user.Role = "empty";
+            _user.RoleName = "empty";
+            _user.EmployeeSurname = "empty";
+            _user.EmployeeName = "empty";
+            _user.EmployeeMiddleName = "empty";
         }
     }
 }

@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Models
 {
-    public class EmployeeModel : ModelBase
+    public class CounteragentModel : ModelBase
     {
         private int _id;
-        private string _surname;
         private string _name;
-        private string _middleName;
-        private string _passportNumber;
+        private int _inn;
+        private int _accountNumber;
         private string _address;
+        private int _postalCode;
         private string _phoneNumber;
+        private string _registrationCountry;
 
-        public int Id
-        {
+        public int Id 
+        { 
             get => _id;
             set
             {
@@ -25,17 +26,9 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string Surname 
+
+        public string Name 
         { 
-            get => _surname;
-            set
-            {
-                _surname = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Name
-        {
             get => _name;
             set
             {
@@ -44,26 +37,28 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string MiddleName
+        public int Inn
         {
-            get => _middleName;
+            get => _inn;
             set
             {
-                _middleName = value;
+                _inn = value;
                 OnPropertyChanged();
             }
         }
-        public string PassportNumber
+
+        public int AccountNumber
         {
-            get => _passportNumber;
+            get => _accountNumber;
             set
             {
-                _passportNumber = value;
+                _accountNumber = value;
                 OnPropertyChanged();
             }
         }
-        public string Address
-        {
+
+        public string Address 
+        { 
             get => _address;
             set
             {
@@ -71,8 +66,19 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string PhoneNumber
+
+        public int PostalCode
         {
+            get => _postalCode;
+            set
+            {
+                _postalCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PhoneNumber 
+        { 
             get => _phoneNumber;
             set
             {
@@ -81,9 +87,19 @@ namespace ProductionManagementClient.Models
             }
         }
 
+        public string RegistrationCountry 
+        { 
+            get => _registrationCountry;
+            set
+            {
+                _registrationCountry = value;
+                OnPropertyChanged();
+            }
+        }
+
         public override string ToString()
         {
-            return $"{Surname} {Name.First()}. {MiddleName.First()}.";
+            return Name;
         }
     }
 }

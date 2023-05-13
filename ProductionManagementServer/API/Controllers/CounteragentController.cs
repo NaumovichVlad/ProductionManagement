@@ -1,5 +1,4 @@
-﻿using API.Jwt;
-using API.Models;
+﻿using API.Models;
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
@@ -9,54 +8,54 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("employee/[action]")]
+    [Route("counteragent/[action]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-    public class EmployeeController : ControllerBase
+    public class CounteragentController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly ICounteragentService _counteragentService;
         private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
+        public CounteragentController(ICounteragentService counteragentService, IMapper mapper)
         {
-            _employeeService = employeeService;
+            _counteragentService = counteragentService;
             _mapper = mapper;
         }
 
         [HttpGet]
         [ActionName("all")]
-        public async Task<ActionResult<IEnumerable<EmployeeModel>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<CounteragentModel>>> GetEmployees()
         {
-            var items = _mapper.Map<List<EmployeeModel>>(_employeeService.GetList());
+            var items = _mapper.Map<List<CounteragentModel>>(_counteragentService.GetList());
 
             return await Task.FromResult(items);
         }
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<EmployeeModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<CounteragentModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var roles = _mapper.Map<List<EmployeeModel>>(_employeeService.GetSelection(start, size, sortDirection, sortParameter));
+            var roles = _mapper.Map<List<CounteragentModel>>(_counteragentService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
         }
 
         [HttpPost]
         [ActionName("insert")]
-        public async Task<IActionResult> Insert([FromBody] EmployeeModel model)
+        public async Task<IActionResult> Insert([FromBody] CounteragentModel model)
         {
-            _employeeService.Insert(_mapper.Map<EmployeeDto>(model));
+            _counteragentService.Insert(_mapper.Map<CounteragentDto>(model));
 
             var response = Ok(new { Message = "Success" });
-            
+
             return response;
         }
 
         [HttpPut]
         [ActionName("edit")]
-        public async Task<IActionResult> Edit([FromBody] EmployeeModel model)
+        public async Task<IActionResult> Edit([FromBody] CounteragentModel model)
         {
-            _employeeService.Edit(_mapper.Map<EmployeeDto>(model));
+            _counteragentService.Edit(_mapper.Map<CounteragentDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -65,9 +64,9 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [ActionName("get")]
-        public async Task<ActionResult<EmployeeModel>> GetById(int id)
+        public async Task<ActionResult<CounteragentModel>> GetById(int id)
         {
-            var model = _mapper.Map<EmployeeModel>(_employeeService.GetById(id));
+            var model = _mapper.Map<CounteragentModel>(_counteragentService.GetById(id));
 
             return new ObjectResult(model);
         }
@@ -76,9 +75,7 @@ namespace API.Controllers
         [ActionName("remove")]
         public async Task<IActionResult> Delete(int id)
         {
-           
-            _employeeService.Delete(id);
-
+            _counteragentService.Delete(id);
 
             var response = Ok(new { Message = "Success" });
 
