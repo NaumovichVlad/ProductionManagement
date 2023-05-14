@@ -8,10 +8,6 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
 {
-    public interface ISalaryService
-    {
-        List<SalaryDto> GetList();
-        List<SalaryDto> GetByEmployee(int employeeId);
-        List<SalaryDto> GetByDate(DateTime startDate, DateTime endDate, Employee employee);
-    }
+    public interface ISalaryService : IService<SalaryDto>
+    { }
 }

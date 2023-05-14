@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccess.Interfaces;
+﻿using BusinessLogic.Dtos;
 
-namespace DataAccess.Entities
+namespace API.Models
 {
-    public class MaterialOrder : IEntity
+    public class MaterialOrderModel
     {
         public int Id { get; set; }
         public string OrderNumber { get; set; }
@@ -18,7 +12,7 @@ namespace DataAccess.Entities
         public DateTime ManufactureDate { get; set; }
         public string ManufactureCountry { get; set; }
         public int CounteragentId { get; set; }
-        public Counteragent Counteragent { get; set; }
-        public Material Material { get; set; }
+        public string MaterialName { get; set; }
+        public string CounteragentName { get; set; }
     }
 }

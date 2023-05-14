@@ -32,7 +32,7 @@ namespace API.Controllers
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<RoleModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<RoleModel>>> GetRoleSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var roles = _mapper.Map<List<RoleModel>>(_roleService.GetSelection(start, size, sortDirection, sortParameter));
 
@@ -41,7 +41,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ActionName("insert")]
-        public async Task<IActionResult> Insert([FromBody] RoleModel model)
+        public async Task<IActionResult> InsertRole([FromBody] RoleModel model)
         {
             _roleService.Insert(_mapper.Map<RoleDto>(model));
 
@@ -52,7 +52,7 @@ namespace API.Controllers
 
         [HttpPut]
         [ActionName("edit")]
-        public async Task<IActionResult> Edit([FromBody] RoleModel model)
+        public async Task<IActionResult> EditRole([FromBody] RoleModel model)
         {
             _roleService.Edit(_mapper.Map<RoleDto>(model));
 
@@ -63,7 +63,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [ActionName("get")]
-        public async Task<ActionResult<RoleModel>> GetById(int id)
+        public async Task<ActionResult<RoleModel>> GetRoleById(int id)
         {
             var model = _mapper.Map<RoleModel>(_roleService.GetById(id));
 
@@ -72,7 +72,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ActionName("remove")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteRole(int id)
         {
             _roleService.Delete(id);
 

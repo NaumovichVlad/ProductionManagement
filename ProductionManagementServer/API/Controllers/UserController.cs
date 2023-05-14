@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<UserModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<UserModel>>> GetUsersSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var roles = _mapper.Map<List<UserModel>>(_userService.GetSelection(start, size, sortDirection, sortParameter));
 
@@ -42,7 +42,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ActionName("insert")]
-        public async Task<IActionResult> Insert([FromBody] UserModel model)
+        public async Task<IActionResult> InsertUser([FromBody] UserModel model)
         {
             _userService.Insert(_mapper.Map<UserDto>(model));
 
@@ -53,7 +53,7 @@ namespace API.Controllers
 
         [HttpPut]
         [ActionName("edit")]
-        public async Task<IActionResult> Edit([FromBody] UserModel model)
+        public async Task<IActionResult> EditUser([FromBody] UserModel model)
         {
             _userService.Edit(_mapper.Map<UserDto>(model));
 
@@ -64,7 +64,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [ActionName("get")]
-        public async Task<ActionResult<UserModel>> GetById(int id)
+        public async Task<ActionResult<UserModel>> GetUserById(int id)
         {
             var model = _mapper.Map<UserModel>(_userService.GetById(id));
 
@@ -73,7 +73,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ActionName("remove")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             _userService.Delete(id);
 

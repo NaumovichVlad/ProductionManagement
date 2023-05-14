@@ -11,39 +11,27 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class SalaryService : ISalaryService
+    public class SalaryService : Service<Salary, SalaryDto>, ISalaryService
     {
-        private readonly IRepository<Salary> _salaryRepository;
-        private readonly IMapper _mapper;
+        public SalaryService(IRepository<Salary> employeeRepository, IMapper mapper) 
+            : base(employeeRepository, mapper)
+        { }
 
-        public SalaryService(IRepository<Salary> salaryRepository, IMapper mapper)
+        public new List<SalaryDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            _salaryRepository = salaryRepository;
-            _mapper = mapper;
-        }
-
-        public List<SalaryDto> GetList()
-        {
-            return _mapper.Map<List<SalaryDto>>(_salaryRepository.GetWithInclude(s => s.Employee).ToList());
-        }
-
-        public List<SalaryDto> GetByEmployee(int employeeId)
-        {
-            return _mapper.Map<List<SalaryDto>>(_salaryRepository.Get(s => s.EmployeeId == employeeId));
-        }
-
-        public List<SalaryDto> GetByDate(DateTime startDate, DateTime endDate, Employee employee = null)
-        {
-            if (employee != null)
+            var type = typeof(Salary);
+            var sortParameterProperty = type.GetProperty(sortParameter);
+            if (sortDirection == "asc")
             {
-                return _mapper.Map<List<SalaryDto>>(_salaryRepository.Get(
-                    s => s.EmployeeId == employee.Id && s.PaymentDate >= startDate && s.PaymentDate <= endDate));
+                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, null, "Employee")
+                    .OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
             else
             {
-                return _mapper.Map<List<SalaryDto>>(_salaryRepository.Get(
-                    s => s.PaymentDate >= startDate && s.PaymentDate <= endDate));
+                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, null, "Employee")
+                    .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
+
         }
     }
 }

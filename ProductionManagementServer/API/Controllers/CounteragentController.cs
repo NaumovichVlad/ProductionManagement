@@ -24,7 +24,7 @@ namespace API.Controllers
 
         [HttpGet]
         [ActionName("all")]
-        public async Task<ActionResult<IEnumerable<CounteragentModel>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<CounteragentModel>>> GetCounteragents()
         {
             var items = _mapper.Map<List<CounteragentModel>>(_counteragentService.GetList());
 
@@ -33,7 +33,7 @@ namespace API.Controllers
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<CounteragentModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<CounteragentModel>>> GetCounteragentSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var roles = _mapper.Map<List<CounteragentModel>>(_counteragentService.GetSelection(start, size, sortDirection, sortParameter));
 
@@ -42,7 +42,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ActionName("insert")]
-        public async Task<IActionResult> Insert([FromBody] CounteragentModel model)
+        public async Task<IActionResult> InsertCounteragent([FromBody] CounteragentModel model)
         {
             _counteragentService.Insert(_mapper.Map<CounteragentDto>(model));
 
@@ -53,7 +53,7 @@ namespace API.Controllers
 
         [HttpPut]
         [ActionName("edit")]
-        public async Task<IActionResult> Edit([FromBody] CounteragentModel model)
+        public async Task<IActionResult> EditCounteragent([FromBody] CounteragentModel model)
         {
             _counteragentService.Edit(_mapper.Map<CounteragentDto>(model));
 
@@ -64,7 +64,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [ActionName("get")]
-        public async Task<ActionResult<CounteragentModel>> GetById(int id)
+        public async Task<ActionResult<CounteragentModel>> GetCounteragentById(int id)
         {
             var model = _mapper.Map<CounteragentModel>(_counteragentService.GetById(id));
 
@@ -73,7 +73,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ActionName("remove")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteCounteragent(int id)
         {
             _counteragentService.Delete(id);
 

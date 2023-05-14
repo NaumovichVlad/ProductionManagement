@@ -34,7 +34,7 @@ namespace API.Controllers
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("all/select")]
-        public async Task<ActionResult<List<EmployeeModel>>> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<EmployeeModel>>> GetEmployeesSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var roles = _mapper.Map<List<EmployeeModel>>(_employeeService.GetSelection(start, size, sortDirection, sortParameter));
 
@@ -43,7 +43,7 @@ namespace API.Controllers
 
         [HttpPost]
         [ActionName("insert")]
-        public async Task<IActionResult> Insert([FromBody] EmployeeModel model)
+        public async Task<IActionResult> InsertEmployee([FromBody] EmployeeModel model)
         {
             _employeeService.Insert(_mapper.Map<EmployeeDto>(model));
 
@@ -54,7 +54,7 @@ namespace API.Controllers
 
         [HttpPut]
         [ActionName("edit")]
-        public async Task<IActionResult> Edit([FromBody] EmployeeModel model)
+        public async Task<IActionResult> EditEmployee([FromBody] EmployeeModel model)
         {
             _employeeService.Edit(_mapper.Map<EmployeeDto>(model));
 
@@ -65,7 +65,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         [ActionName("get")]
-        public async Task<ActionResult<EmployeeModel>> GetById(int id)
+        public async Task<ActionResult<EmployeeModel>> GetEmployeeById(int id)
         {
             var model = _mapper.Map<EmployeeModel>(_employeeService.GetById(id));
 
@@ -74,7 +74,7 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         [ActionName("remove")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteEmployee(int id)
         {
            
             _employeeService.Delete(id);

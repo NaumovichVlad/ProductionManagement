@@ -217,6 +217,7 @@ namespace DbDeployment
                 var entity = new MaterialOrder();
 
                 entity.Id = i + 1;
+                entity.OrderNumber = _random.Next(10000000, 99999999).ToString();
                 entity.ManufactureDate = GetRandomDate(2010, 1, 1);
                 entity.MaterialId = _random.Next(1, _secondCount - 1);
                 entity.Price = _random.Next(1000, 10000);

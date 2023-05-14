@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class ProductsReversesRepository : Repository<ProductsReserve>
+    public class ProductsReservesRepository : Repository<ProductsReserve>
     {
-        public ProductsReversesRepository(ProductionManagementDbContext context) : base(context)
+        public ProductsReservesRepository(ProductionManagementDbContext context) : base(context)
         { }
     }
 }

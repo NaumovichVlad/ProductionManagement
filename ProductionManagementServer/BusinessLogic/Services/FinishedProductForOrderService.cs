@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Dtos;
+using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
 using System;
