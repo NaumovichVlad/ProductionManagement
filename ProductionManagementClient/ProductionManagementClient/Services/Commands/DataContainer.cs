@@ -1,6 +1,8 @@
 ﻿using ProductionManagementClient.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace ProductionManagementClient.Services
             set
             {
                 _table = value;
+
+                _table.AcceptChanges();
                 OnPropertyChanged();
             }
         }
@@ -40,5 +44,6 @@ namespace ProductionManagementClient.Services
         public int PageSize { get => pageSize; set => pageSize = value; }
         public string SortParam { get => sortParam; set => sortParam = value; }
         public string SortDirection { get => sortDirection; set => sortDirection = value; }
+
     }
 }

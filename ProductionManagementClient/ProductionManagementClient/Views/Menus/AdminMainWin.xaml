@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" d:DataContext="{d:DesignInstance Type=menus:AdminMainViewModel}"
         mc:Ignorable="d"
         Title="Окно администратора" Height="450" Width="800">
     <Grid>
@@ -14,6 +14,12 @@
                     <TreeViewItem Name="Roles" Header="Роли" />
                     <TreeViewItem Name="Employees" Header="Сотрудники" />
                     <TreeViewItem Name="Counteragents" Header="Контрагенты" />
+                    <TreeViewItem Name="StoragePlaces" Header="Склады" />
+                    <TreeViewItem Name="Salaries" Header="Зарплаты" />
+                    <TreeViewItem Name="Products" Header="Изделия" />
+                    <TreeViewItem Name="Materials" Header="Материалы" />
+                    <TreeViewItem Name="MaterialOrders" Header="Заказы материалов" />
+                    <TreeViewItem Name="MaterialReserves" Header="Материалы на складе" />
                 </TreeViewItem>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
@@ -25,7 +31,7 @@
             </TreeView>
         </Grid>
         <Grid Margin="223,0,0,0" HorizontalAlignment="Left" Width="577">
-            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True"  Margin="22,60,0,0" HorizontalAlignment="Left" Width="524" Height="292" VerticalAlignment="Top">
+            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}"  AutoGenerateColumns="True"  Margin="22,31,0,0" HorizontalAlignment="Left" Width="524" Height="321" VerticalAlignment="Top">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Sorting">
                         <i:InvokeCommandAction 
@@ -34,8 +40,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
-            <TextBox HorizontalAlignment="Left" Margin="250,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Height="20"/>
-            <Button Content="Поиск" HorizontalAlignment="Left" Margin="498,25,0,0" VerticalAlignment="Top" Width="48"/>
             <Button Command="{Binding PreviousPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Предыдущая" Margin="326,372,0,0" HorizontalAlignment="Left" Width="86" Height="20" VerticalAlignment="Top"/>
             <Button Content="{Binding PageIndex}" Margin="423,372,0,0" HorizontalAlignment="Left" Width="27" Height="20" VerticalAlignment="Top"/>
             <Button Command="{Binding NextPageCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTreeView}" Content="Следующая" Margin="460,372,0,0" HorizontalAlignment="Left" Width="86" Height="20" VerticalAlignment="Top"/>

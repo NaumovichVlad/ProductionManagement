@@ -5,7 +5,11 @@ using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Counteragents;
+using ProductionManagementClient.Views.Materials;
+using ProductionManagementClient.Views.Products;
 using ProductionManagementClient.Views.Roles;
+using ProductionManagementClient.Views.Salaries;
+using ProductionManagementClient.Views.StoragePlaces;
 using ProductionManagementClient.Views.Users;
 using System;
 using System.Collections.Generic;
@@ -59,7 +63,6 @@ namespace ProductionManagementClient.ViewModels.Menus
         public AdminMainViewModel(IApiClient client, IWindowService windowService)
         {
             _client = client;
-            _dataContainer = new DataContainer();
             _windowService = windowService;
             _dataType = DataTypes.Users;
 
@@ -193,24 +196,46 @@ namespace ProductionManagementClient.ViewModels.Menus
             switch (_dataType)
             {
                 case DataTypes.Roles:
-                    _dataContainer.Table = CreateRoleTable(_client.Get<List<RoleModel>>(
+                    DataContainer.Table = CreateRoleTable(_client.Get<List<RoleModel>>(
                         $"role/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
                 case DataTypes.Users:
-                    _dataContainer.Table = CreateUserTable(_client.Get<List<UserModel>>(
+                    DataContainer.Table = CreateUserTable(_client.Get<List<UserModel>>(
                         $"user/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
                 case DataTypes.Employees:
-                    _dataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>(
+                    DataContainer.Table = CreateEmployeeTable(_client.Get<List<EmployeeModel>>(
                         $"employee/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
                 case DataTypes.Counteragents:
-                    _dataContainer.Table = CreateCounteragentTable(_client.Get<List<CounteragentModel>>(
+                    DataContainer.Table = CreateCounteragentTable(_client.Get<List<CounteragentModel>>(
                         $"counteragent/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
+                case DataTypes.StoragePlaces:
+                    DataContainer.Table = CreateStoragePlaceTable(_client.Get<List<StoragePlaceModel>>(
+                        $"storagePlace/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Materials:
+                    DataContainer.Table = CreateMaterialTable(_client.Get<List<MaterialModel>>(
+                        $"material/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Products:
+                    DataContainer.Table = CreateProductTable(_client.Get<List<ProductModel>>(
+                        $"product/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.MaterialOrders:
+                    DataContainer.Table = CreateMaterialOrderTable(_client.Get<List<MaterialOrderModel>>(
+                        $"material/order/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.MaterialReserves:
+                    DataContainer.Table = CreateMaterialReserveTable(_client.Get<List<MaterialReserveModel>>(
+                        $"material/reserve/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Salaries:
+                    DataContainer.Table = CreateSalaryTable(_client.Get<List<SalaryModel>>(
+                        $"salary/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
             }
-
-            
         }
 
         private void EditServerEntity(object id)
@@ -218,16 +243,34 @@ namespace ProductionManagementClient.ViewModels.Menus
             switch (_dataType)
             {
                 case DataTypes.Employees:
-                    _windowService.ShowWindow<EmployeesEditWin>(id);
+                    _windowService.ShowWindowDialog<EmployeesEditWin>(id);
                     break;
                 case DataTypes.Roles:
-                    _windowService.ShowWindow<RolesEditWin>(id);
+                    _windowService.ShowWindowDialog<RolesEditWin>(id);
                     break;
                 case DataTypes.Users:
-                    _windowService.ShowWindow<UsersEditWin>(id);
+                    _windowService.ShowWindowDialog<UsersEditWin>(id);
                     break;
                 case DataTypes.Counteragents:
-                    _windowService.ShowWindow<CounteragentsEditWin>(id);
+                    _windowService.ShowWindowDialog<CounteragentsEditWin>(id);
+                    break;
+                case DataTypes.StoragePlaces:
+                    _windowService.ShowWindowDialog<StoragePlacesEditWin>(id);
+                    break;
+                case DataTypes.Products:
+                    _windowService.ShowWindowDialog<ProductsEditWin>(id);
+                    break;
+                case DataTypes.Materials:
+                    _windowService.ShowWindowDialog<MaterialsEditWin>(id);
+                    break;
+                case DataTypes.MaterialOrders:
+                    _windowService.ShowWindowDialog<MaterialOrderEditWin>(id);
+                    break;
+                case DataTypes.MaterialReserves:
+                    _windowService.ShowWindowDialog<MaterialReserveEditWin>(id);
+                    break;
+                case DataTypes.Salaries:
+                    _windowService.ShowWindowDialog<SalariesEditWin>(id);
                     break;
             }
         }
@@ -237,16 +280,34 @@ namespace ProductionManagementClient.ViewModels.Menus
             switch (_dataType)
             {
                 case DataTypes.Employees:
-                    _windowService.ShowWindow<EmployeesCreateWin>();
+                    _windowService.ShowWindowDialog<EmployeesCreateWin>();
                     break;
                 case DataTypes.Roles:
-                    _windowService.ShowWindow<RolesCreateWin>();
+                    _windowService.ShowWindowDialog<RolesCreateWin>();
                     break;
                 case DataTypes.Users:
-                    _windowService.ShowWindow<UsersCreateWin>();
+                    _windowService.ShowWindowDialog<UsersCreateWin>();
                     break;
                 case DataTypes.Counteragents:
-                    _windowService.ShowWindow<CounteragentsCreateWin>();
+                    _windowService.ShowWindowDialog<CounteragentsCreateWin>();
+                    break;
+                case DataTypes.StoragePlaces:
+                    _windowService.ShowWindowDialog<StoragePlacesCreateWin>();
+                    break;
+                case DataTypes.Products:
+                    _windowService.ShowWindowDialog<ProductsCreateWin>();
+                    break;
+                case DataTypes.Materials:
+                    _windowService.ShowWindowDialog<MaterialsCreateWin>();
+                    break;
+                case DataTypes.MaterialOrders:
+                    _windowService.ShowWindowDialog<MaterialOrderCreateWin>();
+                    break;
+                case DataTypes.MaterialReserves:
+                    _windowService.ShowWindowDialog<MaterialReserveCreateWin>();
+                    break;
+                case DataTypes.Salaries:
+                    _windowService.ShowWindowDialog<SalariesCreateWin>();
                     break;
             }
         }
@@ -267,6 +328,24 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Counteragents:
                     _client.Delete($"counteragent/remove/{id}");
                     break;
+                case DataTypes.StoragePlaces:
+                    _client.Delete($"storagePlace/remove/{id}");
+                    break;
+                case DataTypes.Products:
+                    _client.Delete($"product/remove/{id}");
+                    break;
+                case DataTypes.Materials:
+                    _client.Delete($"material/remove/{id}");
+                    break;
+                case DataTypes.MaterialOrders:
+                    _client.Delete($"material/order/remove/{id}");
+                    break;
+                case DataTypes.MaterialReserves:
+                    _client.Delete($"material/reserve/remove/{id}");
+                    break;
+                case DataTypes.Salaries:
+                    _client.Delete($"salary/remove/{id}");
+                    break;
             }
         }
 
@@ -274,9 +353,12 @@ namespace ProductionManagementClient.ViewModels.Menus
         {
             PageIndex = 1;
 
-            _dataContainer.PageNumber = 1;
-            _dataContainer.SortDirection = "asc";
-            _dataContainer.SortParam = "Id";
+            DataContainer = new DataContainer();
+
+            DataContainer.DataType = _dataType;
+            DataContainer.PageNumber = 1;
+            DataContainer.SortDirection = "asc";
+            DataContainer.SortParam = "Id";
 
             GetServerEntities();
         }
@@ -460,6 +542,230 @@ namespace ProductionManagementClient.ViewModels.Menus
                 newRow[addressNameColumn] = model.Address;
                 newRow[phoneColumn] = model.PhoneNumber;
                 newRow[registrationCountryColumn] = model.RegistrationCountry;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateStoragePlaceTable(List<StoragePlaceModel> models)
+        {
+            var table = new DataTable();
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var nameColumn = new DataColumn("Название");
+            nameColumn.Caption = "Name";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(nameColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[nameColumn] = model.Name;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialTable(List<MaterialModel> models)
+        {
+            var table = new DataTable();
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var nameColumn = new DataColumn("Название");
+            nameColumn.Caption = "Name";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(nameColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[nameColumn] = model.Name;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateProductTable(List<ProductModel> models)
+        {
+            var table = new DataTable();
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var nameColumn = new DataColumn("Название");
+            nameColumn.Caption = "Name";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(nameColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[nameColumn] = model.Name;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialOrderTable(List<MaterialOrderModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Номер заказа");
+            numberColumn.Caption = "OrderNumber";
+
+            var counteragentColumn = new DataColumn("Контерагент");
+            counteragentColumn.Caption = "CounteragentName";
+
+            var materialColumn = new DataColumn("Материал");
+            materialColumn.Caption = "MaterialName";
+
+            var dateColumn = new DataColumn("Дата изготовления");
+            dateColumn.Caption = "ManufactureDate";
+
+            var countryColumn = new DataColumn("Страна производства");
+            countryColumn.Caption = "ManufactureCountry";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+            var priceColumn = new DataColumn("Стоимость");
+            priceColumn.Caption = "Price";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(counteragentColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(dateColumn);
+            table.Columns.Add(countryColumn);
+            table.Columns.Add(countColumn);
+            table.Columns.Add(priceColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.OrderNumber;
+                newRow[counteragentColumn] = model.CounteragentName;
+                newRow[materialColumn] = model.MaterialName;
+                newRow[dateColumn] = model.ManufactureDate;
+                newRow[countryColumn] = model.ManufactureCountry;
+                newRow[countColumn] = model.Count;
+                newRow[priceColumn] = model.Price;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialReserveTable(List<MaterialReserveModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Номер заказа");
+            numberColumn.Caption = "MaterialOrderNumber";
+
+            var storagePlaceColumn = new DataColumn("Склад");
+            storagePlaceColumn.Caption = "StoraPlaceName";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(storagePlaceColumn);
+            table.Columns.Add(countColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.MaterialOrderNumber;
+                newRow[storagePlaceColumn] = model.StoragePlaceName;
+                newRow[countColumn] = model.Count;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateSalaryTable(List<SalaryModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var accruedColumn = new DataColumn("Начислено");
+            accruedColumn.Caption = "Accrued";
+
+            var toBePaidColumn = new DataColumn("К выплате");
+            toBePaidColumn.Caption = "ToBePaid";
+
+            var paidColumn = new DataColumn("Выплачено");
+            paidColumn.Caption = "Paid";
+
+            var dateColumn = new DataColumn("Дата выплаты");
+            dateColumn.Caption = "PaymentDate";
+
+            var surnameColumn = new DataColumn("Фамилия");
+            surnameColumn.Caption = "Surname";
+
+            var nameColumn = new DataColumn("Имя");
+            nameColumn.Caption = "Name";
+
+            var middleNameColumn = new DataColumn("Отчество");
+            middleNameColumn.Caption = "MiddleName";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(accruedColumn);
+            table.Columns.Add(toBePaidColumn);
+            table.Columns.Add(paidColumn);
+            table.Columns.Add(dateColumn);
+            table.Columns.Add(surnameColumn);
+            table.Columns.Add(nameColumn);
+            table.Columns.Add(middleNameColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[accruedColumn] = model.Accrued;
+                newRow[toBePaidColumn] = model.ToBePaid;
+                newRow[paidColumn] = model.Paid;
+                newRow[dateColumn] = model.PaymentDate;
+                newRow[surnameColumn] = model.EmployeeSurname;
+                newRow[nameColumn] = model.EmployeeName;
+                newRow[middleNameColumn] = model.EmployeeMiddleName;
 
                 table.Rows.Add(newRow);
             }

@@ -76,7 +76,7 @@ namespace API.Controllers
         [ActionName("get")]
         public async Task<ActionResult<MaterialModel>> GetMaterialById(int id)
         {
-            var model = _mapper.Map<EmployeeModel>(_materialService.GetById(id));
+            var model = _mapper.Map<MaterialModel>(_materialService.GetById(id));
 
             return new ObjectResult(model);
         }

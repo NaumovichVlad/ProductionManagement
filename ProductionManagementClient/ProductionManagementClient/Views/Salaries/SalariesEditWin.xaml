@@ -1,0 +1,25 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Salaries.SalariesEditWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Salaries"
+        mc:Ignorable="d"
+        Title="Изменение данных о зарплатах" Height="281" Width="353" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Начислено" HorizontalAlignment="Left" Margin="32,23,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="130,27,0,0" TextWrapping="Wrap" Text="{Binding Model.Accrued}" VerticalAlignment="Top" Width="174"/>
+        <Label Content="К выплате:" HorizontalAlignment="Left" Margin="32,54,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="130,58,0,0" TextWrapping="Wrap" Text="{Binding Model.ToBePaid}" VerticalAlignment="Top" Width="174"/>
+        <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" HorizontalAlignment="Left" Margin="130,169,0,0" VerticalAlignment="Top" Width="175"/>
+        <Label Content="Сотрудник:" HorizontalAlignment="Left" Margin="33,167,0,0" VerticalAlignment="Top"/>
+        <Button Content="Назад" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="252,211,0,0" VerticalAlignment="Top" Width="53"/>
+        <Button Content="Подтвердить" Command="{Binding ConfirmCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="157,211,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label Content="Выплачено:" HorizontalAlignment="Left" Margin="32,87,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Model.Paid}" HorizontalAlignment="Left" Margin="130,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="174"/>
+        <DatePicker DataContext="{Binding Model.PaymentDate}" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Width="174"/>
+        <Label Content="Дата выплаты:" HorizontalAlignment="Left" Margin="32,125,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

@@ -22,12 +22,12 @@ namespace BusinessLogic.Services
             var sortParameterProperty = type.GetProperty(sortParameter);
             if (sortDirection == "asc")
             {
-                return _mapper.Map<List<MaterialOrderDto>>(_repository.Get(null, null, "Material, Counteragent")
+                return _mapper.Map<List<MaterialOrderDto>>(_repository.Get(null, null, "Material,Counteragent")
                     .OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
             else
             {
-                return _mapper.Map<List<MaterialOrderDto>>(_repository.Get(null, null, "Material, Counteragent")
+                return _mapper.Map<List<MaterialOrderDto>>(_repository.Get(null, null, "Material,Counteragent")
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
         }

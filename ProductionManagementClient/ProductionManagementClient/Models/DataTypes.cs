@@ -11,6 +11,12 @@ namespace ProductionManagementClient.Models
         Users,
         Employees,
         Roles,
-        Counteragents
+        Counteragents,
+        StoragePlaces,
+        Materials,
+        Products,
+        MaterialOrders,
+        MaterialReserves,
+        Salaries
     }
 }
