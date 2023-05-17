@@ -9,5 +9,7 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Interfaces
 {
     public interface ISalaryService : IService<SalaryDto>
-    { }
+    {
+        List<SalaryDto> GetByEmployee(int employeeId);
+    }
 }

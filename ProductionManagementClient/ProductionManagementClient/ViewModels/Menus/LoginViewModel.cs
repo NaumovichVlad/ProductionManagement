@@ -88,6 +88,9 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case "admin":
                     _windowService.ShowWindow<AdminMainWin>();
                     break;
+                case "hr":
+                    _windowService.ShowWindow<HrMainWin>();
+                    break;
             }
         }
 

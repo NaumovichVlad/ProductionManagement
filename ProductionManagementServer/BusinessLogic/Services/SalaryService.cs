@@ -23,15 +23,21 @@ namespace BusinessLogic.Services
             var sortParameterProperty = type.GetProperty(sortParameter);
             if (sortDirection == "asc")
             {
-                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, null, "Employee")
-                    .OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
+                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, l => l.OrderBy(r => sortParameterProperty.GetValue(r)), "Employee")
+                    .Skip(start).Take(size).ToList());
             }
             else
             {
-                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, null, "Employee")
-                    .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
+                return _mapper.Map<List<SalaryDto>>(_repository.Get(null, l => l.OrderByDescending(r => sortParameterProperty.GetValue(r)), "Employee")
+                    .Skip(start).Take(size).ToList());
             }
 
+        }
+
+        public List<SalaryDto> GetByEmployee(int employeeId) 
+        {
+            return _mapper.Map<List<SalaryDto>>(
+                _repository.Get(s => s.EmployeeId == employeeId, l => l.OrderByDescending(s => s.PaymentDate), "Employee"));
         }
     }
 }

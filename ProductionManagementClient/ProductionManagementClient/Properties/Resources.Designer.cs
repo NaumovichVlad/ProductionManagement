@@ -69,5 +69,45 @@ namespace ProductionManagementClient.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] pensil {
+            get {
+                object obj = ResourceManager.GetObject("pensil", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] plus {
+            get {
+                object obj = ResourceManager.GetObject("plus", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] trash {
+            get {
+                object obj = ResourceManager.GetObject("trash", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

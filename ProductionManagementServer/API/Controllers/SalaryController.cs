@@ -40,6 +40,15 @@ namespace API.Controllers
             return new ObjectResult(roles);
         }
 
+        [HttpGet("{id}")]
+        [ActionName("employee")]
+        public async Task<ActionResult<List<SalaryModel>>> GetSalariesByEmployee(int id)
+        {
+            var salaries = _mapper.Map<List<SalaryModel>>(_salaryService.GetByEmployee(id));
+
+            return new ObjectResult(salaries);
+        }
+
         [HttpPost]
         [ActionName("insert")]
         public async Task<IActionResult> InsertSalary([FromBody] SalaryModel model)

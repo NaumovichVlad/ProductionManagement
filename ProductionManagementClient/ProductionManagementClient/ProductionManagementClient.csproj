@@ -5,10 +5,19 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\gear.png" />
+    <None Remove="Resources\logo.ico" />
+    <None Remove="Resources\pensil.jpg" />
+    <None Remove="Resources\plus.png" />
+    <None Remove="Resources\trash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +31,10 @@
 
   <ItemGroup>
     <Resource Include="Resources\gear.png" />
+    <Resource Include="Resources\logo.ico" />
+    <Resource Include="Resources\pensil.jpg" />
+    <Resource Include="Resources\plus.png" />
+    <Resource Include="Resources\trash.png" />
   </ItemGroup>
 
   <ItemGroup>
