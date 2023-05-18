@@ -63,6 +63,16 @@ namespace ProductionManagementClient.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] Gear {
             get {
                 object obj = ResourceManager.GetObject("Gear", resourceCulture);

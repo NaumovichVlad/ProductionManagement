@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Products
 {
     public class ProductsCreateViewModel : CreateViewModel<ProductModel>
     {
-        public ProductsCreateViewModel(IApiClient client, IMessageBoxService messageBoxService)
+        public ProductsCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         { }
 

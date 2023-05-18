@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.Products
         {
             InitializeComponent();
 
-            DataContext = new ProductsCreateViewModel(new HttpApiClient(), new MessageBoxService());
+            DataContext = new ProductsCreateViewModel(new HttpApiClient(), new DialogService());
         }
     }
 }

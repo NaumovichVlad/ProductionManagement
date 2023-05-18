@@ -54,7 +54,7 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public UsersEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public UsersEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         {
             Employees = _client.Get<List<EmployeeModel>>("employee/all").Result;

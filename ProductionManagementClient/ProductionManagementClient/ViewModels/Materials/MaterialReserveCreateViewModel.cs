@@ -55,7 +55,7 @@ namespace ProductionManagementClient.ViewModels.Materials
             }
         }
 
-        public MaterialReserveCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) 
+        public MaterialReserveCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         {
             Orders = _client.Get<List<MaterialOrderModel>>("material/order/all").Result;

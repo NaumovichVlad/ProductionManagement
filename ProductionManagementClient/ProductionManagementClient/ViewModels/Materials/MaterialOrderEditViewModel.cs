@@ -60,7 +60,7 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public MaterialOrderEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public MaterialOrderEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         {
             Counteragents = _client.Get<List<CounteragentModel>>("counteragent/all").Result;

@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.StoragePlaces
         {
             InitializeComponent();
 
-            DataContext = new StoragePlacesEditViewModel(id.ToString(), new HttpApiClient(), new MessageBoxService());
+            DataContext = new StoragePlacesEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
         }
     }
 }

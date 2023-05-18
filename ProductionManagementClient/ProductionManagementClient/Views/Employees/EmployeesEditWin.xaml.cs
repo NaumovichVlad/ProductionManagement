@@ -28,7 +28,7 @@ namespace ProductionManagementClient.Views
         {
             InitializeComponent();
 
-            DataContext = new EmployeesEditViewModel(id.ToString(), new HttpApiClient(), new MessageBoxService());
+            DataContext = new EmployeesEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
         }
     }
 }

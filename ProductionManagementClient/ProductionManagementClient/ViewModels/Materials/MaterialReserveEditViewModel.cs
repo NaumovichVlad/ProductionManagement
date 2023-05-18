@@ -54,7 +54,7 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public MaterialReserveEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) : base(id, client, messageBoxService)
+        public MaterialReserveEditViewModel(string id, IApiClient client, IDialogService messageBoxService) : base(id, client, messageBoxService)
         {
             Orders = _client.Get<List<MaterialOrderModel>>("material/order/all").Result;
             StoragePlaces = _client.Get<List<StoragePlaceModel>>("storagePlace/all").Result;

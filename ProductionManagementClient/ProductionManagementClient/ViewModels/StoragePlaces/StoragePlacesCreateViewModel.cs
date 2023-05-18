@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.StoragePlaces
 {
     public class StoragePlacesCreateViewModel : CreateViewModel<StoragePlaceModel>
     {
-        public StoragePlacesCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) 
+        public StoragePlacesCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         { }
 

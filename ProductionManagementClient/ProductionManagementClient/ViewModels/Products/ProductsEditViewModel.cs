@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Products
 {
     public class ProductsEditViewModel : EditViewModel<ProductModel>
     {
-        public ProductsEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService)
+        public ProductsEditViewModel(string id, IApiClient client, IDialogService messageBoxService)
             : base(id, client, messageBoxService)
         { }
 

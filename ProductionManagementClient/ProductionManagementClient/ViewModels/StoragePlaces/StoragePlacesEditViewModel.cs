@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.StoragePlaces
 {
     public class StoragePlacesEditViewModel : EditViewModel<StoragePlaceModel>
     {
-        public StoragePlacesEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public StoragePlacesEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         { }
 

@@ -32,9 +32,9 @@
                     <Label Content="Изменение данных" Background="White" Foreground="Gray" HorizontalAlignment="Left" Margin="34,16,0,0" VerticalAlignment="Top"/>
                     <Border BorderBrush="Gray" BorderThickness="1" Margin="259,30,0,0" Height="121" VerticalAlignment="Top" HorizontalAlignment="Left" Width="230">
                         <Grid>
-                            <RadioButton Content="Заявление об увольнении" Margin="9,17,48,85"/>
-                            <RadioButton Content="Заявление о найме" Margin="9,44,48,59"/>
-                            <Button Content="Создать" HorizontalAlignment="Left" Margin="151,87,0,0" VerticalAlignment="Top" Width="67"/>
+                            <RadioButton GroupName="Reports" IsChecked="{Binding DismissalIsChecked}" Content="Приказ об увольнении" Margin="9,17,48,85"/>
+                            <RadioButton GroupName="Reports" Content="Приказ о найме" Margin="9,44,48,59"/>
+                            <Button Command="{Binding CreateReportCommand}" Content="Создать" HorizontalAlignment="Left" Margin="151,87,0,0" VerticalAlignment="Top" Width="67"/>
                         </Grid>
                     </Border>
                     <Label Background="White" Foreground="Gray"  Content="Тип отчёта" HorizontalAlignment="Left" Margin="272,16,0,0" VerticalAlignment="Top"/>

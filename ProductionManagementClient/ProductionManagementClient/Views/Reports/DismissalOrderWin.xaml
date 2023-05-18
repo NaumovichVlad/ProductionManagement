@@ -1,0 +1,29 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Reports.DismissalOrderWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Reports" xmlns:reports="clr-namespace:ProductionManagementClient.ViewModels.Reports" d:DataContext="{d:DesignInstance Type=reports:DismissalOrderViewModel}"
+        mc:Ignorable="d"
+        Title="Приказ об увольнении" Height="323" Width="562" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Приказ №" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding DismissalOrder.OrderNumber}" HorizontalAlignment="Left" Margin="108,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107"/>
+        <Label Content="Сотрудник" HorizontalAlignment="Left" Margin="23,82,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding DismissalOrder.Employees}" SelectedItem="{Binding DismissalOrder.SelectedEmployee}" HorizontalAlignment="Left" Margin="108,86,0,0" VerticalAlignment="Top" Width="400"/>
+        <Label Content="об увольнении с" HorizontalAlignment="Left" Margin="227,10,0,0" VerticalAlignment="Top"/>
+        <DatePicker  SelectedDate="{Binding DismissalOrder.DismissalDate}"  HorizontalAlignment="Left" Margin="340,12,0,0" VerticalAlignment="Top" Width="168"/>
+        <Label Content="Дата составления" HorizontalAlignment="Left" Margin="229,41,0,0" VerticalAlignment="Top"/>
+        <DatePicker SelectedDate="{Binding DismissalOrder.CompilationDate}" HorizontalAlignment="Left" Margin="340,42,0,0" VerticalAlignment="Top" Width="168"/>
+        <Label Content="Примечание" HorizontalAlignment="Left" Margin="23,118,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding DismissalOrder.Note}" HorizontalAlignment="Left" Margin="108,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Height="95"/>
+        <Button Content="Создать" Command="{Binding CreateCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="424,238,0,0" VerticalAlignment="Top" Width="84"/>
+        <TextBox Text="{Binding SavePath}" HorizontalAlignment="Left" Margin="108,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239"/>
+        <Button Command="{Binding SetPathCommand}" HorizontalAlignment="Left" Margin="356,239,0,0" VerticalAlignment="Top" Height="18">
+            <Image Source="../../Resources/folder.png" Height="12" Width="20"/>
+        </Button>
+        <Label Content="Сохранить в:" HorizontalAlignment="Left" Margin="23,235,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

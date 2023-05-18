@@ -4,6 +4,7 @@ using ProductionManagementClient.Models;
 using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views;
+using ProductionManagementClient.Views.Reports;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ namespace ProductionManagementClient.ViewModels.Menus
         private EmployeeModel _selectedEmployee;
         private DataContainer _employeesContainer;
         private DataContainer _salaries;
+        private bool _dismissalIsChecked;
         private List<EmployeeModel> _employees;
 
         public DataContainer EmployeesContainer 
@@ -78,6 +80,16 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
+        public bool DismissalIsChecked
+        {
+            get => _dismissalIsChecked;
+            set
+            {
+                _dismissalIsChecked = value;
+                OnPropertyChanged();
+            }
+        }
+
         public HrMainViewModel(IApiClient client, IWindowService windowService)
         {
             _client = client;
@@ -92,6 +104,8 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             FillEmployeesContainer();
             FillEmployees();
+
+            DismissalIsChecked = true;
         }
 
         private void FillEmployeesContainer()
@@ -154,6 +168,27 @@ namespace ProductionManagementClient.ViewModels.Menus
                         var row = (DataRowView)param;
                         _client.Delete($"employee/remove/{row["Ид"]}");
                     }));
+            }
+        }
+
+        private RelayCommand _createReportCommand;
+        public RelayCommand CreateReportCommand
+        {
+            get
+            {
+                return _createReportCommand ??
+                    (_createReportCommand = new RelayCommand(param =>
+                    {
+                        if(DismissalIsChecked)
+                        {
+                            _windowService.ShowWindowDialog<DismissalOrderWin>();
+                        }
+                        else
+                        {
+                            _windowService.ShowWindowDialog<HiringOrderWin>();
+                        }
+                    }
+                    ));
             }
         }
 

@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.Roles
         {
             InitializeComponent();
 
-            DataContext = new RolesEditViewModel(id.ToString(), new HttpApiClient(), new MessageBoxService());
+            DataContext = new RolesEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
         }
     }
 }

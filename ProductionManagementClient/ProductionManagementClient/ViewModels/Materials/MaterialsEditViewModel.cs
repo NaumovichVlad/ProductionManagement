@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Materials
 {
     public class MaterialsEditViewModel : EditViewModel<MaterialModel>
     {
-        public MaterialsEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService)
+        public MaterialsEditViewModel(string id, IApiClient client, IDialogService messageBoxService)
             : base(id, client, messageBoxService)
         { }
 

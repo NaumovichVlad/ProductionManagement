@@ -16,7 +16,7 @@ namespace ProductionManagementClient.ViewModels.Employees
 {
     public class EmployeesCreateViewModel : CreateViewModel<EmployeeModel>
     {
-        public EmployeesCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) 
+        public EmployeesCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         { }
 

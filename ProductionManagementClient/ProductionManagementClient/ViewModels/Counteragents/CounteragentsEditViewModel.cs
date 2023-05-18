@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Counteragents
 {
     public class CounteragentsEditViewModel : EditViewModel<CounteragentModel>
     {
-        public CounteragentsEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public CounteragentsEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         { }
 

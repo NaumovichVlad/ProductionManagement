@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Roles
 {
     public class RolesCreateViewModel : CreateViewModel<RoleModel>
     {
-        public RolesCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) 
+        public RolesCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         { }
 

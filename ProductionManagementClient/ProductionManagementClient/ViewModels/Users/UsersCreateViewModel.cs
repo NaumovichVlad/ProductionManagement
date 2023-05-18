@@ -54,7 +54,7 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public UsersCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) 
+        public UsersCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         {
             Employees = _client.Get<List<EmployeeModel>>("employee/all").Result;

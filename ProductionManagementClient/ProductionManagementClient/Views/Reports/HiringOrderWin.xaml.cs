@@ -1,6 +1,6 @@
 ﻿using ProductionManagementClient.Connection;
 using ProductionManagementClient.Services;
-using ProductionManagementClient.ViewModels.Materials;
+using ProductionManagementClient.ViewModels.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +15,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views.Materials
+namespace ProductionManagementClient.Views.Reports
 {
     /// <summary>
-    /// Логика взаимодействия для MaterialReserveEditWin.xaml
+    /// Логика взаимодействия для HiringOrderWin.xaml
     /// </summary>
-    public partial class MaterialReserveEditWin : Window
+    public partial class HiringOrderWin : Window
     {
-        public MaterialReserveEditWin(object id)
+        public HiringOrderWin()
         {
             InitializeComponent();
 
-            DataContext = new MaterialReserveEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
+            DataContext = new HiringOrderViewModel(new HttpApiClient(), new WordDocumentService(), new DialogService());
         }
     }
 }

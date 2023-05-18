@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Materials
 {
     public class MaterialsCreateViewModel : CreateViewModel<MaterialModel>
     {
-        public MaterialsCreateViewModel(IApiClient client, IMessageBoxService messageBoxService)
+        public MaterialsCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         { }
 

@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.Materials
         {
             InitializeComponent();
 
-            DataContext = new MaterialOrderCreateViewModel(new HttpApiClient(), new MessageBoxService());
+            DataContext = new MaterialOrderCreateViewModel(new HttpApiClient(), new DialogService());
         }
     }
 }

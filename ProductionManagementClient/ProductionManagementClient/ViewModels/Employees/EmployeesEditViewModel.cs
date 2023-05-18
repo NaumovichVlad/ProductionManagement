@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Employees
 {
     public class EmployeesEditViewModel : EditViewModel<EmployeeModel>
     {
-        public EmployeesEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public EmployeesEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         { }
 

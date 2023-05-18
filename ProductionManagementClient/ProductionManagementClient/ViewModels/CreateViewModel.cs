@@ -16,7 +16,7 @@ namespace ProductionManagementClient.ViewModels
     {
         private T _model;
         private protected IApiClient _client;
-        private protected IMessageBoxService _messageBoxService;
+        private protected IDialogService _messageBoxService;
 
         public T Model
         {
@@ -28,7 +28,7 @@ namespace ProductionManagementClient.ViewModels
             }
         }
 
-        public CreateViewModel(IApiClient client, IMessageBoxService messageBoxService)
+        public CreateViewModel(IApiClient client, IDialogService messageBoxService)
         {
             _client = client;
             _messageBoxService = messageBoxService;

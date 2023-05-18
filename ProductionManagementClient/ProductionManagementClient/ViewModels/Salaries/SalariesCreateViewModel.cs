@@ -35,7 +35,7 @@ namespace ProductionManagementClient.ViewModels.Salaries
             }
         }
 
-        public SalariesCreateViewModel(IApiClient client, IMessageBoxService messageBoxService) : base(client, messageBoxService)
+        public SalariesCreateViewModel(IApiClient client, IDialogService messageBoxService) : base(client, messageBoxService)
         {
             Employees = _client.Get<List<EmployeeModel>>("employee/all").Result;
         }

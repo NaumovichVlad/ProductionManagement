@@ -61,7 +61,7 @@ namespace ProductionManagementClient.ViewModels.Materials
             }
         }
 
-        public MaterialOrderCreateViewModel(IApiClient client, IMessageBoxService messageBoxService)
+        public MaterialOrderCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         {
             Counteragents = _client.Get<List<CounteragentModel>>("counteragent/all").Result;

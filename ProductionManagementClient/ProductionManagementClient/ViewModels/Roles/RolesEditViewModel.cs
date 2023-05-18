@@ -13,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Roles
 {
     public class RolesEditViewModel : EditViewModel<RoleModel>
     {
-        public RolesEditViewModel(string id, IApiClient client, IMessageBoxService messageBoxService) 
+        public RolesEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
             : base(id, client, messageBoxService)
         { }
 

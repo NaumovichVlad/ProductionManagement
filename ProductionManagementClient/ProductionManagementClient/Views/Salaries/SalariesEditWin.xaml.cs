@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.Salaries
         {
             InitializeComponent();
 
-            DataContext = new SalariesEditViewModel(id.ToString(), new HttpApiClient(), new MessageBoxService());
+            DataContext = new SalariesEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
         }
     }
 }
