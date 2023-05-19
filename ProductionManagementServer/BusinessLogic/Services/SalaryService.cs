@@ -39,5 +39,18 @@ namespace BusinessLogic.Services
             return _mapper.Map<List<SalaryDto>>(
                 _repository.Get(s => s.EmployeeId == employeeId, l => l.OrderByDescending(s => s.PaymentDate), "Employee"));
         }
+
+        public List<SalaryDto> GetByYear(int year)
+        {
+            return _mapper.Map<List<SalaryDto>>(
+                _repository.Get(s => s.PaymentDate.Year == year, l => l.OrderBy(s => s.EmployeeId), "Employee"));
+        }
+
+        public List<SalaryDto> GetByEmployeeAndMonth(int employeeId, DateTime date)
+        {
+            return _mapper.Map<List<SalaryDto>>(
+                _repository.Get(s => (s.EmployeeId == employeeId) && (s.PaymentDate.Month == date.Month) && (s.PaymentDate.Year == date.Year), 
+                l => l.OrderByDescending(s => s.PaymentDate), "Employee"));
+        }
     }
 }

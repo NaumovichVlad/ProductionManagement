@@ -5,6 +5,7 @@ using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Reports;
+using ProductionManagementClient.Views.Salaries;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,20 @@ namespace ProductionManagementClient.ViewModels.Menus
         private DataContainer _salaries;
         private bool _dismissalIsChecked;
         private List<EmployeeModel> _employees;
+        private DateTime _reportDate;
+
+        public DateTime ReportDate
+        {
+            get
+            {
+                return _reportDate;
+            }
+            set
+            {
+                _reportDate = value;
+                OnPropertyChanged();
+            }
+        }
 
         public DataContainer EmployeesContainer 
         { 
@@ -128,6 +143,19 @@ namespace ProductionManagementClient.ViewModels.Menus
                 $"salary/employee/{SelectedEmployee.Id}").Result);
         }
 
+        private RelayCommand _addSalaryCommand;
+        public RelayCommand AddSalaryCommand
+        {
+            get
+            {
+                return _addSalaryCommand ??
+                    (_addSalaryCommand = new RelayCommand(param =>
+                    {
+                        _windowService.ShowWindowDialog<SalariesCreateWin>();
+                    }));
+            }
+        }
+
         private RelayCommand _addEmployeeCommand;
         public RelayCommand AddEmployeeCommand
         {
@@ -187,6 +215,33 @@ namespace ProductionManagementClient.ViewModels.Menus
                         {
                             _windowService.ShowWindowDialog<HiringOrderWin>();
                         }
+                    }
+                    ));
+            }
+        }
+
+        private RelayCommand _createPaySheetCommand;
+        public RelayCommand CreatePaySheetCommand
+        {
+            get
+            {
+                return _createPaySheetCommand ??
+                    (_createPaySheetCommand = new RelayCommand(param =>
+                    {
+                        _windowService.ShowWindowDialog<PaySheetWin>();
+                    }));
+            }
+        }
+
+        private RelayCommand _createSalaryReportCommand;
+        public RelayCommand CreateSalaryReportCommand
+        {
+            get
+            {
+                return _createSalaryReportCommand ??
+                    (_createSalaryReportCommand = new RelayCommand(param =>
+                    {
+                        _windowService.ShowWindowDialog<SalaryReportWin>();
                     }
                     ));
             }

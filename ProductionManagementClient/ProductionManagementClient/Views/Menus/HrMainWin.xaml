@@ -42,9 +42,14 @@
             </TabItem>
             <TabItem Header="Зарплаты">
                 <Grid >
-                    <DataGrid ItemsSource="{Binding Salaries.Table}" Margin="23,188,23,39"/>
-                    <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Margin="0,149,23,0" HorizontalAlignment="Right" Width="167" Height="22" VerticalAlignment="Top"/>
-                    <Label Content="Сотрудник:" Margin="0,147,199,0" HorizontalAlignment="Right" Width="71" Height="26" VerticalAlignment="Top"/>
+                    <Button Command="{Binding AddSalaryCommand}" HorizontalAlignment="Left" Margin="23,20,0,0" Width="22" Height="21" VerticalAlignment="Top">
+                        <Image Source="../../Resources/plus.png"/>
+                    </Button>
+                    <DataGrid ItemsSource="{Binding Salaries.Table}" Margin="23,49,23,75"/>
+                    <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Margin="0,19,23,0" HorizontalAlignment="Right" Width="167" Height="22" VerticalAlignment="Top"/>
+                    <Label Content="Сотрудник:" Margin="0,18,195,0" HorizontalAlignment="Right" Width="71" Height="26" VerticalAlignment="Top"/>
+                    <Button Command="{Binding CreatePaySheetCommand}" Content="Расчётный лист" HorizontalAlignment="Left" Margin="23,0,0,35" Width="157" Height="20" VerticalAlignment="Bottom"/>
+                    <Button Command="{Binding CreateSalaryReportCommand}" Content="Составить отчёт" HorizontalAlignment="Left" Margin="194,0,0,35" Width="157" Height="20" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
         </TabControl>

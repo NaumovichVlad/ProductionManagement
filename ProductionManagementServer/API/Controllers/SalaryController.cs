@@ -49,6 +49,24 @@ namespace API.Controllers
             return new ObjectResult(salaries);
         }
 
+        [HttpGet("{year}")]
+        [ActionName("year")]
+        public async Task<ActionResult<List<SalaryModel>>> GetSalariesByYear(int year)
+        {
+            var salaries = _mapper.Map<List<SalaryModel>>(_salaryService.GetByYear(year));
+
+            return new ObjectResult(salaries);
+        }
+
+        [HttpGet("{id}/{date}")]
+        [ActionName("date")]
+        public async Task<ActionResult<List<SalaryModel>>> GetSalariesByEmployeeAndMonth(int id, string date)
+        {
+            var salaries = _mapper.Map<List<SalaryModel>>(_salaryService.GetByEmployeeAndMonth(id, DateTime.Parse(date)));
+
+            return new ObjectResult(salaries);
+        }
+
         [HttpPost]
         [ActionName("insert")]
         public async Task<IActionResult> InsertSalary([FromBody] SalaryModel model)
