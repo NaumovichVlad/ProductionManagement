@@ -14,6 +14,7 @@
     <None Remove="Resources\logo.ico" />
     <None Remove="Resources\pensil.jpg" />
     <None Remove="Resources\plus.png" />
+    <None Remove="Resources\reload.png" />
     <None Remove="Resources\trash.png" />
   </ItemGroup>
 
@@ -37,6 +38,7 @@
     <Resource Include="Resources\logo.ico" />
     <Resource Include="Resources\pensil.jpg" />
     <Resource Include="Resources\plus.png" />
+    <Resource Include="Resources\reload.png" />
     <Resource Include="Resources\trash.png" />
   </ItemGroup>
 

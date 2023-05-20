@@ -13,8 +13,11 @@ namespace BusinessLogic.Services
 {
     public class MaterialsReserveService : Service<MaterialReserve, MaterialReserveDto>, IMaterialsReserveService
     {
-        public MaterialsReserveService(IRepository<MaterialReserve> employeeRepository, IMapper mapper) : base(employeeRepository, mapper)
-        { }
+        private readonly IRepository<MaterialOrder> _materialOrderRepository;
+        public MaterialsReserveService(IRepository<MaterialReserve> employeeRepository, IRepository<MaterialOrder> orderRepository, IMapper mapper) : base(employeeRepository, mapper)
+        {
+            _materialOrderRepository = orderRepository;
+        }
 
         public new List<MaterialReserveDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
@@ -31,5 +34,29 @@ namespace BusinessLogic.Services
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
         }
+
+        public List<MaterialReserveDto> GetStorageReserves(int storagePlaceId)
+        {
+            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "MaterialOrder"));
+        }
+
+        public List<MaterialOrderDto> GetPendingReserves()
+        {
+            var reserves = _repository.Get().Select(r => r.MaterialOrderId);
+            return _mapper.Map<List<MaterialOrderDto>>(_materialOrderRepository.Get(o => !reserves.Contains(o.Id)));
+        }
+
+        public List<MaterialReserveDto> GetAvailableReservesByMaterialId(int materialId)
+        {
+            var reserves = _materialOrderRepository.Get(o => o.MaterialId == materialId).Select(o => o.Id);
+            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (reserves.Contains(r.MaterialOrderId)) && (r.Count > 0), null, "MaterialOrder,StoragePlace"));
+        }
+
+        public List<MaterialReserveDto> GetConsumptionReservesByMaterialId(int materialId)
+        {
+            var reserves = _materialOrderRepository.Get(o => o.MaterialId == materialId).Select(o => o.Id);
+            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (reserves.Contains(r.MaterialOrderId)) && (r.Count == 0), null, "MaterialOrder,StoragePlace"));
+        }
+        
     }
 }

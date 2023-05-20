@@ -275,6 +275,24 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpGet("{id}")]
+        [ActionName("reserve/place")]
+        public async Task<ActionResult<List<ProductsReserveModel>>> GetMaterialsReserveByStoragePlaceId(int id)
+        {
+            var model = _mapper.Map<List<ProductsReserveModel>>(_productsReserveService.GetStorageReserves(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [ActionName("reserve/pending")]
+        public async Task<ActionResult<List<FinishedProductModel>>> GetPendingMaterialsReserve()
+        {
+            var items = _mapper.Map<List<FinishedProductModel>>(_productsReserveService.GetPendingReserves());
+
+            return await Task.FromResult(items);
+        }
+
         [HttpGet]
         [ActionName("finished/all")]
         public async Task<ActionResult<IEnumerable<FinishedProductModel>>> GetFinishedProducts()

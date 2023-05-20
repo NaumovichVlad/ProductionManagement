@@ -25,6 +25,7 @@ namespace ProductionManagementClient.ViewModels.Menus
     {
         private readonly IApiClient _client;
         private readonly IWindowService _windowService;
+        private readonly IDialogService _dialogService;
         private UserModel _user;
         private RelayCommand _loginCommand;
         public UserModel User
@@ -55,6 +56,10 @@ namespace ProductionManagementClient.ViewModels.Menus
                             ApiConnection.User = GetUser();
                             OpenMainWindow();
                             ((Window)obj).Close();
+                        }
+                        else
+                        {
+                            _dialogService.ShowMessage("Ошибка авторизации", "Логин или пароль введён неверно");
                         }
                     }));
 
@@ -94,7 +99,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public LoginViewModel(IApiClient client, IWindowService windowService)
+        public LoginViewModel(IApiClient client, IWindowService windowService, IDialogService dialogService)
         {
             _client = client;
             _windowService = windowService;
@@ -103,6 +108,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             _user.EmployeeSurname = "empty";
             _user.EmployeeName = "empty";
             _user.EmployeeMiddleName = "empty";
+            _dialogService = dialogService;
         }
     }
 }

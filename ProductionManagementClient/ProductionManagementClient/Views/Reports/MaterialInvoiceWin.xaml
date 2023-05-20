@@ -1,0 +1,32 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Reports.MaterialInvoiceWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Reports" xmlns:reports="clr-namespace:ProductionManagementClient.ViewModels.Reports" d:DataContext="{d:DesignInstance Type=reports:MaterialInvoiceViewModel}"
+        mc:Ignorable="d"
+        Title="Поступление товара" Height="309" Width="550" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Поступление материалов №" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="327,14,0,0" TextWrapping="Wrap" Text="{Binding OrderNumber}" VerticalAlignment="Top" Width="58"/>
+        <Label Content="от" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top"/>
+        <DatePicker SelectedDate="{Binding CompilationDate}" HorizontalAlignment="Left" Margin="412,11,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label Content="Грузоотправитель:" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="146,53,0,0" TextWrapping="Wrap" Text="{Binding MaterialOrder.CounteragentName}" VerticalAlignment="Top" Width="378"/>
+        <Label Content="Грузополучатель:" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding StoragePlaces}" SelectedItem="{Binding SelectedStoragePlace}" HorizontalAlignment="Left" Margin="146,82,0,0" VerticalAlignment="Top" Width="378"/>
+        <Label Content="Груз:" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="146,113,0,0" TextWrapping="Wrap" Text="{Binding MaterialOrder.MaterialName}" VerticalAlignment="Top" Width="378"/>
+        <Label Content="Количество:" HorizontalAlignment="Left" Margin="20,139,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="146,143,0,0" TextWrapping="Wrap" Text="{Binding MaterialOrder.Count}" VerticalAlignment="Top" Width="378"/>
+        <Label Content="Стоимость:" HorizontalAlignment="Left" Margin="20,168,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="146,172,0,0" TextWrapping="Wrap" Text="{Binding MaterialOrder.Price}" VerticalAlignment="Top" Width="378"/>
+        <Button Content="Создать" Command="{Binding CreateCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+            AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="440,237,0,0" VerticalAlignment="Top" Width="84"/>
+        <TextBox Text="{Binding SavePath}" HorizontalAlignment="Left" Margin="108,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="239"/>
+        <Button Command="{Binding SetPathCommand}" HorizontalAlignment="Left" Margin="356,239,0,0" VerticalAlignment="Top" Height="18">
+            <Image Source="../../Resources/folder.png" Height="12" Width="20"/>
+        </Button>
+        <Label Content="Сохранить в:" HorizontalAlignment="Left" Margin="20,235,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

@@ -113,6 +113,16 @@ namespace ProductionManagementClient.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        internal static byte[] reload {
+            get {
+                object obj = ResourceManager.GetObject("reload", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         internal static byte[] trash {
             get {
                 object obj = ResourceManager.GetObject("trash", resourceCulture);

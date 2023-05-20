@@ -203,6 +203,42 @@ namespace API.Controllers
             return new ObjectResult(model);
         }
 
+        [HttpGet("{id}")]
+        [ActionName("reserve/get/available")]
+        public async Task<ActionResult<List<MaterialReserveModel>>> GetAvailableMaterialsByMaterialId(int id)
+        {
+            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetAvailableReservesByMaterialId(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("reserve/get/consumption")]
+        public async Task<ActionResult<List<MaterialReserveModel>>> GetConsumptionMaterialsByMaterialId(int id)
+        {
+            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetConsumptionReservesByMaterialId(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("reserve/place")]
+        public async Task<ActionResult<List<MaterialReserveModel>>> GetMaterialsReserveByStoragePlaceId(int id)
+        {
+            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetStorageReserves(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [ActionName("reserve/pending")]
+        public async Task<ActionResult<List<MaterialOrderModel>>> GetPendingMaterialsReserve()
+        {
+            var items = _mapper.Map<List<MaterialOrderModel>>(_materialsReserveService.GetPendingReserves());
+
+            return await Task.FromResult(items);
+        }
+
         [HttpDelete("{id}")]
         [ActionName("reserve/remove")]
         public async Task<IActionResult> DeleteMaterialReserves(int id)

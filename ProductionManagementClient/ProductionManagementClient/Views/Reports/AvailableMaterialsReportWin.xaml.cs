@@ -1,6 +1,6 @@
 ﻿using ProductionManagementClient.Connection;
 using ProductionManagementClient.Services;
-using ProductionManagementClient.ViewModels.Menus;
+using ProductionManagementClient.ViewModels.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +15,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views.Menus
+namespace ProductionManagementClient.Views.Reports
 {
     /// <summary>
-    /// Логика взаимодействия для LogisticMainWin.xaml
+    /// Логика взаимодействия для AvailableMaterialsReportWin.xaml
     /// </summary>
-    public partial class LogisticMainWin : Window
+    public partial class AvailableMaterialsReportWin : Window
     {
-        public LogisticMainWin()
+        public AvailableMaterialsReportWin()
         {
             InitializeComponent();
 
-            DataContext = new LogisticMainViewModel(new HttpApiClient(), new WindowService());
+            DataContext = new AvailableMaterialReportViewModel(new HttpApiClient(), new DialogService(), new WordDocumentService());
         }
     }
 }

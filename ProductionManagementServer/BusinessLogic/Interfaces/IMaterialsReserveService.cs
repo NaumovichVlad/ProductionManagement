@@ -8,5 +8,10 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Interfaces
 {
     public interface IMaterialsReserveService : IService<MaterialReserveDto>
-    { }
+    {
+        List<MaterialReserveDto> GetStorageReserves(int storagePlaceId);
+        List<MaterialOrderDto> GetPendingReserves();
+        List<MaterialReserveDto> GetAvailableReservesByMaterialId(int materialId);
+        List<MaterialReserveDto> GetConsumptionReservesByMaterialId(int materialId);
+    }
 }

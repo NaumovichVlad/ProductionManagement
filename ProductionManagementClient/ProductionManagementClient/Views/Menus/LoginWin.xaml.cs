@@ -28,7 +28,7 @@ namespace ProductionManagementClient.Views
         {
             InitializeComponent();
 
-            DataContext = new LoginViewModel(new HttpApiClient(), new WindowService());
+            DataContext = new LoginViewModel(new HttpApiClient(), new WindowService(), new DialogService());
         }
     }
 }

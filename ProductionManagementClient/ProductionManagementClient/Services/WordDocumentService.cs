@@ -84,6 +84,7 @@ namespace ProductionManagementClient.Services
 
         public void Save(string path)
         {
+            _document.Protect(ProtectionType.ReadOnly);
             _document.Save(path);
         }
 
