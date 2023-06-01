@@ -8,6 +8,7 @@ namespace API.Models
         public int ProductId { get; set; }
         public int Count { get; set; }
         public DateTime ManufactureDate { get; set; }
+        public bool IsApproved { get; set; }
         public string ProductName { get; set; }
     }
 }

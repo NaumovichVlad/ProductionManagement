@@ -14,22 +14,24 @@ namespace API.Controllers
     public class MaterialController : ControllerBase
     {
         private readonly IMaterialService _materialService;
-        private readonly IMaterialOrderService _materialOrderService;
+        private readonly IPurchaseService _purchasesService;
         private readonly IMaterialsReserveService _materialsReserveService;
         private readonly IMaterialsForFinishedProductsService _materialsForFinishedProductsService;
         private readonly IMaterialsForProductsService _materialsForProductsService;
+        private readonly IMaterialsPurchasesService _materialsPurchasesService;
         private readonly IMapper _mapper;
 
-        public MaterialController(IMaterialService materialService, IMaterialOrderService materialOrderService,
+        public MaterialController(IMaterialService materialService, IPurchaseService materialOrderService,
             IMaterialsReserveService materialsReserveService, IMaterialsForFinishedProductsService materialsForFinishedProductsService,
-            IMaterialsForProductsService materialsForProductsService,IMapper mapper)
+            IMaterialsForProductsService materialsForProductsService,  IMapper mapper, IMaterialsPurchasesService materialsPurchasesService)
         {
             _materialService = materialService;
-            _materialOrderService = materialOrderService;
+            _purchasesService = materialOrderService;
             _materialsReserveService = materialsReserveService;
             _materialsForFinishedProductsService = materialsForFinishedProductsService;
             _materialsForProductsService = materialsForProductsService;
             _mapper = mapper;
+            _materialsPurchasesService = materialsPurchasesService;
         }
 
         [HttpGet]
@@ -95,28 +97,28 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ActionName("order/all")]
-        public async Task<ActionResult<IEnumerable<MaterialOrderModel>>> GetMaterialOrders()
+        [ActionName("purchase/all")]
+        public async Task<ActionResult<IEnumerable<PurchaseModel>>> GetPurchases()
         {
-            var items = _mapper.Map<List<MaterialOrderModel>>(_materialOrderService.GetList());
+            var items = _mapper.Map<List<PurchaseModel>>(_purchasesService.GetList());
 
             return await Task.FromResult(items);
         }
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
-        [ActionName("order/all/select")]
-        public async Task<ActionResult<List<MaterialOrderModel>>> GetMaterialOrdersSelection(int start, int size, string sortDirection, string sortParameter)
+        [ActionName("purchase/all/select")]
+        public async Task<ActionResult<List<PurchaseModel>>> GetPurchasesSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var roles = _mapper.Map<List<MaterialOrderModel>>(_materialOrderService.GetSelection(start, size, sortDirection, sortParameter));
+            var roles = _mapper.Map<List<PurchaseModel>>(_purchasesService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
         }
 
         [HttpPost]
-        [ActionName("order/insert")]
-        public async Task<IActionResult> InsertMaterialsOrder([FromBody] MaterialOrderModel model)
+        [ActionName("purchase/insert")]
+        public async Task<IActionResult> InsertPurchase([FromBody] PurchaseModel model)
         {
-            _materialOrderService.Insert(_mapper.Map<MaterialOrderDto>(model));
+            _purchasesService.Insert(_mapper.Map<PurchaseDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -124,10 +126,10 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [ActionName("order/edit")]
-        public async Task<IActionResult> EditMaterialsOrder([FromBody] MaterialOrderModel model)
+        [ActionName("purchase/edit")]
+        public async Task<IActionResult> EditPurchase([FromBody] PurchaseModel model)
         {
-            _materialOrderService.Edit(_mapper.Map<MaterialOrderDto>(model));
+            _purchasesService.Edit(_mapper.Map<PurchaseDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -135,23 +137,91 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [ActionName("order/get")]
-        public async Task<ActionResult<MaterialOrderModel>> GetMaterialsOrderById(int id)
+        [ActionName("purchase/get")]
+        public async Task<ActionResult<PurchaseModel>> GetPurchaseById(int id)
         {
-            var model = _mapper.Map<MaterialOrderModel>(_materialOrderService.GetById(id));
+            var model = _mapper.Map<PurchaseModel>(_purchasesService.GetById(id));
 
             return new ObjectResult(model);
         }
 
         [HttpDelete("{id}")]
-        [ActionName("order/remove")]
-        public async Task<IActionResult> DeleteMaterialsOrder(int id)
+        [ActionName("purchase/remove")]
+        public async Task<IActionResult> DeletePurchase(int id)
         {
-            _materialOrderService.Delete(id);
+            _purchasesService.Delete(id);
 
             var response = Ok(new { Message = "Success" });
 
             return response;
+        }
+        [HttpGet]
+        [ActionName("purchaseMaterial/all")]
+        public async Task<ActionResult<IEnumerable<MaterialPurchaseModel>>> GetMaterialsPurchases()
+        {
+            var items = _mapper.Map<List<MaterialPurchaseModel>>(_materialsPurchasesService.GetList());
+
+            return await Task.FromResult(items);
+        }
+
+        [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
+        [ActionName("purchaseMaterial/all/select")]
+        public async Task<ActionResult<List<MaterialPurchaseModel>>> GetMaterialsPurchasesSelection(int start, int size, string sortDirection, string sortParameter)
+        {
+            var roles = _mapper.Map<List<MaterialPurchaseModel>>(_materialsPurchasesService.GetSelection(start, size, sortDirection, sortParameter));
+
+            return new ObjectResult(roles);
+        }
+
+        [HttpPost]
+        [ActionName("purchaseMaterial/insert")]
+        public async Task<IActionResult> InsertMaterialPurchase([FromBody] MaterialPurchaseModel model)
+        {
+            _materialsPurchasesService.Insert(_mapper.Map<MaterialPurchaseDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpPut]
+        [ActionName("purchaseMaterial/edit")]
+        public async Task<IActionResult> EditMaterialPurchase([FromBody] MaterialPurchaseModel model)
+        {
+            _materialsPurchasesService.Edit(_mapper.Map<MaterialPurchaseDto>(model));
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("purchaseMaterial/get")]
+        public async Task<ActionResult<MaterialPurchaseModel>> GetMaterialPurchaseById(int id)
+        {
+            var model = _mapper.Map<MaterialPurchaseModel>(_materialsPurchasesService.GetById(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpDelete("{id}")]
+        [ActionName("purchaseMaterial/remove")]
+        public async Task<IActionResult> DeleteMaterialPurchase(int id)
+        {
+            _materialsPurchasesService.Delete(id);
+
+            var response = Ok(new { Message = "Success" });
+
+            return response;
+        }
+
+        [HttpGet]
+        [ActionName("purchaseMaterial/notAccepted")]
+        public async Task<ActionResult<IEnumerable<MaterialPurchaseModel>>> GetNotAcceptedMaterialsPurchases()
+        {
+            var items = _mapper.Map<List<MaterialPurchaseModel>>(_materialsPurchasesService.GetNotAccepted());
+
+            return await Task.FromResult(items);
         }
 
         [HttpGet]
@@ -203,41 +273,16 @@ namespace API.Controllers
             return new ObjectResult(model);
         }
 
-        [HttpGet("{id}")]
-        [ActionName("reserve/get/available")]
-        public async Task<ActionResult<List<MaterialReserveModel>>> GetAvailableMaterialsByMaterialId(int id)
-        {
-            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetAvailableReservesByMaterialId(id));
 
-            return new ObjectResult(model);
-        }
-
-        [HttpGet("{id}")]
-        [ActionName("reserve/get/consumption")]
-        public async Task<ActionResult<List<MaterialReserveModel>>> GetConsumptionMaterialsByMaterialId(int id)
-        {
-            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetConsumptionReservesByMaterialId(id));
-
-            return new ObjectResult(model);
-        }
-
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         [ActionName("reserve/place")]
         public async Task<ActionResult<List<MaterialReserveModel>>> GetMaterialsReserveByStoragePlaceId(int id)
         {
             var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetStorageReserves(id));
 
             return new ObjectResult(model);
-        }
+        }*/
 
-        [HttpGet]
-        [ActionName("reserve/pending")]
-        public async Task<ActionResult<List<MaterialOrderModel>>> GetPendingMaterialsReserve()
-        {
-            var items = _mapper.Map<List<MaterialOrderModel>>(_materialsReserveService.GetPendingReserves());
-
-            return await Task.FromResult(items);
-        }
 
         [HttpDelete("{id}")]
         [ActionName("reserve/remove")]

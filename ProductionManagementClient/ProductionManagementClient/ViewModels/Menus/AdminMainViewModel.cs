@@ -36,6 +36,7 @@ namespace ProductionManagementClient.ViewModels.Menus
         private readonly IApiClient _client;
         private DataTypes _dataType;
         private readonly IWindowService _windowService;
+        private readonly IDialogService _dialogService;
 
         public DataContainer DataContainer
         {
@@ -60,11 +61,12 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public AdminMainViewModel(IApiClient client, IWindowService windowService)
+        public AdminMainViewModel(IApiClient client, IWindowService windowService, IDialogService dialogService)
         {
             _client = client;
             _windowService = windowService;
             _dataType = DataTypes.Users;
+            _dialogService = dialogService;
 
             Clear();
         }
@@ -190,7 +192,23 @@ namespace ProductionManagementClient.ViewModels.Menus
                     ));
             }
         }
-
+        private RelayCommand _skipColumnsCommand;
+        public RelayCommand SkipColumnsCommand
+        {
+            get
+            {
+                return _skipColumnsCommand ??
+                    (_skipColumnsCommand = new RelayCommand(args =>
+                    {
+                        var column = (DataGridAutoGeneratingColumnEventArgs)args;
+                        if (column.Column.Header == "Ид")
+                        {
+                            column.Cancel = true;
+                        }
+                    }
+                    ));
+            }
+        }
         private void GetServerEntities()
         {
             switch (_dataType)
@@ -223,9 +241,13 @@ namespace ProductionManagementClient.ViewModels.Menus
                     DataContainer.Table = CreateProductTable(_client.Get<List<ProductModel>>(
                         $"product/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
-                case DataTypes.MaterialOrders:
-                    DataContainer.Table = CreateMaterialOrderTable(_client.Get<List<MaterialOrderModel>>(
-                        $"material/order/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                case DataTypes.Purchases:
+                    DataContainer.Table = CreatePurchaseTable(_client.Get<List<PurchaseModel>>(
+                        $"material/purchase/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.MaterialsPurchases:
+                    DataContainer.Table = CreateMaterialPurchaseTable(_client.Get<List<MaterialPurchaseModel>>(
+                        $"material/purchaseMaterial/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
                 case DataTypes.MaterialReserves:
                     DataContainer.Table = CreateMaterialReserveTable(_client.Get<List<MaterialReserveModel>>(
@@ -234,6 +256,8 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Salaries:
                     DataContainer.Table = CreateSalaryTable(_client.Get<List<SalaryModel>>(
                         $"salary/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                default:
                     break;
             }
         }
@@ -263,14 +287,17 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Materials:
                     _windowService.ShowWindowDialog<MaterialsEditWin>(id);
                     break;
-                case DataTypes.MaterialOrders:
-                    _windowService.ShowWindowDialog<MaterialOrderEditWin>(id);
+                case DataTypes.Purchases:
+                    _windowService.ShowWindowDialog<PurchaseEditWin>(id);
                     break;
-                case DataTypes.MaterialReserves:
-                    _windowService.ShowWindowDialog<MaterialReserveEditWin>(id);
+                case DataTypes.MaterialsPurchases:
+                    _windowService.ShowWindowDialog<MaterialPurchaseEditWin>(id);
                     break;
                 case DataTypes.Salaries:
                     _windowService.ShowWindowDialog<SalariesEditWin>(id);
+                    break;
+                default:
+                    _dialogService.ShowErrorMessage("Предупреждение", "Редактирование невозможно");
                     break;
             }
         }
@@ -300,8 +327,11 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Materials:
                     _windowService.ShowWindowDialog<MaterialsCreateWin>();
                     break;
-                case DataTypes.MaterialOrders:
-                    _windowService.ShowWindowDialog<MaterialOrderCreateWin>();
+                case DataTypes.Purchases:
+                    _windowService.ShowWindowDialog<PurchaseCreateWin>();
+                    break;
+                case DataTypes.MaterialsPurchases:
+                    _windowService.ShowWindowDialog<MaterialPurchaseCreateWin>();
                     break;
                 case DataTypes.MaterialReserves:
                     _windowService.ShowWindowDialog<MaterialReserveCreateWin>();
@@ -337,8 +367,11 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Materials:
                     _client.Delete($"material/remove/{id}");
                     break;
-                case DataTypes.MaterialOrders:
-                    _client.Delete($"material/order/remove/{id}");
+                case DataTypes.Purchases:
+                    _client.Delete($"material/purchase/remove/{id}");
+                    break;
+                case DataTypes.MaterialsPurchases:
+                    _client.Delete($"material/purchaseMaterial/remove/{id}");
                     break;
                 case DataTypes.MaterialReserves:
                     _client.Delete($"material/reserve/remove/{id}");
@@ -368,6 +401,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             var table = new DataTable();
             var idColumn = new DataColumn("Ид");
             idColumn.Caption = "Id";
+            
 
             var nameColumn = new DataColumn("Название");
             nameColumn.Caption = "Name";
@@ -624,7 +658,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             return table;
         }
 
-        private DataTable CreateMaterialOrderTable(List<MaterialOrderModel> models)
+        private DataTable CreatePurchaseTable(List<PurchaseModel> models)
         {
             var table = new DataTable();
 
@@ -637,29 +671,18 @@ namespace ProductionManagementClient.ViewModels.Menus
             var counteragentColumn = new DataColumn("Контерагент");
             counteragentColumn.Caption = "CounteragentName";
 
-            var materialColumn = new DataColumn("Материал");
-            materialColumn.Caption = "MaterialName";
-
             var dateColumn = new DataColumn("Дата изготовления");
             dateColumn.Caption = "ManufactureDate";
 
             var countryColumn = new DataColumn("Страна производства");
             countryColumn.Caption = "ManufactureCountry";
 
-            var countColumn = new DataColumn("Количество");
-            countColumn.Caption = "Count";
-
-            var priceColumn = new DataColumn("Стоимость");
-            priceColumn.Caption = "Price";
 
             table.Columns.Add(idColumn);
             table.Columns.Add(numberColumn);
             table.Columns.Add(counteragentColumn);
-            table.Columns.Add(materialColumn);
             table.Columns.Add(dateColumn);
             table.Columns.Add(countryColumn);
-            table.Columns.Add(countColumn);
-            table.Columns.Add(priceColumn);
 
 
             foreach (var model in models)
@@ -669,11 +692,56 @@ namespace ProductionManagementClient.ViewModels.Menus
                 newRow[idColumn] = model.Id;
                 newRow[numberColumn] = model.OrderNumber;
                 newRow[counteragentColumn] = model.CounteragentName;
-                newRow[materialColumn] = model.MaterialName;
                 newRow[dateColumn] = model.ManufactureDate;
                 newRow[countryColumn] = model.ManufactureCountry;
-                newRow[countColumn] = model.Count;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialPurchaseTable(List<MaterialPurchaseModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Номер заказа");
+            numberColumn.Caption = "OrderNumber";
+
+            var materialColumn = new DataColumn("Материал");
+            materialColumn.Caption = "MaterialName";
+
+            var priceColumn = new DataColumn("Стоимость");
+            priceColumn.Caption = "Price";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+            var isAcceptedColumn = new DataColumn("Принято на складе");
+            isAcceptedColumn.Caption = "IsAccepted";
+
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(priceColumn);
+            table.Columns.Add(countColumn);
+            table.Columns.Add(isAcceptedColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.PurchaseNumber;
+                newRow[materialColumn] = model.MaterialName;
                 newRow[priceColumn] = model.Price;
+                newRow[countColumn] = model.Count;
+                newRow[isAcceptedColumn] = model.IsAccepted ? "Принято" : "Не принято";
 
                 table.Rows.Add(newRow);
             }
@@ -691,15 +759,19 @@ namespace ProductionManagementClient.ViewModels.Menus
             var numberColumn = new DataColumn("Номер заказа");
             numberColumn.Caption = "MaterialOrderNumber";
 
+            var materialColumn = new DataColumn("Материал");
+            materialColumn.Caption = "MaterialName";
+
             var storagePlaceColumn = new DataColumn("Склад");
-            storagePlaceColumn.Caption = "StoraPlaceName";
+            storagePlaceColumn.Caption = "StoragePlaceName";
 
             var countColumn = new DataColumn("Количество");
             countColumn.Caption = "Count";
 
             table.Columns.Add(idColumn);
-            table.Columns.Add(numberColumn);
             table.Columns.Add(storagePlaceColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(materialColumn);
             table.Columns.Add(countColumn);
 
             foreach (var model in models)
@@ -708,6 +780,7 @@ namespace ProductionManagementClient.ViewModels.Menus
 
                 newRow[idColumn] = model.Id;
                 newRow[numberColumn] = model.MaterialOrderNumber;
+                newRow[materialColumn] = model.MaterialName;
                 newRow[storagePlaceColumn] = model.StoragePlaceName;
                 newRow[countColumn] = model.Count;
 

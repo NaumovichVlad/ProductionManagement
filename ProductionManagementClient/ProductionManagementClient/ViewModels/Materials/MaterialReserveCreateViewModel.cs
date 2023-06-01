@@ -13,17 +13,27 @@ namespace ProductionManagementClient.ViewModels.Materials
 {
     public class MaterialReserveCreateViewModel : CreateViewModel<MaterialReserveModel>
     {
-        private List<MaterialOrderModel> _orders;
+        private List<MaterialPurchaseModel> _materials;
         private List<StoragePlaceModel> _storagePlaces;
-        private MaterialOrderModel _selectedOrder;
+        private MaterialPurchaseModel _selectedMaterial;
         private StoragePlaceModel _selectedStoragePlace;
+        private int _count;
 
-        public List<MaterialOrderModel> Orders 
-        { 
-            get => _orders;
+        public int Count
+        {
+            get => _count;
             set
             {
-                _orders = value;
+                _count = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<MaterialPurchaseModel> Materials 
+        { 
+            get => _materials;
+            set
+            {
+                _materials = value;
                 OnPropertyChanged();
             }
         }
@@ -36,12 +46,13 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public MaterialOrderModel SelectedOrder
+        public MaterialPurchaseModel SelectedMaterial
         {
-            get => _selectedOrder;
+            get => _selectedMaterial;
             set
             {
-                _selectedOrder = value;
+                _selectedMaterial = value;
+                Count = _selectedMaterial.Count;
                 OnPropertyChanged();
             }
         }
@@ -58,7 +69,7 @@ namespace ProductionManagementClient.ViewModels.Materials
         public MaterialReserveCreateViewModel(IApiClient client, IDialogService messageBoxService) 
             : base(client, messageBoxService)
         {
-            Orders = _client.Get<List<MaterialOrderModel>>("material/order/all").Result;
+            Materials = _client.Get<List<MaterialPurchaseModel>>("material/purchaseMaterial/notAccepted").Result;
             StoragePlaces = _client.Get<List<StoragePlaceModel>>("storagePlace/all").Result;
         }
 
@@ -69,11 +80,15 @@ namespace ProductionManagementClient.ViewModels.Materials
                 return _confirmCommand ??
                     (_confirmCommand = new RelayCommand(obj =>
                     {
-                        Model.MaterialOrderNumber = SelectedOrder.OrderNumber;
+                        Model.MaterialOrderNumber = SelectedMaterial.PurchaseNumber;
+                        Model.MaterialName = SelectedMaterial.MaterialName;
                         Model.StoragePlaceName = SelectedStoragePlace.Name;
-                        Model.MaterialOrderId = SelectedOrder.Id;
+                        Model.MaterialPurchaseId = SelectedMaterial.Id;
                         Model.StoragePlaceId = SelectedStoragePlace.Id;
-
+                        Model.Count = Count;
+                        SelectedMaterial.IsAccepted = true;
+                        
+                        _client.Put(SelectedMaterial, $"material/purchaseMaterial/edit");
                         _client.Post(Model, "material/reserve/insert");
 
                         _messageBoxService.ShowMessage("Добавление записи", "Запись успешно добавлена");

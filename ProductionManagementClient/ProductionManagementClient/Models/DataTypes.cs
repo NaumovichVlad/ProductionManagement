@@ -15,8 +15,15 @@ namespace ProductionManagementClient.Models
         StoragePlaces,
         Materials,
         Products,
-        MaterialOrders,
+        Purchases,
         MaterialReserves,
-        Salaries
+        Salaries,
+        MaterialsPurchases,
+        FinishedProducts,
+        Sales,
+        ProductsReserves,
+        FinishedProductsSales,
+        MaterialsForProducts,
+        MaterialsForFinishedProducts
     }
 }

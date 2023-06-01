@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" d:DataContext="{d:DesignInstance Type=menus:AdminMainViewModel}"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:ProductionManagementClient.ViewModels" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus"
         Title="Окно администратора" Height="450" Width="800">
     <Grid>
         <Grid Margin="0,0,577,0">
@@ -13,13 +12,19 @@
                     <TreeViewItem IsSelected="True" Name="Users" Header="Пользователи" />
                     <TreeViewItem Name="Roles" Header="Роли" />
                     <TreeViewItem Name="Employees" Header="Сотрудники" />
+                    <TreeViewItem Name="Salaries" Header="Зарплаты" />
                     <TreeViewItem Name="Counteragents" Header="Контрагенты" />
                     <TreeViewItem Name="StoragePlaces" Header="Склады" />
-                    <TreeViewItem Name="Salaries" Header="Зарплаты" />
-                    <TreeViewItem Name="Products" Header="Изделия" />
                     <TreeViewItem Name="Materials" Header="Материалы" />
-                    <TreeViewItem Name="MaterialOrders" Header="Заказы материалов" />
+                    <TreeViewItem Name="Purchases" Header="Закупки" />
+                    <TreeViewItem Name="MaterialsPurchases" Header="Материалы из заказа" />
                     <TreeViewItem Name="MaterialReserves" Header="Материалы на складе" />
+                    <TreeViewItem Name="Products" Header="Продукция" />
+                    <TreeViewItem Name="FinishedProducts" Header="Изготовленная продукция" />
+                    <TreeViewItem Name="ProductsReserves" Header="Продукция на складе" />
+                    <TreeViewItem Name="Sales" Header="Продажи" />
+                    <TreeViewItem Name="MaterialsForProducts" Header="Рецептура продукции" />
+                    <TreeViewItem Name="MaterialsForFinishedProducts" Header="Использованные материалы" />
                 </TreeViewItem>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
@@ -31,11 +36,16 @@
             </TreeView>
         </Grid>
         <Grid Margin="223,0,0,0">
-            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}"  AutoGenerateColumns="True"  Margin="22,58,31,82">
+            <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True" Margin="22,58,31,82">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Sorting">
                         <i:InvokeCommandAction 
                          Command="{Binding SortCommand}"
+                         PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="AutoGeneratingColumn">
+                        <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
                          PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>

@@ -14,9 +14,10 @@ namespace ProductionManagementClient.Models
         private int _count;
         private string _storagePlaceName;
         private string _materialOrderNumber;
+        private string _materialName;
 
-        public int Id 
-        { 
+        public int Id
+        {
             get
             {
                 return _id;
@@ -39,7 +40,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int MaterialOrderId 
+        public int MaterialPurchaseId
         {
             get
             {
@@ -51,7 +52,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int Count 
+        public int Count
         {
             get
             {
@@ -63,8 +64,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string StoragePlaceName 
-        { 
+        public string StoragePlaceName
+        {
             get
             {
                 return _storagePlaceName;
@@ -75,8 +76,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string MaterialOrderNumber 
-        { 
+        public string MaterialOrderNumber
+        {
             get
             {
                 return _materialOrderNumber;
@@ -84,6 +85,16 @@ namespace ProductionManagementClient.Models
             set
             {
                 _materialOrderNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string MaterialName 
+        { 
+            get => _materialName;
+            set
+            {
+                _materialName = value;
                 OnPropertyChanged();
             }
         }

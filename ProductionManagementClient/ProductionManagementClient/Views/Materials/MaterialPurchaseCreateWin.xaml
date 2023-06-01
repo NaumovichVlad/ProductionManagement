@@ -1,0 +1,24 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Materials.MaterialPurchaseCreateWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Materials" xmlns:materials="clr-namespace:ProductionManagementClient.ViewModels.Materials" d:DataContext="{d:DesignInstance Type=materials:MaterialPurchaseCreateViewModel}"
+        mc:Ignorable="d"
+        Title="Добавление материала в заказ" Height="306" Width="364" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Материал:" HorizontalAlignment="Left" Margin="31,24,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Materials}" SelectedItem="{Binding SelectedMaterial}" HorizontalAlignment="Left" Margin="114,26,0,0" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Заказ:" HorizontalAlignment="Left" Margin="31,66,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Purchases}" SelectedItem="{Binding SelectedPurchase}" HorizontalAlignment="Left" Margin="114,68,0,0" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Количество:" HorizontalAlignment="Left" Margin="31,105,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Model.Count}" HorizontalAlignment="Left" Margin="114,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Стоимость:" HorizontalAlignment="Left" Margin="31,141,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Model.Price}" HorizontalAlignment="Left" Margin="114,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Принято на складе" HorizontalAlignment="Left" Margin="31,178,0,0" VerticalAlignment="Top"/>
+        <CheckBox IsChecked="{Binding Model.IsAccepted}" HorizontalAlignment="Left" Margin="150,185,0,0" VerticalAlignment="Top"/>
+        <Button Content="Назад" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="272,228,0,0" VerticalAlignment="Top" Width="53"/>
+        <Button Content="Подтвердить" Command="{Binding ConfirmCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="178,228,0,0" VerticalAlignment="Top" Width="82"/>
+
+    </Grid>
+</Window>

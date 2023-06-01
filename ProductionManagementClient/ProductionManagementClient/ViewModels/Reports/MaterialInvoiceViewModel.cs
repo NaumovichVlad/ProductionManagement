@@ -25,7 +25,7 @@ namespace ProductionManagementClient.ViewModels.Reports
         private int _orderId;
         private List<StoragePlaceModel> _storagePlaces;
         private StoragePlaceModel _selectedStoragePlace;
-        private MaterialOrderModel _materialOrderModel;
+        private PurchaseModel _materialOrderModel;
         private EmployeeModel _compilationEmployee;
 
         public EmployeeModel CompilationEmployee
@@ -97,7 +97,7 @@ namespace ProductionManagementClient.ViewModels.Reports
                 OnPropertyChanged();
             }
         }
-        public MaterialOrderModel MaterialOrder
+        public PurchaseModel MaterialOrder
         {
             get => _materialOrderModel;
             set
@@ -124,9 +124,9 @@ namespace ProductionManagementClient.ViewModels.Reports
         
         private void FillMaterialOrder(int orderId)
         {
-            MaterialOrder = _client.Get<MaterialOrderModel>($"material/order/get/{orderId}").Result;
+      /*      MaterialOrder = _client.Get<PurchaseModel>($"material/order/get/{orderId}").Result;
             MaterialOrder.MaterialName = _client.Get<MaterialModel>($"material/get/{MaterialOrder.MaterialId}").Result.Name;
-            MaterialOrder.CounteragentName = _client.Get<CounteragentModel>($"counteragent/get/{MaterialOrder.CounteragentId}").Result.Name;
+            MaterialOrder.CounteragentName = _client.Get<CounteragentModel>($"counteragent/get/{MaterialOrder.CounteragentId}").Result.Name;*/
         }
 
         private RelayCommand _createCommand;
@@ -163,11 +163,11 @@ namespace ProductionManagementClient.ViewModels.Reports
         {
             var reserve = new MaterialReserveModel()
             {
-                StoragePlaceId = SelectedStoragePlace.Id,
+              /*  StoragePlaceId = SelectedStoragePlace.Id,
                 Count = MaterialOrder.Count,
                 MaterialOrderNumber = MaterialOrder.OrderNumber,
                 MaterialOrderId = MaterialOrder.Id,
-                StoragePlaceName = SelectedStoragePlace.Name
+                StoragePlaceName = SelectedStoragePlace.Name*/
             };
 
             _client.Post(reserve, "material/reserve/insert");
@@ -211,7 +211,7 @@ namespace ProductionManagementClient.ViewModels.Reports
             _documentService.Font.Underline = Underline.Single;
             _documentService.WriteLine($"УП \"Универсал Бобруйск\", {SelectedStoragePlace.Name}");
 
-            _documentService.Font.Underline = Underline.None;
+     /*       _documentService.Font.Underline = Underline.None;
             _documentService.SkipLines(2);
             _documentService.StartTable();
             _documentService.InsertCell("Номер заказа");
@@ -223,7 +223,7 @@ namespace ProductionManagementClient.ViewModels.Reports
             _documentService.InsertCell(MaterialOrder.Count.ToString());
             _documentService.InsertLastCellInRow(MaterialOrder.Price.ToString());
             _documentService.EndTable();
-
+*/
             _documentService.SkipLines(2);
             _documentService.Font.Bold = true;
             _documentService.Write("Выплативший сотрудник: ");

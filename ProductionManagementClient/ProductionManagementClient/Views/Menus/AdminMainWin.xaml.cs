@@ -26,7 +26,7 @@ namespace ProductionManagementClient.Views.Menus
         public AdminMainWin()
         {
             InitializeComponent();
-            DataContext = new AdminMainViewModel(new HttpApiClient(), new WindowService());
+            DataContext = new AdminMainViewModel(new HttpApiClient(), new WindowService(), new DialogService());
         }
     }
 }

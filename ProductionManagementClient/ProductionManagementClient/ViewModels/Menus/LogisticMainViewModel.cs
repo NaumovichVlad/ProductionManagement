@@ -102,7 +102,7 @@ namespace ProductionManagementClient.ViewModels.Menus
         {
             Materials = new Container();
             Materials.PendingUnloading = CreateMaterialOrderTable(
-                _client.Get<List<MaterialOrderModel>>("material/reserve/pending").Result);
+                _client.Get<List<PurchaseModel>>("material/reserve/pending").Result);
         }
 
         private void FillMaterialReserves()
@@ -147,7 +147,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                     (_updateCommand = new RelayCommand(param =>
                     {
                         Materials.PendingUnloading = CreateMaterialOrderTable(
-                            _client.Get<List<MaterialOrderModel>>("material/reserve/pending").Result);
+                            _client.Get<List<PurchaseModel>>("material/reserve/pending").Result);
                     }));
             }
         }
@@ -232,7 +232,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        private DataTable CreateMaterialOrderTable(List<MaterialOrderModel> models)
+        private DataTable CreateMaterialOrderTable(List<PurchaseModel> models)
         {
             var table = new DataTable();
 
@@ -270,7 +270,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             {
                 var newRow = table.NewRow();
 
-                newRow[idColumn] = model.Id;
+                /*newRow[idColumn] = model.Id;
                 newRow[numberColumn] = model.OrderNumber;
                 newRow[materialColumn] = _client.Get<MaterialModel>($"material/get/{model.MaterialId}").Result;
                 newRow[dateColumn] = model.ManufactureDate.ToShortDateString();
@@ -278,7 +278,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 newRow[countColumn] = model.Count;
                 newRow[priceColumn] = model.Price;
 
-                table.Rows.Add(newRow);
+                table.Rows.Add(newRow);*/
             }
 
             return table;
@@ -303,15 +303,15 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             foreach (var model in models)
             {
-                var newRow = table.NewRow();
-                var order = _client.Get<MaterialOrderModel>($"material/order/get/{model.MaterialOrderId}").Result;
+               /* var newRow = table.NewRow();
+                var order = _client.Get<PurchaseModel>($"material/order/get/{model.MaterialOrderId}").Result;
 
                 newRow[numberColumn] = model.MaterialOrderNumber;
 
                 newRow[materialColumn] = _client.Get<MaterialModel>($"material/get/{order.MaterialId}").Result;
                 newRow[countColumn] = model.Count;
 
-                table.Rows.Add(newRow);
+                table.Rows.Add(newRow);*/
             }
 
             return table;

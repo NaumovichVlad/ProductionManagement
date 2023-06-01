@@ -49,7 +49,7 @@ namespace DbDeployment
             FillMaterials();
             _context.SaveChanges();
 
-            FillMaterialOrders();
+            FillPurchases();
             _context.SaveChanges();
 
             FillProducts();
@@ -58,7 +58,7 @@ namespace DbDeployment
             FillProductOrders();
             _context.SaveChanges();
 
-            FillProductsForOrders();
+            FillFinishedProducts();
             _context.SaveChanges();
 
             FillMaterialsForProducts();
@@ -207,21 +207,18 @@ namespace DbDeployment
             data.AddRange(entities);
         }
 
-        private void FillMaterialOrders()
+        private void FillPurchases()
         {
-            var data = _context.Set<MaterialOrder>();
-            var entities = new List<MaterialOrder>();
+            var data = _context.Set<Purchase>();
+            var entities = new List<Purchase>();
 
-            for (var i = 0; i < _thirdCount; i++)
+            for (var i = 0; i < _secondCount; i++)
             {
-                var entity = new MaterialOrder();
+                var entity = new Purchase();
 
                 entity.Id = i + 1;
                 entity.OrderNumber = _random.Next(10000000, 99999999).ToString();
                 entity.ManufactureDate = GetRandomDate(2010, 1, 1);
-                entity.MaterialId = _random.Next(1, _secondCount - 1);
-                entity.Price = _random.Next(1000, 10000);
-                entity.Count = _random.Next(10, 1000);
                 entity.ManufactureCountry = $"Страна_{_random.Next(1, _firstCount)}";
                 entity.CounteragentId = _random.Next(1, _secondCount - 1);
 
@@ -229,27 +226,61 @@ namespace DbDeployment
             }
 
             data.AddRange(entities);
-            FillMaterialReserves(entities);
+
+            FillMaterialsPurchases(entities);
         }
 
-        private void FillMaterialReserves(List<MaterialOrder> materialOrders)
+        private void FillMaterialsPurchases(List<Purchase> purchases)
         {
-            var data = _context.Set<MaterialReserve>();
-            var entities = new List<MaterialReserve>();
-
-            for (var i = 0; i < _thirdCount; i++)
+            var data = _context.Set<MaterialPurchase>();
+            var entities = new List<MaterialPurchase>();
+            var id = 1;
+            foreach (var purchase in purchases)
             {
-                var entity = new MaterialReserve();
+                for (var i = 0; i < _firstCount; i++)
+                {
+                    var entity = new MaterialPurchase();
 
-                entity.Id = i + 1;
-                entity.StoragePlaceId = _random.Next(1, _firstCount - 1);
-                entity.MaterialOrderId = materialOrders[i].Id;
-                entity.Count = materialOrders[i].Count;
+                    entity.Id = id;
+                    entity.MaterialId = _random.Next(1, _secondCount - 1);
+                    entity.PurchaseId = purchase.Id;
+                    entity.Price = _random.Next(1000, 10000);
+                    entity.Count = _random.Next(10, 1000);
+                    entity.IsAccepted = true;
 
-                entities.Add(entity);
+                    entities.Add(entity);
+
+                    id++;
+                }
             }
 
             data.AddRange(entities);
+
+            FillMaterialReserves(entities);
+        }
+
+        private void FillMaterialReserves(List<MaterialPurchase> materialsPurchases)
+        {
+            var data = _context.Set<MaterialReserve>();
+            var entities = new List<MaterialReserve>();
+            var i = 1;
+
+            foreach (var purchase in materialsPurchases)
+            {
+                var entity = new MaterialReserve();
+
+                entity.Id = i;
+                entity.StoragePlaceId = _random.Next(1, _firstCount - 1);
+                entity.MaterialPurchaseId = purchase.Id;
+                entity.Count = purchase.Count;
+
+                entities.Add(entity);
+                data.Append(entity);
+                i++;
+            }
+
+            data.AddRange(entities);
+
         }
 
         private void FillProducts()
@@ -272,12 +303,12 @@ namespace DbDeployment
 
         private void FillProductOrders()
         {
-            var data = _context.Set<ProductOrder>();
-            var entities = new List<ProductOrder>();
+            var data = _context.Set<Sale>();
+            var entities = new List<Sale>();
 
             for (var i = 0; i < _secondCount; i++)
             {
-                var entity = new ProductOrder();
+                var entity = new Sale();
 
                 entity.Id = i + 1;
                 entity.OrderNumber = _random.Next(10000, 30000);
@@ -290,28 +321,8 @@ namespace DbDeployment
             data.AddRange(entities);
         }
 
-        private void FillProductsForOrders()
-        {
-            var data = _context.Set<ProductsForOrder>();
-            var entities = new List<ProductsForOrder>();
 
-            for (var i = 0; i < _thirdCount; i++)
-            {
-                var entity = new ProductsForOrder();
-
-                entity.Id = i + 1;
-                entity.ProductOrderId = _random.Next(1, _secondCount - 1);
-                entity.ProductId = _random.Next(1, _secondCount - 1);
-                entity.Count = _random.Next(10, 1000);
-
-                entities.Add(entity);
-            }
-
-            data.AddRange(entities);
-            FillFinishedProducts(entities);
-        }
-
-        private void FillFinishedProducts(List<ProductsForOrder> productsForOrders)
+        private void FillFinishedProducts()
         {
             var data = _context.Set<FinishedProduct>();
             var entities = new List<FinishedProduct>();
@@ -322,8 +333,9 @@ namespace DbDeployment
 
                 entity.Id = i + 1;
                 entity.ManufactureDate = GetRandomDate(2020, 1, 1);
-                entity.ProductId = productsForOrders[i].ProductId;
-                entity.Count = productsForOrders[i].Count;
+                entity.ProductId = _random.Next(1, _secondCount - 1);
+                entity.Count = _random.Next(1, 100);
+                entity.IsApproved = true;
 
                 entities.Add(entity);
             }
@@ -355,15 +367,15 @@ namespace DbDeployment
 
         private void FillFinishedProductsForOrders(List<FinishedProduct> finishedProducts)
         {
-            var data = _context.Set<FinishedProductsForOrder>();
-            var entities = new List<FinishedProductsForOrder>();
+            var data = _context.Set<FinishedProductSale>();
+            var entities = new List<FinishedProductSale>();
 
             for (var i = 0; i < _thirdCount; i++)
             {
-                var entity = new FinishedProductsForOrder();
+                var entity = new FinishedProductSale();
 
                 entity.Id = i + 1;
-                entity.ProductsForOrderId = finishedProducts[i].Id;
+                entity.SaleId = _random.Next(1, _secondCount - 1);
                 entity.ProductsReserveId = finishedProducts[i].Id;
                 entity.Count = finishedProducts[i].Count;
 

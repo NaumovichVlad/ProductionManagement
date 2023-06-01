@@ -112,12 +112,12 @@ namespace ProductionManagementClient.ViewModels.Reports
 
             _documentService.Font.Bold = false;
 
-            foreach (var material in materials)
+           /* foreach (var material in materials)
             {
                 _documentService.InsertCell(material.MaterialOrderNumber);
                 _documentService.InsertCell(material.StoragePlaceName);
-                _documentService.InsertLastCellInRow(_client.Get<MaterialOrderModel>($"material/order/get/{material.MaterialOrderId}").Result.Count.ToString());
-            }
+                _documentService.InsertLastCellInRow(_client.Get<PurchaseModel>($"material/order/get/{material.MaterialOrderId}").Result.Count.ToString());
+            }*/
 
             _documentService.EndTable();
 

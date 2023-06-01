@@ -14,21 +14,18 @@ namespace API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IProductOrderService _productOrderService;
-        private readonly IProductsForOrderService _productsForOrderService;
+        private readonly ISaleService _productOrderService;
         private readonly IProductsReserveService _productsReserveService;
         private readonly IFinishedProductService _finishedProductService;
-        private readonly IFinishedProductForOrderService _finishedProductForOrderService;
+        private readonly IFinishedProductSaleService _finishedProductForOrderService;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService, IProductOrderService productOrderService, 
-            IProductsForOrderService productsForOrderService, IProductsReserveService productsReserveService, 
-            IFinishedProductService finishedProductService, IFinishedProductForOrderService finishedProductForOrderService, 
+        public ProductController(IProductService productService, ISaleService productOrderService, IProductsReserveService productsReserveService, 
+            IFinishedProductService finishedProductService, IFinishedProductSaleService finishedProductForOrderService, 
             IMapper mapper)
         {
             _productService = productService;
             _productOrderService = productOrderService;
-            _productsForOrderService = productsForOrderService;
             _productsReserveService = productsReserveService;
             _finishedProductService = finishedProductService;
             _finishedProductForOrderService = finishedProductForOrderService;
@@ -97,27 +94,27 @@ namespace API.Controllers
 
         [HttpGet]
         [ActionName("order/all")]
-        public async Task<ActionResult<IEnumerable<ProductOrderModel>>> GetProductOrders()
+        public async Task<ActionResult<IEnumerable<SaleModel>>> GetProductOrders()
         {
-            var items = _mapper.Map<List<ProductOrderModel>>(_productOrderService.GetList());
+            var items = _mapper.Map<List<SaleModel>>(_productOrderService.GetList());
 
             return await Task.FromResult(items);
         }
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
         [ActionName("order/all/select")]
-        public async Task<ActionResult<List<ProductOrderModel>>> GetProductOrdersSelection(int start, int size, string sortDirection, string sortParameter)
+        public async Task<ActionResult<List<SaleModel>>> GetProductOrdersSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var roles = _mapper.Map<List<ProductOrderModel>>(_productOrderService.GetSelection(start, size, sortDirection, sortParameter));
+            var roles = _mapper.Map<List<SaleModel>>(_productOrderService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
         }
 
         [HttpPost]
-        [ActionName("order/insert")]
-        public async Task<IActionResult> InsertProductOrder([FromBody] ProductOrderModel model)
+        [ActionName("sale/insert")]
+        public async Task<IActionResult> InsertProductOrder([FromBody] SaleModel model)
         {
-            _productOrderService.Insert(_mapper.Map<ProductOrderDto>(model));
+            _productOrderService.Insert(_mapper.Map<SaleDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -125,10 +122,10 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [ActionName("order/edit")]
-        public async Task<IActionResult> EditProductOrder([FromBody] ProductOrderModel model)
+        [ActionName("sale/edit")]
+        public async Task<IActionResult> EditProductOrder([FromBody] SaleModel model)
         {
-            _productOrderService.Edit(_mapper.Map<ProductOrderDto>(model));
+            _productOrderService.Edit(_mapper.Map<SaleDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -136,79 +133,19 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [ActionName("order/get")]
-        public async Task<ActionResult<ProductOrderModel>> GetProductOrderById(int id)
+        [ActionName("sale/get")]
+        public async Task<ActionResult<SaleModel>> GetProductOrderById(int id)
         {
-            var model = _mapper.Map<ProductOrderModel>(_productOrderService.GetById(id));
+            var model = _mapper.Map<SaleModel>(_productOrderService.GetById(id));
 
             return new ObjectResult(model);
         }
 
         [HttpDelete("{id}")]
-        [ActionName("order/remove")]
+        [ActionName("sale/remove")]
         public async Task<IActionResult> DeleteProductOrder(int id)
         {
             _productOrderService.Delete(id);
-
-            var response = Ok(new { Message = "Success" });
-
-            return response;
-        }
-
-        [HttpGet]
-        [ActionName("forOrder/all")]
-        public async Task<ActionResult<IEnumerable<ProductsForOrdersModel>>> GetProductsForOrders()
-        {
-            var items = _mapper.Map<List<ProductsForOrdersModel>>(_productsForOrderService.GetList());
-
-            return await Task.FromResult(items);
-        }
-
-        [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
-        [ActionName("forOrder/all/select")]
-        public async Task<ActionResult<List<ProductsForOrdersModel>>> GetProductsForOrdersSelection(int start, int size, string sortDirection, string sortParameter)
-        {
-            var roles = _mapper.Map<List<ProductsForOrdersModel>>(_productsForOrderService.GetSelection(start, size, sortDirection, sortParameter));
-
-            return new ObjectResult(roles);
-        }
-
-        [HttpPost]
-        [ActionName("forOrder/insert")]
-        public async Task<IActionResult> InsertProductsForOrder([FromBody] ProductsForOrdersModel model)
-        {
-            _productsForOrderService.Insert(_mapper.Map<ProductsForOrderDto>(model));
-
-            var response = Ok(new { Message = "Success" });
-
-            return response;
-        }
-
-        [HttpPut]
-        [ActionName("forOrder/edit")]
-        public async Task<IActionResult> EditProductsForOrder([FromBody] ProductsForOrdersModel model)
-        {
-            _productsForOrderService.Edit(_mapper.Map<ProductsForOrderDto>(model));
-
-            var response = Ok(new { Message = "Success" });
-
-            return response;
-        }
-
-        [HttpGet("{id}")]
-        [ActionName("forOrder/get")]
-        public async Task<ActionResult<ProductsForOrdersModel>> GetProductsForOrderById(int id)
-        {
-            var model = _mapper.Map<ProductsForOrdersModel>(_productsForOrderService.GetById(id));
-
-            return new ObjectResult(model);
-        }
-
-        [HttpDelete("{id}")]
-        [ActionName("forOrder/remove")]
-        public async Task<IActionResult> DeleteProductsForOrder(int id)
-        {
-            _productsForOrderService.Delete(id);
 
             var response = Ok(new { Message = "Success" });
 
@@ -354,28 +291,28 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ActionName("finished/forOrder/all")]
-        public async Task<ActionResult<IEnumerable<FinishedProductsForOrderModel>>> GetFinishedProductsForOrder()
+        [ActionName("finished/sale/all")]
+        public async Task<ActionResult<IEnumerable<FinishedProductSaleModel>>> GetFinishedProductsForOrder()
         {
-            var items = _mapper.Map<List<FinishedProductsForOrderModel>>(_finishedProductForOrderService.GetList());
+            var items = _mapper.Map<List<FinishedProductSaleModel>>(_finishedProductForOrderService.GetList());
 
             return await Task.FromResult(items);
         }
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
-        [ActionName("finished/forOrder/all/select")]
-        public async Task<ActionResult<List<FinishedProductsForOrderModel>>> GetFinishedProductsForOrderSelection(int start, int size, string sortDirection, string sortParameter)
+        [ActionName("finished/sale/all/select")]
+        public async Task<ActionResult<List<FinishedProductSaleModel>>> GetFinishedProductsForOrderSelection(int start, int size, string sortDirection, string sortParameter)
         {
-            var roles = _mapper.Map<List<FinishedProductsForOrderModel>>(_finishedProductForOrderService.GetSelection(start, size, sortDirection, sortParameter));
+            var roles = _mapper.Map<List<FinishedProductSaleModel>>(_finishedProductForOrderService.GetSelection(start, size, sortDirection, sortParameter));
 
             return new ObjectResult(roles);
         }
 
         [HttpPost]
-        [ActionName("finished/forOrder/insert")]
-        public async Task<IActionResult> InsertFinishedProductForOrder([FromBody] FinishedProductsForOrderModel model)
+        [ActionName("finished/sale/insert")]
+        public async Task<IActionResult> InsertFinishedProductForOrder([FromBody] FinishedProductSaleModel model)
         {
-            _finishedProductForOrderService.Insert(_mapper.Map<FinishedProductsForOrderDto>(model));
+            _finishedProductForOrderService.Insert(_mapper.Map<FinishedProductsSaleDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -383,10 +320,10 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [ActionName("finished/forOrder/edit")]
-        public async Task<IActionResult> EditFinishedProductForOrder([FromBody] FinishedProductsForOrderModel model)
+        [ActionName("finished/sale/edit")]
+        public async Task<IActionResult> EditFinishedProductForOrder([FromBody] FinishedProductSaleModel model)
         {
-            _finishedProductForOrderService.Edit(_mapper.Map<FinishedProductsForOrderDto>(model));
+            _finishedProductForOrderService.Edit(_mapper.Map<FinishedProductsSaleDto>(model));
 
             var response = Ok(new { Message = "Success" });
 
@@ -394,16 +331,16 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [ActionName("finished/forOrder/get")]
-        public async Task<ActionResult<FinishedProductsForOrderModel>> GetFinishedProductForOrderById(int id)
+        [ActionName("finished/sale/get")]
+        public async Task<ActionResult<FinishedProductSaleModel>> GetFinishedProductForOrderById(int id)
         {
-            var model = _mapper.Map<FinishedProductsForOrderModel>(_finishedProductForOrderService.GetById(id));
+            var model = _mapper.Map<FinishedProductSaleModel>(_finishedProductForOrderService.GetById(id));
 
             return new ObjectResult(model);
         }
 
         [HttpDelete("{id}")]
-        [ActionName("finished/forOrder/remove")]
+        [ActionName("finished/sale/remove")]
         public async Task<IActionResult> DeleteFinishedProductForOrder(int id)
         {
             _finishedProductForOrderService.Delete(id);

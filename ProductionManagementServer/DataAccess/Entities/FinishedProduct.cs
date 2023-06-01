@@ -12,6 +12,7 @@ namespace DataAccess.Entities
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
+        public bool IsApproved { get; set; }
         public DateTime ManufactureDate { get; set; }
         public Product Product { get; set; }
 
