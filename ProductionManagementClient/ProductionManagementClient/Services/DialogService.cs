@@ -44,7 +44,11 @@ namespace ProductionManagementClient.Services
         }
         public void ShowMessage(string header, string message)
         {
-            MessageBox.Show(message, header, MessageBoxButton.OK);
+            MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public void ShowErrorMessage(string header, string message)
+        {
+            MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

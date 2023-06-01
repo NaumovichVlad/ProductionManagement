@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{FD80909C-BD71-4363-86AA-A228B424E452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbDeployment", "DbDeployment\DbDeployment.csproj", "{81EE54B9-F110-4B5A-811F-B98A20F7C9BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbDeployment", "DbDeployment\DbDeployment.csproj", "{81EE54B9-F110-4B5A-811F-B98A20F7C9BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductionManagementServerTests", "ProductionManagementServerTests\ProductionManagementServerTests.csproj", "{422C87A0-0051-4EC4-B50A-7A842A1E9B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{81EE54B9-F110-4B5A-811F-B98A20F7C9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81EE54B9-F110-4B5A-811F-B98A20F7C9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81EE54B9-F110-4B5A-811F-B98A20F7C9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422C87A0-0051-4EC4-B50A-7A842A1E9B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422C87A0-0051-4EC4-B50A-7A842A1E9B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422C87A0-0051-4EC4-B50A-7A842A1E9B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422C87A0-0051-4EC4-B50A-7A842A1E9B7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Config
 {
-    public static class BllDiModule
+    public static class BllDiModule  
     {
         public static void ConfigurateBll(this IServiceCollection service, string connectionString)
         {

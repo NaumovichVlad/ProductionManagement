@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
+using System.Net.Sockets;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -48,18 +49,25 @@ namespace ProductionManagementClient.ViewModels.Menus
                 return _loginCommand ??
                     (_loginCommand = new RelayCommand(obj =>
                     {
-                        var responce = _client.Post(User, "login/autorize").Result;
+                        try
+                        {
+                            var responce = _client.Post(User, "login/autorize").Result;
 
-                        if (responce.StatusCode == HttpStatusCode.OK)
-                        {
-                            ApiConnection.Token = JsonNode.Parse(responce.Content.ReadAsStringAsync().Result)["token"].ToString();
-                            ApiConnection.User = GetUser();
-                            OpenMainWindow();
-                            ((Window)obj).Close();
+                            if (responce.StatusCode == HttpStatusCode.OK)
+                            {
+                                ApiConnection.Token = JsonNode.Parse(responce.Content.ReadAsStringAsync().Result)["token"].ToString();
+                                ApiConnection.User = GetUser();
+                                OpenMainWindow();
+                                ((Window)obj).Close();
+                            }
+                            else
+                            {
+                                _dialogService.ShowErrorMessage("Ошибка авторизации", "Логин или пароль введён неверно");
+                            }
                         }
-                        else
+                        catch (AggregateException ex)
                         {
-                            _dialogService.ShowMessage("Ошибка авторизации", "Логин или пароль введён неверно");
+                            _dialogService.ShowErrorMessage("Ошибка подключения", "Подключение к серверу не установлено");
                         }
                     }));
 
@@ -95,6 +103,9 @@ namespace ProductionManagementClient.ViewModels.Menus
                     break;
                 case "hr":
                     _windowService.ShowWindow<HrMainWin>();
+                    break;
+                case "logistics":
+                    _windowService.ShowWindow<LogisticMainWin>();
                     break;
             }
         }

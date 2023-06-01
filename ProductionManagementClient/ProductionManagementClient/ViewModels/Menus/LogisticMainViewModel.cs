@@ -344,7 +344,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 var newRow = table.NewRow();
 
                 newRow[idColumn] = model.Id;
-                newRow[nameColumn] = model.ProductName;
+                newRow[nameColumn] = _client.Get<ProductModel>($"product/get/{model.ProductId}").Result.Name;
                 newRow[dateColumn] = model.ManufactureDate.ToShortDateString();
                 newRow[countColumn] = model.Count;
 

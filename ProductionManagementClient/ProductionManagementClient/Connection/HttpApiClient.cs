@@ -30,7 +30,14 @@ namespace ProductionManagementClient.Connection
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ApiConnection.Token);
                 var request = client.PostAsJsonAsync(uri, model);
 
-                request.Wait();
+                try
+                {
+                    request.Wait();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
 
                 return request;
             }

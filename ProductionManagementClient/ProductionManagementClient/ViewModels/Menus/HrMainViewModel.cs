@@ -395,7 +395,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 newRow[accruedColumn] = model.Accrued;
                 newRow[toBePaidColumn] = model.ToBePaid;
                 newRow[paidColumn] = model.Paid;
-                newRow[dateColumn] = model.PaymentDate;
+                newRow[dateColumn] = model.PaymentDate.ToShortDateString();
                 newRow[surnameColumn] = model.EmployeeSurname;
                 newRow[nameColumn] = model.EmployeeName;
                 newRow[middleNameColumn] = model.EmployeeMiddleName;

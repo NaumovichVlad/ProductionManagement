@@ -12,5 +12,6 @@ namespace ProductionManagementClient.Interfaces.Services
         public bool SaveFileDialog(string format);
 
         void ShowMessage(string header, string message);
+        void ShowErrorMessage(string header, string message);
     }
 }
