@@ -3,6 +3,7 @@ using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
+using ProductionManagementClient.ViewModels.Products;
 using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Counteragents;
 using ProductionManagementClient.Views.Materials;
@@ -114,10 +115,17 @@ namespace ProductionManagementClient.ViewModels.Menus
                 return _editCommand ??
                     (_editCommand = new RelayCommand(param =>
                     {
-                        var row = (DataRowView)param;
-                        EditServerEntity(row["Ид"]);
+                        if (param != null)
+                        {
+                            var row = (DataRowView)param;
+                            EditServerEntity(row["Ид"]);
 
-                        Clear();
+                            Clear();
+                        }
+                        else
+                        {
+                            _dialogService.ShowErrorMessage("Внимание", "Выберите элемент таблицы");
+                        }
                     }));
             }
         }
@@ -131,10 +139,17 @@ namespace ProductionManagementClient.ViewModels.Menus
                 return _deleteCommand ??
                     (_deleteCommand = new RelayCommand(param =>
                     {
-                        var row = (DataRowView)param;
-                        DeleteServerEntity(row["Ид"]);
+                        if (param != null)
+                        {
+                            var row = (DataRowView)param;
+                            DeleteServerEntity(row["Ид"]);
 
-                        Clear();
+                            Clear();
+                        }
+                        else
+                        {
+                            _dialogService.ShowErrorMessage("Внимание", "Выберите элемент таблицы");
+                        }
                     }));
             }
         }
@@ -257,6 +272,30 @@ namespace ProductionManagementClient.ViewModels.Menus
                     DataContainer.Table = CreateSalaryTable(_client.Get<List<SalaryModel>>(
                         $"salary/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
                     break;
+                case DataTypes.FinishedProducts:
+                    DataContainer.Table = CreateFinishedProductTable(_client.Get<List<FinishedProductModel>>(
+                        $"product/finished/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.ProductsReserves:
+                    DataContainer.Table = CreateProductReserveTable(_client.Get<List<ProductReserveModel>>(
+                        $"product/reserve/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.Sales:
+                    DataContainer.Table = CreateSaleTable(_client.Get<List<SaleModel>>(
+                        $"product/sale/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.FinishedProductsSales:
+                    DataContainer.Table = CreateFinishedProductSaleTable(_client.Get<List<FinishedProductSaleModel>>(
+                        $"product/finished/sale/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.MaterialsForProducts:
+                    DataContainer.Table = CreateMaterialsForProductsTable(_client.Get<List<MaterialsForProductsModel>>(
+                        $"material/forProducts/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
+                case DataTypes.MaterialsForFinishedProducts:
+                    DataContainer.Table = CreateMaterialsForFinishedProductsTable(_client.Get<List<MaterialsForFinishedProductsModel>>(
+                        $"material/forFinishedProducts/all/select/{_dataContainer.SortDirection}/{_dataContainer.SortParam}/{_pageIndex * pageSize}/{pageSize}").Result);
+                    break;
                 default:
                     break;
             }
@@ -295,6 +334,21 @@ namespace ProductionManagementClient.ViewModels.Menus
                     break;
                 case DataTypes.Salaries:
                     _windowService.ShowWindowDialog<SalariesEditWin>(id);
+                    break;
+                case DataTypes.FinishedProducts:
+                    _windowService.ShowWindowDialog<FinishedProductsEditWin>(id);
+                    break;
+                case DataTypes.Sales:
+                    _windowService.ShowWindowDialog<SalesEditWIn>(id);
+                    break;
+                case DataTypes.FinishedProductsSales:
+                    _windowService.ShowWindowDialog<FinishedProductsSalesEditWin>(id);
+                    break;
+                case DataTypes.MaterialsForProducts:
+                    _windowService.ShowWindowDialog<MaterialsForProductsEditWin>(id);
+                    break;
+                case DataTypes.MaterialsForFinishedProducts:
+                    _windowService.ShowWindowDialog<MaterialsForFinishedProductsEditWin>(id);
                     break;
                 default:
                     _dialogService.ShowErrorMessage("Предупреждение", "Редактирование невозможно");
@@ -339,6 +393,24 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case DataTypes.Salaries:
                     _windowService.ShowWindowDialog<SalariesCreateWin>();
                     break;
+                case DataTypes.FinishedProducts:
+                    _windowService.ShowWindowDialog<FinishedProductsCreateWin>();
+                    break;
+                case DataTypes.ProductsReserves:
+                    _windowService.ShowWindowDialog<ProductsReservesCreateWin>();
+                    break;
+                case DataTypes.Sales:
+                    _windowService.ShowWindowDialog<SalesCreateWin>();
+                    break;
+                case DataTypes.FinishedProductsSales:
+                    _windowService.ShowWindowDialog<FinishedProductsSalesCreateWin>();
+                    break;
+                case DataTypes.MaterialsForProducts:
+                    _windowService.ShowWindowDialog<MaterialsForProductsCreateWin>();
+                    break;
+                case DataTypes.MaterialsForFinishedProducts:
+                    _windowService.ShowWindowDialog<MaterialsForFinishedProductsCreateWin>();
+                    break;
             }
         }
 
@@ -378,6 +450,21 @@ namespace ProductionManagementClient.ViewModels.Menus
                     break;
                 case DataTypes.Salaries:
                     _client.Delete($"salary/remove/{id}");
+                    break;
+                case DataTypes.FinishedProducts:
+                    _client.Delete($"product/finished/remove/{id}");
+                    break;
+                case DataTypes.ProductsReserves:
+                    _client.Delete($"product/reserve/remove/{id}");
+                    break;
+                case DataTypes.Sales:
+                    _client.Delete($"product/sale/remove/{id}");
+                    break;
+                case DataTypes.MaterialsForProducts:
+                    _client.Delete($"material/forProducts/remove/{id}");
+                    break;
+                case DataTypes.MaterialsForFinishedProducts:
+                    _client.Delete($"material/forFinishedProducts/remove/{id}");
                     break;
             }
         }
@@ -839,6 +926,238 @@ namespace ProductionManagementClient.ViewModels.Menus
                 newRow[surnameColumn] = model.EmployeeSurname;
                 newRow[nameColumn] = model.EmployeeName;
                 newRow[middleNameColumn] = model.EmployeeMiddleName;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateFinishedProductTable(List<FinishedProductModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var materialColumn = new DataColumn("Продукция");
+            materialColumn.Caption = "ProductName";
+
+            var dateColumn = new DataColumn("Дата производства");
+            dateColumn.Caption = "ManufactureDate";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+            var isAcceptedColumn = new DataColumn("Принято на складе");
+            isAcceptedColumn.Caption = "IsApproved";
+
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(dateColumn);
+            table.Columns.Add(countColumn);
+            table.Columns.Add(isAcceptedColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[materialColumn] = model.ProductName;
+                newRow[dateColumn] = model.ManufactureDate.ToShortDateString();
+                newRow[countColumn] = model.Count;
+                newRow[isAcceptedColumn] = model.IsApproved ? "Принято" : "Не принято";
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateProductReserveTable(List<ProductReserveModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var materialColumn = new DataColumn("Продукция");
+            materialColumn.Caption = "MaterialName";
+
+            var storagePlaceColumn = new DataColumn("Склад");
+            storagePlaceColumn.Caption = "StoragePlaceName";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(storagePlaceColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(countColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[materialColumn] = model.FinishedProductName;
+                newRow[storagePlaceColumn] = model.StoragePlaceName;
+                newRow[countColumn] = model.Count;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateSaleTable(List<SaleModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Номер заказа");
+            numberColumn.Caption = "OrderNumber";
+
+            var counteragentColumn = new DataColumn("Контерагент");
+            counteragentColumn.Caption = "CounteragentName";
+
+            var dateColumn = new DataColumn("Дата заказа");
+            dateColumn.Caption = "OrderDate";
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(counteragentColumn);
+            table.Columns.Add(dateColumn);
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.OrderNumber;
+                newRow[counteragentColumn] = model.CounteragentName;
+                newRow[dateColumn] = model.OrderDate.ToShortDateString();
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateFinishedProductSaleTable(List<FinishedProductSaleModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Номер заказа");
+            numberColumn.Caption = "OrderNumber";
+
+            var materialColumn = new DataColumn("Продукция");
+            materialColumn.Caption = "ProductNameName";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(countColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.SaleNumber;
+                newRow[materialColumn] = model.ProductName;
+                newRow[countColumn] = model.Count;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialsForProductsTable(List<MaterialsForProductsModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Материал");
+            numberColumn.Caption = "MaterialName";
+
+            var materialColumn = new DataColumn("Продукция");
+            materialColumn.Caption = "ProductName";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(countColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.MaterialName;
+                newRow[materialColumn] = model.ProductName;
+                newRow[countColumn] = model.Count;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private DataTable CreateMaterialsForFinishedProductsTable(List<MaterialsForFinishedProductsModel> models)
+        {
+            var table = new DataTable();
+
+            var idColumn = new DataColumn("Ид");
+            idColumn.Caption = "Id";
+
+            var numberColumn = new DataColumn("Материал");
+            numberColumn.Caption = "MaterialName";
+
+            var materialColumn = new DataColumn("Продукция");
+            materialColumn.Caption = "ProductName";
+
+            var countColumn = new DataColumn("Количество");
+            countColumn.Caption = "Count";
+
+
+
+            table.Columns.Add(idColumn);
+            table.Columns.Add(numberColumn);
+            table.Columns.Add(materialColumn);
+            table.Columns.Add(countColumn);
+
+
+            foreach (var model in models)
+            {
+                var newRow = table.NewRow();
+
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.MaterialName;
+                newRow[materialColumn] = model.ProductName;
+                newRow[countColumn] = model.Count;
 
                 table.Rows.Add(newRow);
             }

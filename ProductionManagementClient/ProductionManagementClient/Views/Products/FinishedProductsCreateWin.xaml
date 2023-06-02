@@ -1,0 +1,21 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Products.FinishedProductsCreateWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Products" xmlns:products="clr-namespace:ProductionManagementClient.ViewModels.Products" d:DataContext="{d:DesignInstance Type=products:FinishedProductsCreateViewModel}"
+        mc:Ignorable="d"
+        Title="Добавление данных о изготовленной продукции" Height="260" Width="371">
+    <Grid>
+        <Label Content="Продукция:" HorizontalAlignment="Left" Margin="31,24,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" HorizontalAlignment="Left" Margin="114,26,0,0" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Дата:" HorizontalAlignment="Left" Margin="32,63,0,0" VerticalAlignment="Top"/>
+        <Label Content="Количество:" HorizontalAlignment="Left" Margin="32,99,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Model.Count}" HorizontalAlignment="Left" Margin="115,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+        <Label Content="Принято на складе" HorizontalAlignment="Left" Margin="32,132,0,0" VerticalAlignment="Top"/>
+        <CheckBox IsChecked="{Binding Model.IsApproved}" HorizontalAlignment="Left" Margin="151,139,0,0" VerticalAlignment="Top"/>
+        <Button Content="Назад" Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="273,182,0,0" VerticalAlignment="Top" Width="53"/>
+        <Button Content="Подтвердить" Command="{Binding ConfirmCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="179,182,0,0" VerticalAlignment="Top" Width="82"/>
+        <DatePicker SelectedDate="{Binding Model.ManufactureDate}" HorizontalAlignment="Left" Margin="115,65,0,0" VerticalAlignment="Top" Width="209"/>
+    </Grid>
+</Window>

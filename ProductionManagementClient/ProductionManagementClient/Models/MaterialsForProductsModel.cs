@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Dtos
+namespace ProductionManagementClient.Models
 {
-    public class MaterialsForFinishedProductsDto
+    public class MaterialsForProductsModel : ModelBase
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
-        public int MaterialReserveId { get; set; }
+        public int MaterialId { get; set; }
         public int Count { get; set; }
-        public FinishedProductDto Product { get; set; }
-        public MaterialReserveDto MaterialReserve { get; set; }
+        public string ProductName { get; set; }
+        public string MaterialName { get; set; }
     }
 }

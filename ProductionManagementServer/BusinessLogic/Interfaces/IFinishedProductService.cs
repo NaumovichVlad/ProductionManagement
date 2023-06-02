@@ -8,5 +8,7 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Interfaces
 {
     public interface IFinishedProductService : IService<FinishedProductDto>
-    { }
+    {
+        List<FinishedProductDto> GetNotAccepted();
+    }
 }

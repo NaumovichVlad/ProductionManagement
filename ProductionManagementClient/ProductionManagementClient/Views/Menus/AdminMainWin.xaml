@@ -23,6 +23,7 @@
                     <TreeViewItem Name="FinishedProducts" Header="Изготовленная продукция" />
                     <TreeViewItem Name="ProductsReserves" Header="Продукция на складе" />
                     <TreeViewItem Name="Sales" Header="Продажи" />
+                    <TreeViewItem Name="FinishedProductsSales" Header="Продукция из заказа" />
                     <TreeViewItem Name="MaterialsForProducts" Header="Рецептура продукции" />
                     <TreeViewItem Name="MaterialsForFinishedProducts" Header="Использованные материалы" />
                 </TreeViewItem>

@@ -15,26 +15,48 @@ namespace BusinessLogic.Services
     public class ProductsReserveService : Service<ProductsReserve, ProductsReserveDto>, IProductsReserveService
     {
         private IRepository<FinishedProduct> _finishedProductRepository;
-        public ProductsReserveService(IRepository<ProductsReserve> employeeRepository, IMapper mapper, IRepository<FinishedProduct> finishedProductRepository) : base(employeeRepository, mapper)
+        private IRepository<Product> _productRepository;
+        public ProductsReserveService(IRepository<ProductsReserve> employeeRepository, IMapper mapper, IRepository<FinishedProduct> finishedProductRepository, IRepository<Product> productRepository) : base(employeeRepository, mapper)
         {
             _finishedProductRepository = finishedProductRepository;
+            _productRepository = productRepository;
         }
 
         public new List<ProductsReserveDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var type = typeof(ProductsReserve);
+            var dtos = new List<ProductsReserveDto>();
             var sortParameterProperty = type.GetProperty(sortParameter);
+
             if (sortDirection == "asc")
             {
-                return _mapper.Map<List<ProductsReserveDto>>(_repository.Get(null, null, "FinishedProduct,StoragePlace")
+                dtos = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(null, null, "FinishedProduct,StoragePlace")
                     .OrderBy(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
             else
             {
-                return _mapper.Map<List<ProductsReserveDto>>(_repository.Get(null, null, "FinishedProduct,StoragePlace")
+                dtos = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(null, null, "FinishedProduct,StoragePlace")
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
 
+            foreach (var dto in dtos)
+            {
+                dto.FinishedProduct.Product = _mapper.Map<ProductDto>(_productRepository.GetById(dto.FinishedProduct.ProductId));
+            }
+
+            return dtos;
+        }
+
+        public List<ProductsReserveDto> GetList()
+        {
+            var dtos = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(null, null, "FinishedProduct")).ToList();
+
+            foreach (var dto in dtos)
+            {
+                dto.FinishedProduct.Product = _mapper.Map<ProductDto>(_productRepository.GetById(dto.FinishedProduct.ProductId));
+            }
+
+            return dtos;
         }
 
         public List<ProductsReserveDto> GetStorageReserves(int storagePlaceId)

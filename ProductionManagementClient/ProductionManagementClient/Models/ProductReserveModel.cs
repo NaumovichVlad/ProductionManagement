@@ -14,5 +14,10 @@ namespace ProductionManagementClient.Models
         public int Count { get; set; }
         public string StoragePlaceName { get; set; }
         public string FinishedProductName { get; set; }
+
+        public override string ToString()
+        {
+            return FinishedProductName;
+        }
     }
 }

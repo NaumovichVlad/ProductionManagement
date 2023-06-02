@@ -1,8 +1,12 @@
-﻿using DataAccess.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace API.Models
+namespace ProductionManagementClient.Models
 {
-    public class FinishedProductSaleModel
+    public class FinishedProductSaleModel : ModelBase
     {
         public int Id { get; set; }
         public int SaleId { get; set; }

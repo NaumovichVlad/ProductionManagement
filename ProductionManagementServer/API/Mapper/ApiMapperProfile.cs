@@ -96,9 +96,9 @@ namespace API.Mapper
                 .ForMember(model => model.Id, dto => dto.MapFrom(s => s.Id))
                 .ForMember(model => model.ProductId, dto => dto.MapFrom(s => s.ProductId))
                 .ForMember(model => model.MaterialReserveId, dto => dto.MapFrom(s => s.MaterialReserveId))
-                .ForMember(model => model.ProductName, dto => dto.MapFrom(s => s.Product.Name))
+                .ForMember(model => model.ProductName, dto => dto.MapFrom(s => s.Product.Product.Name))
                 .ForMember(model => model.Count, dto => dto.MapFrom(s => s.Count))
-                .ForMember(model => model.OrderNumber, dto => dto.MapFrom(s => s.MaterialReserve.MaterialPurchase.PurchaseId));
+                .ForMember(model => model.MaterialName, dto => dto.MapFrom(s => s.MaterialReserve.MaterialPurchase.Material.Name));
 
             CreateMap<MaterialsForFinishedProductsModel, MaterialsForFinishedProductsDto>()
                 .ForMember(dto => dto.Id, model => model.MapFrom(s => s.Id))
@@ -163,7 +163,7 @@ namespace API.Mapper
             CreateMap<FinishedProductsSaleDto, FinishedProductSaleModel>()
                 .ForMember(model => model.Id, dto => dto.MapFrom(s => s.Id))
                 .ForMember(model => model.ProductsReserveId, dto => dto.MapFrom(s => s.ProductsReserveId))
-                .ForMember(model => model.ProductsForOrderId, dto => dto.MapFrom(s => s.ProductsForOrderId))
+                .ForMember(model => model.SaleId, dto => dto.MapFrom(s => s.SaleId))
                 .ForMember(model => model.Count, dto => dto.MapFrom(s => s.Count))
                 .ForMember(model => model.SaleNumber, dto => dto.MapFrom(s => s.Sale.OrderNumber))
                 .ForMember(model => model.ProductName, dto => dto.MapFrom(s => s.ProductsReserve.FinishedProduct.Product.Name));
@@ -171,7 +171,7 @@ namespace API.Mapper
             CreateMap<FinishedProductSaleModel, FinishedProductsSaleDto>()
                 .ForMember(dto => dto.Id, model => model.MapFrom(s => s.Id))
                 .ForMember(dto => dto.ProductsReserveId, model => model.MapFrom(s => s.ProductsReserveId))
-                .ForMember(dto => dto.ProductsForOrderId, model => model.MapFrom(s => s.ProductsForOrderId))
+                .ForMember(dto => dto.SaleId, model => model.MapFrom(s => s.SaleId))
                 .ForMember(dto => dto.Count, model => model.MapFrom(s => s.Count));
 
             CreateMap<RoleDto, RoleModel>().ReverseMap();

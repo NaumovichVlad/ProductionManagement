@@ -1,8 +1,12 @@
-﻿using BusinessLogic.Dtos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace API.Models
+namespace ProductionManagementClient.Models
 {
-    public class MaterialsForFinishedProductsModel
+    public class MaterialsForFinishedProductsModel : ModelBase
     {
         public int Id { get; set; }
         public int ProductId { get; set; }

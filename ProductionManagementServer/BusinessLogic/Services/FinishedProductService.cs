@@ -31,5 +31,10 @@ namespace BusinessLogic.Services
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
         }
+
+        public List<FinishedProductDto> GetNotAccepted()
+        {
+            return _mapper.Map<List<FinishedProductDto>>(_repository.Get(m => m.IsApproved == false, null, "Product"));
+        }
     }
 }

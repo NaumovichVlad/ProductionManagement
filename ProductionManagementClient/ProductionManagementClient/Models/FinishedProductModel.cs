@@ -13,5 +13,11 @@ namespace ProductionManagementClient.Models
         public int Count { get; set; }
         public DateTime ManufactureDate { get; set; }
         public string ProductName { get; set; }
+        public bool IsApproved { get; set; }
+
+        public override string ToString()
+        {
+            return ProductName;
+        }
     }
 }

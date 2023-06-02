@@ -93,7 +93,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ActionName("order/all")]
+        [ActionName("sale/all")]
         public async Task<ActionResult<IEnumerable<SaleModel>>> GetProductOrders()
         {
             var items = _mapper.Map<List<SaleModel>>(_productOrderService.GetList());
@@ -102,7 +102,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{sortDirection}/{sortParameter}/{start}/{size}")]
-        [ActionName("order/all/select")]
+        [ActionName("sale/all/select")]
         public async Task<ActionResult<List<SaleModel>>> GetProductOrdersSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var roles = _mapper.Map<List<SaleModel>>(_productOrderService.GetSelection(start, size, sortDirection, sortParameter));
@@ -288,6 +288,15 @@ namespace API.Controllers
             var response = Ok(new { Message = "Success" });
 
             return response;
+        }
+
+        [HttpGet]
+        [ActionName("finished/notAccepted")]
+        public async Task<ActionResult<IEnumerable<FinishedProductModel>>> GetNotAcceptedFinishedProducts()
+        {
+            var items = _mapper.Map<List<FinishedProductModel>>(_finishedProductService.GetNotAccepted());
+
+            return await Task.FromResult(items);
         }
 
         [HttpGet]
