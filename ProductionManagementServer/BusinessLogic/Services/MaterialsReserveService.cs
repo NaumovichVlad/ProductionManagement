@@ -14,11 +14,15 @@ namespace BusinessLogic.Services
     public class MaterialsReserveService : Service<MaterialReserve, MaterialReserveDto>, IMaterialsReserveService
     {
         private readonly IRepository<Purchase> _purchaseRepository;
+        private readonly IRepository<MaterialPurchase> _materialPurchaseRepository;
         private readonly IRepository<Material> _materialRepository;
-        public MaterialsReserveService(IRepository<MaterialReserve> employeeRepository, IRepository<Purchase> orderRepository,  IMapper mapper, IRepository<Material> materialRepository) : base(employeeRepository, mapper)
+        public MaterialsReserveService(IRepository<MaterialReserve> employeeRepository, IRepository<Purchase> orderRepository,  
+            IMapper mapper, IRepository<Material> materialRepository, IRepository<MaterialPurchase> materialPurchaseRepository) 
+            : base(employeeRepository, mapper)
         {
             _purchaseRepository = orderRepository;
             _materialRepository = materialRepository;
+            _materialPurchaseRepository = materialPurchaseRepository;
         }
 
         public new List<MaterialReserveDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
@@ -46,28 +50,52 @@ namespace BusinessLogic.Services
             return dtos;
         }
 
-        /*public List<MaterialReserveDto> GetStorageReserves(int storagePlaceId)
+        public List<MaterialReserveDto> GetStorageReserves(int storagePlaceId)
         {
-            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "MaterialPurchase"));
+            var reserves = _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "MaterialPurchase"));
+            
+            foreach (var reserve in reserves) 
+            { 
+                reserve.MaterialPurchase.Purchase = _mapper.Map<PurchaseDto>(_purchaseRepository.GetById(reserve.MaterialPurchase.PurchaseId));
+                reserve.MaterialPurchase.Material = _mapper.Map<MaterialDto>(_materialRepository.GetById(reserve.MaterialPurchase.MaterialId));
+            }
+
+            return reserves;
         }
 
-        public List<PurchaseDto> GetPendingReserves()
+        public List<MaterialPurchaseDto> GetPendingReserves()
         {
-            var reserves = _repository.Get().Select(r => r.MaterialOrderId);
-            return _mapper.Map<List<PurchaseDto>>(_materialOrderRepository.Get(o => !reserves.Contains(o.Id)));
+            return _mapper.Map<List<MaterialPurchaseDto>>(_materialPurchaseRepository.Get(m => !m.IsAccepted, null, "Purchase,Material"));
         }
 
         public List<MaterialReserveDto> GetAvailableReservesByMaterialId(int materialId)
         {
-            var reserves = _materialOrderRepository.Get(o => o. == materialId).Select(o => o.Id);
-            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (reserves.Contains(r.MaterialOrderId)) && (r.Count > 0), null, "MaterialPurchase,StoragePlace"));
+            var reserves = _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.Count > 0), null, "MaterialPurchase,StoragePlace"));
+            reserves = reserves.Where(r => r.MaterialPurchase.MaterialId == materialId).ToList();
+
+            foreach (var reserve in reserves)
+            {
+                reserve.MaterialPurchase.Purchase = _mapper.Map<PurchaseDto>(_purchaseRepository.GetById(reserve.MaterialPurchase.PurchaseId));
+                reserve.MaterialPurchase.Material = _mapper.Map<MaterialDto>(_materialRepository.GetById(reserve.MaterialPurchase.MaterialId));
+            }
+
+            return reserves;
         }
 
         public List<MaterialReserveDto> GetConsumptionReservesByMaterialId(int materialId)
         {
-            var reserves = _materialOrderRepository.Get(o => o.MaterialId == materialId).Select(o => o.Id);
-            return _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (reserves.Contains(r.MaterialOrderId)) && (r.Count == 0), null, "MaterialPurchase,StoragePlace"));
-        }*/
+            var reserves = _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.Count == 0), null, "MaterialPurchase,StoragePlace"));
+            
+            reserves = reserves.Where(r => r.MaterialPurchase.MaterialId == materialId).ToList();
+
+            foreach (var reserve in reserves)
+            {
+                reserve.MaterialPurchase.Purchase = _mapper.Map<PurchaseDto>(_purchaseRepository.GetById(reserve.MaterialPurchase.PurchaseId));
+                reserve.MaterialPurchase.Material = _mapper.Map<MaterialDto>(_materialRepository.GetById(reserve.MaterialPurchase.MaterialId));
+            }
+
+            return reserves;
+        }
         
     }
 }

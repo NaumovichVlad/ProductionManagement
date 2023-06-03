@@ -61,13 +61,19 @@ namespace BusinessLogic.Services
 
         public List<ProductsReserveDto> GetStorageReserves(int storagePlaceId)
         {
-            return _mapper.Map<List<ProductsReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "FinishedProduct"));
+            var reserves = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "FinishedProduct"));
+
+            foreach (var reserve in reserves) 
+            {
+                reserve.FinishedProduct.Product = _mapper.Map<ProductDto>(_productRepository.GetById(reserve.FinishedProduct.ProductId));
+            }
+
+            return reserves;
         }
 
         public List<FinishedProductDto> GetPendingReserves()
         {
-            var reserves = _repository.Get().Select(r => r.FinishedProductId);
-            return _mapper.Map<List<FinishedProductDto>>(_finishedProductRepository.Get(o => !reserves.Contains(o.Id)));
+            return _mapper.Map<List<FinishedProductDto>>(_finishedProductRepository.Get(o => !o.IsApproved, null, "Product"));
         }
 
         /*public List<ProductsReserveDto> GetAvailableReservesByMaterialId(int productId)

@@ -274,14 +274,41 @@ namespace API.Controllers
         }
 
 
-        /*[HttpGet("{id}")]
+        [HttpGet("{id}")]
         [ActionName("reserve/place")]
         public async Task<ActionResult<List<MaterialReserveModel>>> GetMaterialsReserveByStoragePlaceId(int id)
         {
             var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetStorageReserves(id));
 
             return new ObjectResult(model);
-        }*/
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("reserve/get/available")]
+        public async Task<ActionResult<List<MaterialReserveModel>>> GetAvailableMaterialsReserve(int id)
+        {
+            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetAvailableReservesByMaterialId(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet("{id}")]
+        [ActionName("reserve/get/consumption")]
+        public async Task<ActionResult<List<MaterialReserveModel>>> GetConsumptionMaterialsReserve(int id)
+        {
+            var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetConsumptionReservesByMaterialId(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [ActionName("reserve/pending")]
+        public async Task<ActionResult<List<MaterialPurchaseModel>>> GetPendingMaterials()
+        {
+            var model = _mapper.Map<List<MaterialPurchaseModel>>(_materialsReserveService.GetPendingReserves());
+
+            return new ObjectResult(model);
+        }
 
 
         [HttpDelete("{id}")]

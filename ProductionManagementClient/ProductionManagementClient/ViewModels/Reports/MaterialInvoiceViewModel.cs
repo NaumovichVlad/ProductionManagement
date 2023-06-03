@@ -22,10 +22,11 @@ namespace ProductionManagementClient.ViewModels.Reports
         private DateTime _compilationDate;
         private int _orderNumber;
         private string _savePath;
+        private string _counteragent;
         private int _orderId;
         private List<StoragePlaceModel> _storagePlaces;
         private StoragePlaceModel _selectedStoragePlace;
-        private PurchaseModel _materialOrderModel;
+        private MaterialPurchaseModel _materialOrderModel;
         private EmployeeModel _compilationEmployee;
 
         public EmployeeModel CompilationEmployee
@@ -97,7 +98,16 @@ namespace ProductionManagementClient.ViewModels.Reports
                 OnPropertyChanged();
             }
         }
-        public PurchaseModel MaterialOrder
+        public string Counteragent
+        {
+            get => _counteragent;
+            set
+            {
+                _counteragent = value;
+                OnPropertyChanged();
+            }
+        }
+        public MaterialPurchaseModel MaterialOrder
         {
             get => _materialOrderModel;
             set
@@ -124,9 +134,13 @@ namespace ProductionManagementClient.ViewModels.Reports
         
         private void FillMaterialOrder(int orderId)
         {
-      /*      MaterialOrder = _client.Get<PurchaseModel>($"material/order/get/{orderId}").Result;
+            MaterialOrder = _client.Get<MaterialPurchaseModel>($"material/purchaseMaterial/get/{orderId}").Result;
             MaterialOrder.MaterialName = _client.Get<MaterialModel>($"material/get/{MaterialOrder.MaterialId}").Result.Name;
-            MaterialOrder.CounteragentName = _client.Get<CounteragentModel>($"counteragent/get/{MaterialOrder.CounteragentId}").Result.Name;*/
+
+            var purchase = _client.Get<PurchaseModel>($"material/purchase/get/{MaterialOrder.PurchaseId}").Result;
+
+            MaterialOrder.PurchaseNumber = purchase.OrderNumber;
+            Counteragent = _client.Get<CounteragentModel>($"counteragent/get/{purchase.CounteragentId}").Result.Name;
         }
 
         private RelayCommand _createCommand;
@@ -163,14 +177,17 @@ namespace ProductionManagementClient.ViewModels.Reports
         {
             var reserve = new MaterialReserveModel()
             {
-              /*  StoragePlaceId = SelectedStoragePlace.Id,
+                StoragePlaceId = SelectedStoragePlace.Id,
                 Count = MaterialOrder.Count,
-                MaterialOrderNumber = MaterialOrder.OrderNumber,
-                MaterialOrderId = MaterialOrder.Id,
-                StoragePlaceName = SelectedStoragePlace.Name*/
+                MaterialOrderNumber = MaterialOrder.PurchaseNumber,
+                MaterialPurchaseId = MaterialOrder.PurchaseId,
+                StoragePlaceName = SelectedStoragePlace.Name
             };
 
+            MaterialOrder.IsAccepted = true;
+
             _client.Post(reserve, "material/reserve/insert");
+            _client.Put(MaterialOrder, "material/purchaseMaterial/edit");
         }
 
         private void CreateOrderDocument()
@@ -202,7 +219,7 @@ namespace ProductionManagementClient.ViewModels.Reports
             _documentService.Write("Грузоотправитель: ");
             _documentService.Font.Bold = false;
             _documentService.Font.Underline = Underline.Single;
-            _documentService.WriteLine($"{MaterialOrder.CounteragentName}");
+            _documentService.WriteLine($"{Counteragent}");
 
             _documentService.Font.Underline = Underline.None;
             _documentService.Font.Bold = true;
@@ -211,19 +228,19 @@ namespace ProductionManagementClient.ViewModels.Reports
             _documentService.Font.Underline = Underline.Single;
             _documentService.WriteLine($"УП \"Универсал Бобруйск\", {SelectedStoragePlace.Name}");
 
-     /*       _documentService.Font.Underline = Underline.None;
+            _documentService.Font.Underline = Underline.None;
             _documentService.SkipLines(2);
             _documentService.StartTable();
             _documentService.InsertCell("Номер заказа");
             _documentService.InsertCell("Наименование материала");
             _documentService.InsertCell("Количество");
             _documentService.InsertLastCellInRow("Стоимость");
-            _documentService.InsertCell(MaterialOrder.OrderNumber.ToString());
+            _documentService.InsertCell(MaterialOrder.PurchaseNumber.ToString());
             _documentService.InsertCell(MaterialOrder.MaterialName);
             _documentService.InsertCell(MaterialOrder.Count.ToString());
             _documentService.InsertLastCellInRow(MaterialOrder.Price.ToString());
             _documentService.EndTable();
-*/
+
             _documentService.SkipLines(2);
             _documentService.Font.Bold = true;
             _documentService.Write("Выплативший сотрудник: ");

@@ -12,7 +12,7 @@
         <Label Content="от" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top"/>
         <DatePicker SelectedDate="{Binding CompilationDate}" HorizontalAlignment="Left" Margin="412,11,0,0" VerticalAlignment="Top" Width="112"/>
         <Label Content="Грузоотправитель:" HorizontalAlignment="Left" Margin="20,49,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="146,53,0,0" TextWrapping="Wrap" Text="{Binding MaterialOrder.CounteragentName}" VerticalAlignment="Top" Width="378"/>
+        <TextBox HorizontalAlignment="Left" Margin="146,53,0,0" TextWrapping="Wrap" Text="{Binding Counteragent}" VerticalAlignment="Top" Width="378"/>
         <Label Content="Грузополучатель:" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top"/>
         <ComboBox ItemsSource="{Binding StoragePlaces}" SelectedItem="{Binding SelectedStoragePlace}" HorizontalAlignment="Left" Margin="146,82,0,0" VerticalAlignment="Top" Width="378"/>
         <Label Content="Груз:" HorizontalAlignment="Left" Margin="20,109,0,0" VerticalAlignment="Top"/>

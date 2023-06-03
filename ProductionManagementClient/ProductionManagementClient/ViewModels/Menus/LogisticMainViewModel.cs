@@ -102,7 +102,7 @@ namespace ProductionManagementClient.ViewModels.Menus
         {
             Materials = new Container();
             Materials.PendingUnloading = CreateMaterialOrderTable(
-                _client.Get<List<PurchaseModel>>("material/reserve/pending").Result);
+                _client.Get<List<MaterialPurchaseModel>>("material/reserve/pending").Result);
         }
 
         private void FillMaterialReserves()
@@ -147,7 +147,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                     (_updateCommand = new RelayCommand(param =>
                     {
                         Materials.PendingUnloading = CreateMaterialOrderTable(
-                            _client.Get<List<PurchaseModel>>("material/reserve/pending").Result);
+                            _client.Get<List<MaterialPurchaseModel>>("material/reserve/pending").Result);
                     }));
             }
         }
@@ -161,7 +161,20 @@ namespace ProductionManagementClient.ViewModels.Menus
                     (_addProductReserveCommand = new RelayCommand(param =>
                     {
                         var row = (DataRowView)param;
-                        _windowService.ShowWindowDialog<MaterialInvoiceWin>(row["Ид"]);
+                        var product = _client.Get<FinishedProductModel>($"product/finished/get/{row["Ид"]}").Result;
+
+                        product.IsApproved = true;
+
+                        _client.Put(product, "product/finished/edit");
+
+                        var reserve = new ProductReserveModel()
+                        {
+                            FinishedProductId = product.Id,
+                            StoragePlaceId = SelectedStoragePlaceProd.Id,
+                            Count = product.Count,
+                        };
+
+                        _client.Post(reserve, "product/reserve/insert");
                     }));
             }
         }
@@ -232,7 +245,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        private DataTable CreateMaterialOrderTable(List<PurchaseModel> models)
+        private DataTable CreateMaterialOrderTable(List<MaterialPurchaseModel> models)
         {
             var table = new DataTable();
 
@@ -245,12 +258,6 @@ namespace ProductionManagementClient.ViewModels.Menus
             var materialColumn = new DataColumn("Материал");
             materialColumn.Caption = "MaterialName";
 
-            var dateColumn = new DataColumn("Дата изготовления");
-            dateColumn.Caption = "ManufactureDate";
-
-            var countryColumn = new DataColumn("Страна производства");
-            countryColumn.Caption = "ManufactureCountry";
-
             var countColumn = new DataColumn("Количество");
             countColumn.Caption = "Count";
 
@@ -260,8 +267,6 @@ namespace ProductionManagementClient.ViewModels.Menus
             table.Columns.Add(idColumn);
             table.Columns.Add(numberColumn);
             table.Columns.Add(materialColumn);
-            table.Columns.Add(dateColumn);
-            table.Columns.Add(countryColumn);
             table.Columns.Add(countColumn);
             table.Columns.Add(priceColumn);
 
@@ -270,15 +275,13 @@ namespace ProductionManagementClient.ViewModels.Menus
             {
                 var newRow = table.NewRow();
 
-                /*newRow[idColumn] = model.Id;
-                newRow[numberColumn] = model.OrderNumber;
-                newRow[materialColumn] = _client.Get<MaterialModel>($"material/get/{model.MaterialId}").Result;
-                newRow[dateColumn] = model.ManufactureDate.ToShortDateString();
-                newRow[countryColumn] = model.ManufactureCountry;
+                newRow[idColumn] = model.Id;
+                newRow[numberColumn] = model.PurchaseNumber;
+                newRow[materialColumn] = model.MaterialName;
                 newRow[countColumn] = model.Count;
                 newRow[priceColumn] = model.Price;
 
-                table.Rows.Add(newRow);*/
+                table.Rows.Add(newRow);
             }
 
             return table;
@@ -303,15 +306,15 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             foreach (var model in models)
             {
-               /* var newRow = table.NewRow();
-                var order = _client.Get<PurchaseModel>($"material/order/get/{model.MaterialOrderId}").Result;
+                var newRow = table.NewRow();
+                var order = model.MaterialOrderNumber;
 
                 newRow[numberColumn] = model.MaterialOrderNumber;
 
-                newRow[materialColumn] = _client.Get<MaterialModel>($"material/get/{order.MaterialId}").Result;
+                newRow[materialColumn] = model.MaterialName;
                 newRow[countColumn] = model.Count;
 
-                table.Rows.Add(newRow);*/
+                table.Rows.Add(newRow);
             }
 
             return table;
@@ -344,7 +347,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 var newRow = table.NewRow();
 
                 newRow[idColumn] = model.Id;
-                newRow[nameColumn] = _client.Get<ProductModel>($"product/get/{model.ProductId}").Result.Name;
+                newRow[nameColumn] = model.ProductName;
                 newRow[dateColumn] = model.ManufactureDate.ToShortDateString();
                 newRow[countColumn] = model.Count;
 
@@ -369,10 +372,9 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             foreach (var model in models)
             {
-                var finishedProduct = _client.Get<FinishedProductModel>($"product/finished/get/{model.FinishedProductId}").Result;
                 var newRow = table.NewRow();
 
-                newRow[materialColumn] = _client.Get<MaterialModel>($"product/get/{finishedProduct.ProductId}").Result.Name;
+                newRow[materialColumn] = model.FinishedProductName;
                 newRow[countColumn] = model.Count;
 
                 table.Rows.Add(newRow);

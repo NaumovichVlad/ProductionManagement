@@ -38,7 +38,7 @@
                     <Label Content="Продукция на складе" FontSize="20" HorizontalAlignment="Left" Margin="26,21,0,0" Height="37" VerticalAlignment="Top"/>
                     <DataGrid Name="PendingTableProd" ItemsSource="{Binding Productions.PendingUnloading}" Margin="26,0,204,60" Height="163" VerticalAlignment="Bottom"/>
                     <Label Content="Ожидающие разгрузки" FontSize="20" HorizontalAlignment="Left" Margin="26,0,0,223" Height="37" VerticalAlignment="Bottom"/>
-                    <Button Command="{Binding AddMaterialReserveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PendingTableProd}" Content="Разгрузить" HorizontalAlignment="Right" Margin="0,0,204,23" Width="81" Height="20" VerticalAlignment="Bottom"/>
+                    <Button Command="{Binding AddProductReserveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PendingTableProd}" Content="Разгрузить" HorizontalAlignment="Right" Margin="0,0,204,23" Width="81" Height="20" VerticalAlignment="Bottom"/>
                     <Button Command="{Binding UpdateProductCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTable}" Margin="0,0,204,228" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22">
                         <Image Source="../../Resources/reload.png" Height="13"/>
                     </Button>
