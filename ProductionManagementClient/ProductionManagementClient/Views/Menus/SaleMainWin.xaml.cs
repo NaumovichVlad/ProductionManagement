@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ProductionManagementClient.Connection;
+using ProductionManagementClient.Services;
+using ProductionManagementClient.ViewModels.Menus;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +18,15 @@ using System.Windows.Shapes;
 namespace ProductionManagementClient.Views.Menus
 {
     /// <summary>
-    /// Логика взаимодействия для PurchasingMenuWin.xaml
+    /// Логика взаимодействия для SaleMainWin.xaml
     /// </summary>
-    public partial class PurchasingMenuWin : Window
+    public partial class SaleMainWin : Window
     {
-        public PurchasingMenuWin()
+        public SaleMainWin()
         {
             InitializeComponent();
+
+            DataContext = new SaleMainViewModel(new HttpApiClient(), new DialogService(), new WindowService());
         }
     }
 }

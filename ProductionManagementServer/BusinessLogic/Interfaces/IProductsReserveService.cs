@@ -11,5 +11,6 @@ namespace BusinessLogic.Interfaces
     {
         List<ProductsReserveDto> GetStorageReserves(int storagePlaceId);
         List<FinishedProductDto> GetPendingReserves();
+        List<AvailableProductDto> GetAvailableProducts();
     }
 }

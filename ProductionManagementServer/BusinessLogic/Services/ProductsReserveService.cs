@@ -76,6 +76,25 @@ namespace BusinessLogic.Services
             return _mapper.Map<List<FinishedProductDto>>(_finishedProductRepository.Get(o => !o.IsApproved, null, "Product"));
         }
 
+        public List<AvailableProductDto> GetAvailableProducts()
+        {
+            var reserves = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(r => (r.Count > 0), null, "FinishedProduct")).GroupBy(r => r.FinishedProduct.ProductId);
+            var materialas = new List<AvailableProductDto>();
+
+            foreach (var reserve in reserves)
+            {
+                var finishedProduct = _mapper.Map<FinishedProductDto>(_finishedProductRepository.GetById(reserve.Key));
+
+                materialas.Add(new AvailableProductDto
+                {
+                    Name = _mapper.Map<ProductDto>(_productRepository.GetById(finishedProduct.ProductId)).Name,
+                    Count = reserve.Sum(r => r.Count),
+                });
+            }
+
+            return materialas;
+        }
+
         /*public List<ProductsReserveDto> GetAvailableReservesByMaterialId(int productId)
         {
             var reserves = _finishedProductRepository.Get(o => o.ProductId == productId).Select(o => o.Id);

@@ -141,6 +141,24 @@ namespace API.Controllers
             return new ObjectResult(model);
         }
 
+        [HttpGet("{number}")]
+        [ActionName("sale/getByNumber")]
+        public async Task<ActionResult<SaleModel>> GetSaleByOrderNumber(string number)
+        {
+            var model = _mapper.Map<SaleModel>(_productOrderService.GetByOrderNumber(number));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [ActionName("sale/full")]
+        public async Task<ActionResult<IEnumerable<SaleContainerModel>>> GetFullSales()
+        {
+            var items = _mapper.Map<List<SaleContainerModel>>(_productOrderService.GetFullSales());
+
+            return await Task.FromResult(items);
+        }
+
         [HttpDelete("{id}")]
         [ActionName("sale/remove")]
         public async Task<IActionResult> DeleteProductOrder(int id)
@@ -228,6 +246,15 @@ namespace API.Controllers
             var items = _mapper.Map<List<FinishedProductModel>>(_productsReserveService.GetPendingReserves());
 
             return await Task.FromResult(items);
+        }
+
+        [HttpGet]
+        [ActionName("reserve/available/all")]
+        public async Task<ActionResult<List<AvailableProductModel>>> GetAvailableProducts()
+        {
+            var model = _mapper.Map<List<AvailableProductModel>>(_productsReserveService.GetAvailableProducts());
+
+            return new ObjectResult(model);
         }
 
         [HttpGet]
