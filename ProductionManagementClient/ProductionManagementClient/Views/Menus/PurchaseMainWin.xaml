@@ -1,0 +1,36 @@
+﻿<Window x:Class="ProductionManagementClient.Views.Menus.PurchaseMainWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=menus:PurchaseMainViewModel}"
+        mc:Ignorable="d"
+        Title="Отдел закупок" Height="595" Width="996">
+    <Grid>
+        <DataGrid ItemsSource="{Binding Purchases}" Margin="27,69,322,350" RenderTransformOrigin="0.5,0.5"/>
+        <Label Content="Заказы" FontSize="20" HorizontalAlignment="Left" Margin="27,23,0,0" Height="37" VerticalAlignment="Top"/>
+        <Label Content="Контрагенты" FontSize="20" HorizontalAlignment="Left" Margin="27,0,0,289" Height="37" VerticalAlignment="Bottom"/>
+        <DataGrid Name="CounteragentsTable" ItemsSource="{Binding Counteragents}" AutoGenerateColumns="True" Margin="27,0,322,40" Height="244" VerticalAlignment="Bottom">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="AutoGeneratingColumn">
+                    <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
+                         PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+        <Button Content="Оформить заказ" Command="{Binding CheckoutCommand}" Margin="0,35,489,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="107"/>
+        <Button Content="Добавить тип материала" Command="{Binding AddMaterialCommand}" Margin="0,35,322,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="153"/>
+        <Button Command="{Binding AddCommand}" Margin="0,0,375,297" HorizontalAlignment="Right" Width="22" Height="20" VerticalAlignment="Bottom">
+            <Image Source="../../Resources/plus.png"/>
+        </Button>
+        <Button Command="{Binding EditCommand}" CommandParameter="{Binding SelectedItem, ElementName=CounteragentsTable}" Margin="0,0,348,297" HorizontalAlignment="Right" Width="22" Height="20" VerticalAlignment="Bottom">
+            <Image Source="../../Resources/pensil.jpg"/>
+        </Button>
+        <Button Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedItem, ElementName=CounteragentsTable}" HorizontalAlignment="Right" Margin="0,0,322,297" Width="22" Height="20" VerticalAlignment="Bottom">
+            <Image Source="../../Resources/trash.png"/>
+        </Button>
+        <DataGrid ItemsSource="{Binding Materials}" Margin="0,72,38,40" HorizontalAlignment="Right" Width="249"/>
+        <Label Content="Материалы в наличии" FontSize="20" Margin="0,26,72,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Right" Width="215"/>
+    </Grid>
+</Window>

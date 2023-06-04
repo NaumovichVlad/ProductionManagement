@@ -13,5 +13,6 @@ namespace BusinessLogic.Interfaces
         List<MaterialPurchaseDto> GetPendingReserves();
         List<MaterialReserveDto> GetAvailableReservesByMaterialId(int materialId);
         List<MaterialReserveDto> GetConsumptionReservesByMaterialId(int materialId);
+        List<AvailableMaterialDto> GetAvailableMaterials();
     }
 }

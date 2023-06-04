@@ -180,6 +180,8 @@ namespace API.Mapper
             CreateMap<MaterialDto, MaterialModel>().ReverseMap();
             CreateMap<ProductDto, ProductModel>().ReverseMap();
             CreateMap<StoragePlaceDto, StoragePlaceModel>().ReverseMap();
+            CreateMap<PurchaseContainerDto, PurchaseContainerModel>().ReverseMap();
+            CreateMap<AvailableMaterialDto, AvailableMaterialModel>().ReverseMap();
         }
     }
 }

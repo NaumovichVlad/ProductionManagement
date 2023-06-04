@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Counteragents"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Counteragents" xmlns:counteragents="clr-namespace:ProductionManagementClient.ViewModels.Counteragents" d:DataContext="{d:DesignInstance Type=counteragents:CounteragentsEditViewModel}"
         mc:Ignorable="d"
         Title="Изменение данных о контрагентах" Height="389" Width="353" ResizeMode="NoResize">
     <Grid>
         <Label Content="Название:" HorizontalAlignment="Left" Margin="32,23,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="105,27,0,0" TextWrapping="Wrap" Text="{Binding Model.Name}" VerticalAlignment="Top" Width="199"/>
         <Label Content="ИНН:" HorizontalAlignment="Left" Margin="32,54,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="105,58,0,0" TextWrapping="Wrap" Text="{Binding Model.INN}" VerticalAlignment="Top" Width="199"/>
+        <TextBox HorizontalAlignment="Left" Margin="105,58,0,0" TextWrapping="Wrap" Text="{Binding Model.Inn}" VerticalAlignment="Top" Width="199"/>
         <Label Content="Счёт:" HorizontalAlignment="Left" Margin="32,85,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="105,89,0,0" TextWrapping="Wrap" Text="{Binding Model.AccountNumber}" VerticalAlignment="Top" Width="199"/>
         <Label Content="Телефон:" HorizontalAlignment="Left" Margin="32,119,0,0" VerticalAlignment="Top"/>

@@ -82,6 +82,23 @@ namespace BusinessLogic.Services
             return reserves;
         }
 
+        public List<AvailableMaterialDto> GetAvailableMaterials()
+        {
+            var reserves = _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.Count > 0), null, "MaterialPurchase")).GroupBy(r => r.MaterialPurchase.MaterialId);
+            var materialas = new List<AvailableMaterialDto>();
+
+            foreach (var reserve in reserves)
+            {
+                materialas.Add(new AvailableMaterialDto
+                {
+                    Name = _mapper.Map<MaterialDto>(_materialRepository.GetById(reserve.Key)).Name,
+                    Count = reserve.Sum(r => r.Count),
+                });
+            }
+
+            return materialas;
+        }
+
         public List<MaterialReserveDto> GetConsumptionReservesByMaterialId(int materialId)
         {
             var reserves = _mapper.Map<List<MaterialReserveDto>>(_repository.Get(r => (r.Count == 0), null, "MaterialPurchase,StoragePlace"));

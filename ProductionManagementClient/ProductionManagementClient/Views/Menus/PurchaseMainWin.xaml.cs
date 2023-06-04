@@ -1,6 +1,6 @@
 ﻿using ProductionManagementClient.Connection;
 using ProductionManagementClient.Services;
-using ProductionManagementClient.ViewModels.Counteragents;
+using ProductionManagementClient.ViewModels.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +15,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ProductionManagementClient.Views.Counteragents
+namespace ProductionManagementClient.Views.Menus
 {
     /// <summary>
-    /// Логика взаимодействия для CounteragentsEditWin.xaml
+    /// Логика взаимодействия для PurchaseMainWin.xaml
     /// </summary>
-    public partial class CounteragentsEditWin : Window
+    public partial class PurchaseMainWin : Window
     {
-        public CounteragentsEditWin(object id)
+        public PurchaseMainWin()
         {
             InitializeComponent();
 
-            DataContext = new CounteragentsEditViewModel(id.ToString(), new HttpApiClient(), new DialogService());
+            DataContext = new PurchaseMainViewModel(new HttpApiClient(), new DialogService(), new WindowService());
         }
     }
 }

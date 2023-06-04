@@ -145,6 +145,15 @@ namespace API.Controllers
             return new ObjectResult(model);
         }
 
+        [HttpGet("{number}")]
+        [ActionName("purchase/getByNumber")]
+        public async Task<ActionResult<PurchaseModel>> GetPurchaseByOrderNumber(string number)
+        {
+            var model = _mapper.Map<PurchaseModel>(_purchasesService.GetByOrderNumber(number));
+
+            return new ObjectResult(model);
+        }
+
         [HttpDelete("{id}")]
         [ActionName("purchase/remove")]
         public async Task<IActionResult> DeletePurchase(int id)
@@ -155,6 +164,16 @@ namespace API.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        [ActionName("purchase/full")]
+        public async Task<ActionResult<IEnumerable<PurchaseContainerModel>>> GetFullPurchases()
+        {
+            var items = _mapper.Map<List<PurchaseContainerModel>>(_purchasesService.GetFullPurchases());
+
+            return await Task.FromResult(items);
+        }
+
         [HttpGet]
         [ActionName("purchaseMaterial/all")]
         public async Task<ActionResult<IEnumerable<MaterialPurchaseModel>>> GetMaterialsPurchases()
@@ -288,6 +307,15 @@ namespace API.Controllers
         public async Task<ActionResult<List<MaterialReserveModel>>> GetAvailableMaterialsReserve(int id)
         {
             var model = _mapper.Map<List<MaterialReserveModel>>(_materialsReserveService.GetAvailableReservesByMaterialId(id));
+
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [ActionName("reserve/available/all")]
+        public async Task<ActionResult<List<AvailableMaterialModel>>> GetAvailableMaterials()
+        {
+            var model = _mapper.Map<List<AvailableMaterialModel>>(_materialsReserveService.GetAvailableMaterials());
 
             return new ObjectResult(model);
         }
