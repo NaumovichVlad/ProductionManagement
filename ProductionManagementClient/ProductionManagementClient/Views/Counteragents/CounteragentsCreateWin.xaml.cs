@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ProductionManagementClient.Connection;
+using ProductionManagementClient.Services;
+using ProductionManagementClient.ViewModels.Counteragents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +25,8 @@ namespace ProductionManagementClient.Views.Counteragents
         public CounteragentsCreateWin()
         {
             InitializeComponent();
+
+            DataContext = new CounteragentsCreateViewModel(new HttpApiClient(), new DialogService());
         }
     }
 }

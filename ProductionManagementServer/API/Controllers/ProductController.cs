@@ -385,5 +385,23 @@ namespace API.Controllers
 
             return response;
         }
+
+        [HttpPost("{name}/{count}/{saleId}")]
+        [ActionName("finished/sale/insert/byProductName")]
+        public async Task<IActionResult> InsertFinishedProductSaleByName(string name, int count, int saleId)
+        {
+            var message = string.Empty;
+
+            if (_finishedProductForOrderService.InsertByName(name, count, saleId))
+            {
+                message = "Продукция успешно добавлена";
+            }
+            else
+            {
+                message = "Недостаточное количество продукции на складе";
+            }
+
+            return Ok(message);
+        }
     }
 }

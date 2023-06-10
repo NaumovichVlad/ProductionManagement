@@ -19,7 +19,7 @@
                            AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="157,211,0,0" VerticalAlignment="Top" Width="82"/>
         <Label Content="Выплачено:" HorizontalAlignment="Left" Margin="32,87,0,0" VerticalAlignment="Top"/>
         <TextBox Text="{Binding Model.Paid}" HorizontalAlignment="Left" Margin="130,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="174"/>
-        <DatePicker DataContext="{Binding Model.PaymentDate}" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Width="174"/>
+        <DatePicker SelectedDate="{Binding Model.PaymentDate}" HorizontalAlignment="Left" Margin="130,126,0,0" VerticalAlignment="Top" Width="174"/>
         <Label Content="Дата выплаты:" HorizontalAlignment="Left" Margin="32,125,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

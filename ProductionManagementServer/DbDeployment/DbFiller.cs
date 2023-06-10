@@ -3,6 +3,7 @@ using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,10 +29,9 @@ namespace DbDeployment
 
         public void FillAllTables()
         {
-            FillRoles();
-            _context.SaveChanges();
+            AddAdmin();
 
-            FillStoragePlaces();
+            /*FillStoragePlaces();
             _context.SaveChanges();
 
             FillEmployees();
@@ -62,9 +62,40 @@ namespace DbDeployment
             _context.SaveChanges();
 
             FillMaterialsForProducts();
-            _context.SaveChanges();
+            _context.SaveChanges();*/
         }
 
+        private void AddAdmin()
+        {
+            FillRoles();
+            _context.SaveChanges();
+
+            var employees = _context.Set<Employee>();
+
+            employees.Add(new Employee()
+            {
+                Surname = "Наумович",
+                Name = "Владислав",
+                MiddleName = "Олегович",
+                PassportNumber = "KB23132432",
+                PhoneNumber = "+375445463423",
+                Address = "г. Бобруйск, ул. Горелика"
+            });
+
+            _context.SaveChanges();
+
+            var users = _context.Set<User>();
+
+            users.Add(new User()
+            {
+                EmployeeId = 1,
+                Login = "admin",
+                Password = "admin",
+                RoleId = 1
+            });
+
+            _context.SaveChanges();
+        }
         private void FillRoles()
         {
             var data = _context.Set<Role>();

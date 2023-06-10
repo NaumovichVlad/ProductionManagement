@@ -5,6 +5,7 @@ using ProductionManagementClient.Services.Commands;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,10 @@ namespace ProductionManagementClient.ViewModels.Products
     public class SalesRegistrationCreateViewModel : CreateViewModel<SaleModel>
     {
         private List<CounteragentModel> _counteragents;
-        private DataTable _materials;
-        private List<MaterialPurchaseModel> _selectedMaterials;
+        private DataTable _products;
+        private List<AvailableProductModel> _selectedProducts;
         private CounteragentModel _selectedCounteragent;
         private int _count;
-        private int _price;
 
         public int Count
         {
@@ -29,24 +29,15 @@ namespace ProductionManagementClient.ViewModels.Products
                 OnPropertyChanged();
             }
         }
-        public int Price
-        {
-            get => _price;
-            set
-            {
-                _price = value;
-                OnPropertyChanged();
-            }
-        }
-        public List<MaterialPurchaseModel> SelectedMaterials
+        public List<AvailableProductModel> SelectedProducts
         {
             get
             {
-                return _selectedMaterials;
+                return _selectedProducts;
             }
             set
             {
-                _selectedMaterials = value;
+                _selectedProducts = value;
                 OnPropertyChanged();
             }
         }
@@ -72,21 +63,22 @@ namespace ProductionManagementClient.ViewModels.Products
             }
         }
 
-        public DataTable Materials
+        public DataTable Products
         {
-            get => _materials;
+            get => _products;
             set
             {
-                _materials = value;
+                _products = value;
                 OnPropertyChanged();
             }
         }
 
-        public CheckoutCreateViewModel(IApiClient client, IDialogService messageBoxService) : base(client, messageBoxService)
+        public SalesRegistrationCreateViewModel(IApiClient client, IDialogService messageBoxService) : base(client, messageBoxService)
         {
             Counteragents = _client.Get<List<CounteragentModel>>("counteragent/all").Result;
-            Materials = CreateMaterialTable(_client.Get<List<MaterialModel>>("material/all").Result);
-            SelectedMaterials = new List<MaterialPurchaseModel>();
+            Products = CreateProductTable(_client.Get<List<AvailableProductModel>>("product/reserve/available/all").Result);
+            SelectedProducts = new List<AvailableProductModel>();
+            Model.OrderDate = DateTime.Now;
         }
 
         public override RelayCommand ConfirmCommand
@@ -99,16 +91,14 @@ namespace ProductionManagementClient.ViewModels.Products
                         Model.CounteragentName = SelectedCounteragent.Name;
                         Model.CounteragentId = SelectedCounteragent.Id;
 
-                        _client.Post(Model, "material/purchase/insert");
+                        _client.Post(Model, "product/sale/insert");
 
-                        var purchase = _client.Get<PurchaseModel>($"material/purchase/getByNumber/{Model.OrderNumber}").Result;
+                        var sale = _client.Get<SaleModel>($"product/sale/getByNumber/{Model.OrderNumber}").Result;
 
-                        foreach (var material in SelectedMaterials)
+                        foreach (var product in SelectedProducts)
                         {
-                            material.PurchaseNumber = Model.OrderNumber;
-                            material.PurchaseId = purchase.Id;
-
-                            _client.Post(material, "material/purchaseMaterial/insert");
+                            
+                            _client.Post($"product/finished/sale/insert/byProductName/{product.Name}/{product.Count}/{sale.Id}");
                         }
 
                         _messageBoxService.ShowMessage("Добавление записи", "Запись успешно добавлена");
@@ -128,39 +118,44 @@ namespace ProductionManagementClient.ViewModels.Products
                     {
                         var row = (DataRowView)obj;
 
-                        SelectedMaterials.Add(new MaterialPurchaseModel()
+                        var product = new AvailableProductModel()
                         {
-                            MaterialId = int.Parse(row["Ид"].ToString()),
-                            MaterialName = row["Название"].ToString(),
+                            Name = row["Название"].ToString(),
                             Count = Count,
-                            Price = Price,
-                            IsAccepted = false
+                        };
 
-                        });
-                        _messageBoxService.ShowMessage("Успех", "Материал добавлен в заказ");
+                        if (int.Parse(row["На складе"].ToString()) >= Count)
+                        {
+                            SelectedProducts.Add(product);
 
+                            _messageBoxService.ShowMessage("Успех", "Материал добавлен в заказ");
+                        }
+                        else
+                        {
+                            _messageBoxService.ShowErrorMessage("Ошибка", "Недостаточное количество продукции на складе");
+                        }
                     }));
             }
         }
 
-        private DataTable CreateMaterialTable(List<MaterialModel> models)
+        private DataTable CreateProductTable(List<AvailableProductModel> models)
         {
             var table = new DataTable();
-            var idColumn = new DataColumn("Ид");
+            var idColumn = new DataColumn("На складе");
             idColumn.Caption = "Id";
 
             var nameColumn = new DataColumn("Название");
             nameColumn.Caption = "Name";
 
-            table.Columns.Add(idColumn);
             table.Columns.Add(nameColumn);
-
+            table.Columns.Add(idColumn);
+            
             foreach (var model in models)
             {
                 var newRow = table.NewRow();
 
-                newRow[idColumn] = model.Id;
                 newRow[nameColumn] = model.Name;
+                newRow[idColumn] = model.Count;
 
                 table.Rows.Add(newRow);
             }

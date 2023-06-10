@@ -43,6 +43,29 @@ namespace ProductionManagementClient.Connection
             }
         }
 
+        public Task<HttpResponseMessage> Post(string uri)
+        {
+            uri = _apiUri + uri;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + ApiConnection.Token);
+                var request = client.PostAsync(uri, new StringContent(""));
+
+                try
+                {
+                    request.Wait();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+
+                return request;
+            }
+        }
+
         public Task<T> Get<T>(string uri)
         {
             uri = _apiUri + uri;
