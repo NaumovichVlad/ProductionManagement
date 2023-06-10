@@ -519,9 +519,6 @@ namespace ProductionManagementClient.ViewModels.Menus
             var loginColumn = new DataColumn("Логин");
             loginColumn.Caption = "Login";
 
-            var passwordColumn = new DataColumn("Пароль");
-            passwordColumn.Caption = "Password";
-
             var surnameColumn = new DataColumn("Фамилия");
             surnameColumn.Caption = "Surname";
 
@@ -536,7 +533,6 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             table.Columns.Add(idColumn);
             table.Columns.Add(loginColumn);
-            table.Columns.Add(passwordColumn);
             table.Columns.Add(roleColumn);
             table.Columns.Add(surnameColumn);
             table.Columns.Add(nameColumn);
@@ -548,7 +544,6 @@ namespace ProductionManagementClient.ViewModels.Menus
 
                 newRow[idColumn] = model.Id;
                 newRow[loginColumn] = model.Login;
-                newRow[passwordColumn] = model.Password;
                 newRow[roleColumn] = model.RoleName;
                 newRow[surnameColumn] = model.EmployeeSurname;
                 newRow[nameColumn] = model.EmployeeName;

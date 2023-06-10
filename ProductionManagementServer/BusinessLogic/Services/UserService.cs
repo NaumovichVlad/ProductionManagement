@@ -12,10 +12,15 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class UserService : Service<User, UserDto>, IUserService
+    public class UserService :  IUserService
     {
-        public UserService(IRepository<User> employeeRepository, IMapper mapper) : base(employeeRepository, mapper)
-        { }
+        protected readonly IRepository<User> _repository;
+        protected readonly IMapper _mapper;
+        public UserService(IRepository<User> userRepository, IMapper mapper)
+        { 
+            _repository = userRepository;
+            _mapper = mapper;
+        }
 
         public bool CheckUser(UserDto userDto)
         {
@@ -25,7 +30,7 @@ namespace BusinessLogic.Services
             {
                 var user = users.First();
                 
-                return user.Password == userDto.Password;
+                return user.Password == PasswordHashService.GeneratePasswordHash(userDto.Password);
             }
             else
             {
@@ -38,7 +43,7 @@ namespace BusinessLogic.Services
             return _mapper.Map<UserDto>(_repository.Get(u => u.Login == login, null, "Role,Employee").First());
         }
 
-        public new List<UserDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
+        public List<UserDto> GetSelection(int start, int size, string sortDirection, string sortParameter)
         {
             var type = typeof(User);
             var sortParameterProperty = type.GetProperty(sortParameter);
@@ -52,7 +57,39 @@ namespace BusinessLogic.Services
                 return _mapper.Map<List<UserDto>>(_repository.Get(null, null, "Role,Employee")
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
+        }
 
+        public List<UserDto> GetList()
+        {
+            return _mapper.Map<List<UserDto>>(_repository.Get()).ToList();
+        }
+
+        public void Insert(UserDto userDto)
+        {
+            userDto.Password = PasswordHashService.GeneratePasswordHash(userDto.Password);
+            _repository.Insert(_mapper.Map<User>(userDto));
+        }
+
+        public void Edit(UserDto userDto)
+        {
+            var user = _repository.GetById(userDto.Id);
+
+            if (user.Password != userDto.Password)
+            {
+                userDto.Password = PasswordHashService.GeneratePasswordHash(userDto.Password);
+            }
+
+            _repository.Update(_mapper.Map<User>(userDto));
+        }
+
+        public void Delete(int id)
+        {
+            _repository.Delete(id);
+        }
+
+        public UserDto GetById(int id)
+        {
+            return _mapper.Map<UserDto>(_repository.GetById(id));
         }
     }
 }
