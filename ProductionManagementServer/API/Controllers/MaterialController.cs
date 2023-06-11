@@ -459,6 +459,15 @@ namespace API.Controllers
             return new ObjectResult(model);
         }
 
+        [HttpGet("{id}")]
+        [ActionName("forProducts/byProduct/get")]
+        public async Task<ActionResult<List<MaterialsForProductsModel>>> GetMaterialsForProductsByProductId(int id)
+        {
+            var model = _mapper.Map<List<MaterialsForProductsModel>>(_materialsForProductsService.GetMaterialsByProductId(id));
+
+            return new ObjectResult(model);
+        }
+
         [HttpDelete("{id}")]
         [ActionName("forProducts/remove")]
         public async Task<IActionResult> DeleteMaterialForProducts(int id)

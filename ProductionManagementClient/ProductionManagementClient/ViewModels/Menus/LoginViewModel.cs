@@ -113,6 +113,9 @@ namespace ProductionManagementClient.ViewModels.Menus
                 case "sales":
                     _windowService.ShowWindow<SaleMainWin>();
                     break;
+                case "manufacturer":
+                    _windowService.ShowWindow<ManufacturerMainWin>();
+                    break;
             }
         }
 

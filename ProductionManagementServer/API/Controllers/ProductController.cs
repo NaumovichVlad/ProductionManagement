@@ -286,6 +286,24 @@ namespace API.Controllers
             return response;
         }
 
+        [HttpPost("{productId}/{count}")]
+        [ActionName("finished/create")]
+        public async Task<IActionResult> CreateFinishedProduct(int productId, int count)
+        {
+            var message = string.Empty;
+
+            if (_finishedProductService.CreateFinishedProducts(productId, count))
+            {
+                message = "Продукция успешно добавлена";
+            }
+            else
+            {
+                message = "Недостаточное количество материалов на складе";
+            }
+
+            return Ok(message);
+        }
+
         [HttpPut]
         [ActionName("finished/edit")]
         public async Task<IActionResult> EditFinishedProduct([FromBody] FinishedProductModel model)

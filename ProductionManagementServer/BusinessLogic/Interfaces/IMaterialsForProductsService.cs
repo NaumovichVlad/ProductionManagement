@@ -8,5 +8,7 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Interfaces
 {
     public interface IMaterialsForProductsService : IService<MaterialsForProductsDto>
-    { }
+    {
+        List<MaterialsForProductsDto> GetMaterialsByProductId(int productId);
+    }
 }

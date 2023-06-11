@@ -92,10 +92,6 @@ namespace ProductionManagementClient.ViewModels.Menus
 
             SelectedStoragePlaceProd = StoragePlaces.First();
             SelectedStoragePlaceMat = StoragePlaces.First();
-            
-            
-
-            
         }
 
         private void FillMaterialsContainer()
@@ -162,10 +158,11 @@ namespace ProductionManagementClient.ViewModels.Menus
                     {
                         var row = (DataRowView)param;
                         var product = _client.Get<FinishedProductModel>($"product/finished/get/{row["Ид"]}").Result;
+                        product.ProductName = _client.Get<ProductModel>($"product/get/{product.ProductId}").Result.Name;
 
                         product.IsApproved = true;
 
-                        _client.Put(product, "product/finished/edit");
+                        _client.Put(product, $"product/finished/edit");
 
                         var reserve = new ProductReserveModel()
                         {

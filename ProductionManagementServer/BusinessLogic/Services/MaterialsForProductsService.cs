@@ -31,5 +31,10 @@ namespace BusinessLogic.Services
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
         }
+
+        public List<MaterialsForProductsDto> GetMaterialsByProductId(int productId)
+        {
+            return _mapper.Map<List<MaterialsForProductsDto>>(_repository.Get(m => m.ProductId == productId, null, "Material,Product"));
+        }
     }
 }
