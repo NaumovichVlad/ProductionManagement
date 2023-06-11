@@ -3,12 +3,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -17,7 +11,7 @@ namespace BusinessLogic.Services
         private readonly IRepository<FinishedProduct> _finishedProductRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductsReserve> _productsReserveRepository;
-        public FinishedProductSaleService(IRepository<FinishedProductSale> employeeRepository, IMapper mapper, 
+        public FinishedProductSaleService(IRepository<FinishedProductSale> employeeRepository, IMapper mapper,
             IRepository<FinishedProduct> repository, IRepository<Product> productRepository, IRepository<ProductsReserve> productReserveRepository)
             : base(employeeRepository, mapper)
         {
@@ -118,7 +112,7 @@ namespace BusinessLogic.Services
             else
             {
                 return false;
-            }    
+            }
         }
     }
 }

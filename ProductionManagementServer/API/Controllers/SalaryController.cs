@@ -2,9 +2,7 @@
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

@@ -1,6 +1,4 @@
-﻿using DataAccess.Entities;
-
-namespace API.Models
+﻿namespace API.Models
 {
     public class FinishedProductModel
     {

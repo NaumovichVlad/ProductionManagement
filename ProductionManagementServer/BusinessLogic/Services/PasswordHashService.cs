@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -26,7 +22,7 @@ namespace BusinessLogic.Services
             byte[] saltedPassword = new byte[salt.Length + passwordBytes.Length];
 
             using var hash = new SHA256CryptoServiceProvider();
-            
+
             return hash.ComputeHash(saltedPassword);
         }
 

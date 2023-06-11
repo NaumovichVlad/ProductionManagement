@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using BusinessLogic.Dtos;
 using DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Mapper
 {
     public class BllMapperProfile : Profile
     {
-        public BllMapperProfile() 
+        public BllMapperProfile()
         {
             CreateMap<Counteragent, CounteragentDto>().ReverseMap();
             CreateMap<Employee, EmployeeDto>().ReverseMap();

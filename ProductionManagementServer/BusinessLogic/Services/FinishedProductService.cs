@@ -3,11 +3,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -16,9 +11,9 @@ namespace BusinessLogic.Services
         private readonly IRepository<MaterialsForProducts> _materialsForProductsRepository;
         private readonly IRepository<MaterialReserve> _materialsReserveRepository;
         private readonly IRepository<MaterialsForFinishedProducts> _materialsFinishedProductsRepository;
-        public FinishedProductService(IRepository<FinishedProduct> employeeRepository, IMapper mapper, 
-            IRepository<MaterialsForProducts> materialsForProductsRepository, IRepository<MaterialReserve> materialsReserveRepository, 
-            IRepository<MaterialsForFinishedProducts> materialsForFinishedProductsRepository) 
+        public FinishedProductService(IRepository<FinishedProduct> employeeRepository, IMapper mapper,
+            IRepository<MaterialsForProducts> materialsForProductsRepository, IRepository<MaterialReserve> materialsReserveRepository,
+            IRepository<MaterialsForFinishedProducts> materialsForFinishedProductsRepository)
             : base(employeeRepository, mapper)
         {
             _materialsForProductsRepository = materialsForProductsRepository;
@@ -49,7 +44,7 @@ namespace BusinessLogic.Services
 
         public bool CreateFinishedProducts(int productId, int productCount)
         {
-            var materialsForProducts = 
+            var materialsForProducts =
                 _mapper.Map<List<MaterialsForProductsDto>>(_materialsForProductsRepository.Get(m => m.ProductId == productId, null, "Material,Product"));
 
             if (CheckAvailableMaterials(materialsForProducts, productCount))

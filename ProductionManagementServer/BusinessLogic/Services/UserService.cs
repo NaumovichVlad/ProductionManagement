@@ -3,21 +3,15 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class UserService :  IUserService
+    public class UserService : IUserService
     {
         protected readonly IRepository<User> _repository;
         protected readonly IMapper _mapper;
         public UserService(IRepository<User> userRepository, IMapper mapper)
-        { 
+        {
             _repository = userRepository;
             _mapper = mapper;
         }
@@ -29,7 +23,7 @@ namespace BusinessLogic.Services
             if (users.Any())
             {
                 var user = users.First();
-                
+
                 return user.Password == PasswordHashService.GeneratePasswordHash(userDto.Password);
             }
             else

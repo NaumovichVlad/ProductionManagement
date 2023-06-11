@@ -3,17 +3,12 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
     public class SalaryService : Service<Salary, SalaryDto>, ISalaryService
     {
-        public SalaryService(IRepository<Salary> employeeRepository, IMapper mapper) 
+        public SalaryService(IRepository<Salary> employeeRepository, IMapper mapper)
             : base(employeeRepository, mapper)
         { }
 
@@ -34,7 +29,7 @@ namespace BusinessLogic.Services
 
         }
 
-        public List<SalaryDto> GetByEmployee(int employeeId) 
+        public List<SalaryDto> GetByEmployee(int employeeId)
         {
             return _mapper.Map<List<SalaryDto>>(
                 _repository.Get(s => s.EmployeeId == employeeId, l => l.OrderByDescending(s => s.PaymentDate), "Employee"));
@@ -49,7 +44,7 @@ namespace BusinessLogic.Services
         public List<SalaryDto> GetByEmployeeAndMonth(int employeeId, DateTime date)
         {
             return _mapper.Map<List<SalaryDto>>(
-                _repository.Get(s => (s.EmployeeId == employeeId) && (s.PaymentDate.Month == date.Month) && (s.PaymentDate.Year == date.Year), 
+                _repository.Get(s => (s.EmployeeId == employeeId) && (s.PaymentDate.Month == date.Month) && (s.PaymentDate.Year == date.Year),
                 l => l.OrderByDescending(s => s.PaymentDate), "Employee"));
         }
     }

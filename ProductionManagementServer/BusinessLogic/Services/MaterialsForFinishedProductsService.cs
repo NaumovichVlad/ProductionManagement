@@ -3,11 +3,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -32,7 +27,7 @@ namespace BusinessLogic.Services
             }
             else
             {
-                dtos =  _mapper.Map<List<MaterialsForFinishedProductsDto>>(_repository.Get(null, null, "Material,Product")
+                dtos = _mapper.Map<List<MaterialsForFinishedProductsDto>>(_repository.Get(null, null, "Material,Product")
                     .OrderByDescending(r => sortParameterProperty.GetValue(r)).Skip(start).Take(size).ToList());
             }
 

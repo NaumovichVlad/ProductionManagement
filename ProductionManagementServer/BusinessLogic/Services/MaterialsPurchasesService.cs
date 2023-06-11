@@ -3,17 +3,12 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
     public class MaterialsPurchasesService : Service<MaterialPurchase, MaterialPurchaseDto>, IMaterialsPurchasesService
     {
-        public MaterialsPurchasesService(IRepository<MaterialPurchase> employeeRepository, IMapper mapper) 
+        public MaterialsPurchasesService(IRepository<MaterialPurchase> employeeRepository, IMapper mapper)
             : base(employeeRepository, mapper)
         { }
 

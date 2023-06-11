@@ -2,7 +2,6 @@
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +22,7 @@ namespace API.Controllers
 
         public MaterialController(IMaterialService materialService, IPurchaseService materialOrderService,
             IMaterialsReserveService materialsReserveService, IMaterialsForFinishedProductsService materialsForFinishedProductsService,
-            IMaterialsForProductsService materialsForProductsService,  IMapper mapper, IMaterialsPurchasesService materialsPurchasesService)
+            IMaterialsForProductsService materialsForProductsService, IMapper mapper, IMaterialsPurchasesService materialsPurchasesService)
         {
             _materialService = materialService;
             _purchasesService = materialOrderService;

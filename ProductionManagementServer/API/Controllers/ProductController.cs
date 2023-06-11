@@ -2,7 +2,6 @@
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,8 +19,8 @@ namespace API.Controllers
         private readonly IFinishedProductSaleService _finishedProductForOrderService;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService, ISaleService productOrderService, IProductsReserveService productsReserveService, 
-            IFinishedProductService finishedProductService, IFinishedProductSaleService finishedProductForOrderService, 
+        public ProductController(IProductService productService, ISaleService productOrderService, IProductsReserveService productsReserveService,
+            IFinishedProductService finishedProductService, IFinishedProductSaleService finishedProductForOrderService,
             IMapper mapper)
         {
             _productService = productService;

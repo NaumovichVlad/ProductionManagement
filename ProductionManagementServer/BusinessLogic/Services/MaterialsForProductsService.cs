@@ -3,17 +3,12 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
     public class MaterialsForProductsService : Service<MaterialsForProducts, MaterialsForProductsDto>, IMaterialsForProductsService
     {
-        public MaterialsForProductsService(IRepository<MaterialsForProducts> employeeRepository, IMapper mapper) 
+        public MaterialsForProductsService(IRepository<MaterialsForProducts> employeeRepository, IMapper mapper)
             : base(employeeRepository, mapper)
         { }
         public new List<MaterialsForProductsDto> GetSelection(int start, int size, string sortDirection, string sortParameter)

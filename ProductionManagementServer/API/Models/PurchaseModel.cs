@@ -1,6 +1,4 @@
-﻿using BusinessLogic.Dtos;
-
-namespace API.Models
+﻿namespace API.Models
 {
     public class PurchaseModel
     {

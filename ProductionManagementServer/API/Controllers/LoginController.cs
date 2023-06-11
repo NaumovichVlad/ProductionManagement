@@ -5,8 +5,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace API.Controllers
 {
@@ -42,7 +40,7 @@ namespace API.Controllers
 
             if (AuthenticateUser(model).Result)
             {
-                
+
                 var tokenString = JwtManager.GenerateJSONWebToken(_config);
                 response = Ok(new { Token = tokenString, Message = "Success" });
             }

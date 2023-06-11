@@ -1,9 +1,7 @@
-﻿using API.Jwt;
-using API.Models;
+﻿using API.Models;
 using AutoMapper;
 using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +46,7 @@ namespace API.Controllers
             _employeeService.Insert(_mapper.Map<EmployeeDto>(model));
 
             var response = Ok(new { Message = "Success" });
-            
+
             return response;
         }
 
@@ -76,7 +74,7 @@ namespace API.Controllers
         [ActionName("remove")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-           
+
             _employeeService.Delete(id);
 
 

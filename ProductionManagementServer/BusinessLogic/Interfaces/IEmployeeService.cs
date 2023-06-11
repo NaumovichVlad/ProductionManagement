@@ -1,5 +1,4 @@
 ﻿using BusinessLogic.Dtos;
-using DataAccess.Entities;
 
 namespace BusinessLogic.Interfaces
 {

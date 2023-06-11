@@ -1,12 +1,7 @@
 ﻿using DataAccess.Config;
 using DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
@@ -22,7 +17,7 @@ namespace DataAccess.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public virtual IEnumerable<T> Get( Expression<Func<T, bool>> filter = null,
+        public virtual IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             string includeProperties = "")
         {

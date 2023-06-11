@@ -3,12 +3,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -63,7 +57,7 @@ namespace BusinessLogic.Services
         {
             var reserves = _mapper.Map<List<ProductsReserveDto>>(_repository.Get(r => (r.StoragePlaceId == storagePlaceId) && (r.Count > 0), null, "FinishedProduct"));
 
-            foreach (var reserve in reserves) 
+            foreach (var reserve in reserves)
             {
                 reserve.FinishedProduct.Product = _mapper.Map<ProductDto>(_productRepository.GetById(reserve.FinishedProduct.ProductId));
             }

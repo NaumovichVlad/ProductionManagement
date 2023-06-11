@@ -6,7 +6,7 @@ namespace API.Mapper
 {
     public class ApiMapperProfile : Profile
     {
-        public ApiMapperProfile() 
+        public ApiMapperProfile()
         {
             CreateMap<SalaryDto, SalaryModel>()
                 .ForMember(model => model.Id, dto => dto.MapFrom(s => s.Id))

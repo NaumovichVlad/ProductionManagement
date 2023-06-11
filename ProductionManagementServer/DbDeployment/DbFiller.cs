@@ -1,12 +1,5 @@
 ﻿using DataAccess.Config;
 using DataAccess.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbDeployment
 {
@@ -17,8 +10,8 @@ namespace DbDeployment
         private int _firstCount;
         private int _secondCount;
         private int _thirdCount;
-        
-        public DbFiller(ProductionManagementDbContext context, int firstCount, int secondCount, int thirdCount) 
+
+        public DbFiller(ProductionManagementDbContext context, int firstCount, int secondCount, int thirdCount)
         {
             _context = context;
             _firstCount = firstCount;
@@ -112,7 +105,7 @@ namespace DbDeployment
             var data = _context.Set<StoragePlace>();
             var entities = new List<StoragePlace>();
 
-            for (var i = 0; i < _firstCount; i++) 
+            for (var i = 0; i < _firstCount; i++)
             {
                 var entity = new StoragePlace();
 
@@ -140,7 +133,7 @@ namespace DbDeployment
                 entity.MiddleName = $"Отчество_{i + 1}";
                 entity.PassportNumber = $"KB{_random.Next(100000, 999999)}";
                 entity.Address = $"Адрес_{i + 1}";
-                entity.PhoneNumber = $"+37529{_random.Next(1000000, 9999999)}"; 
+                entity.PhoneNumber = $"+37529{_random.Next(1000000, 9999999)}";
 
                 entities.Add(entity);
             }
@@ -153,7 +146,7 @@ namespace DbDeployment
             var data = _context.Set<User>();
             var entities = new List<User>();
 
-            entities.Add(new User { Id = 1, RoleId = 1, EmployeeId = 1, Login = "admin", Password = "admin"});
+            entities.Add(new User { Id = 1, RoleId = 1, EmployeeId = 1, Login = "admin", Password = "admin" });
 
             for (var i = 1; i < _secondCount; i++)
             {
@@ -231,7 +224,7 @@ namespace DbDeployment
 
                 entity.Id = i + 1;
                 entity.Name = $"Материал_{i + 1}";
-     
+
                 entities.Add(entity);
             }
 

@@ -3,12 +3,6 @@ using BusinessLogic.Dtos;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
-using DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
@@ -19,9 +13,9 @@ namespace BusinessLogic.Services
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Counteragent> _counteragentRepository;
         public SaleService(IRepository<Sale> employeeRepository, IMapper mapper,
-            IRepository<FinishedProductSale> finishedProductSaleRepository, 
-            IRepository<FinishedProduct> finishedProductRepository, IRepository<Product> productRepository, 
-            IRepository<Counteragent> counteragentRepository) 
+            IRepository<FinishedProductSale> finishedProductSaleRepository,
+            IRepository<FinishedProduct> finishedProductRepository, IRepository<Product> productRepository,
+            IRepository<Counteragent> counteragentRepository)
             : base(employeeRepository, mapper)
         {
             _finishedProductSaleRepository = finishedProductSaleRepository;
@@ -50,7 +44,7 @@ namespace BusinessLogic.Services
         {
             var materials = _finishedProductSaleRepository.Get(null, null, "ProductsReserve");
 
-            foreach (var material in materials )
+            foreach (var material in materials)
             {
                 material.ProductsReserve.FinishedProduct = _finishedProductRepository.GetById(material.ProductsReserve.FinishedProductId);
                 material.ProductsReserve.FinishedProduct.Product = _productRepository.GetById(material.ProductsReserve.FinishedProduct.ProductId);

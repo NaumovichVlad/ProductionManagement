@@ -1,12 +1,4 @@
-﻿using DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLogic.Dtos
+﻿namespace BusinessLogic.Dtos
 {
     public class PurchaseDto
     {
