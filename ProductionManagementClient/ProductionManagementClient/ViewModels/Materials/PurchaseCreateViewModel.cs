@@ -2,11 +2,7 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Materials
@@ -17,7 +13,7 @@ namespace ProductionManagementClient.ViewModels.Materials
         private CounteragentModel _selectedCounteragent;
 
         public List<CounteragentModel> Counteragents
-        { 
+        {
             get
             {
                 return _counteragents;
@@ -28,8 +24,8 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public CounteragentModel SelectedCounteragent 
-        { 
+        public CounteragentModel SelectedCounteragent
+        {
             get => _selectedCounteragent;
             set
             {
@@ -52,7 +48,7 @@ namespace ProductionManagementClient.ViewModels.Materials
                     (_confirmCommand = new RelayCommand(obj =>
                     {
                         Model.CounteragentName = SelectedCounteragent.Name;
-                        Model.CounteragentId =SelectedCounteragent.Id;
+                        Model.CounteragentId = SelectedCounteragent.Id;
 
                         _client.Post(Model, "material/purchase/insert");
 

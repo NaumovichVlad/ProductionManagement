@@ -190,7 +190,7 @@ namespace ProductionManagementClient.ViewModels.Reports
                 salary += s.Paid;
             }
 
-            return (int) salary;
+            return (int)salary;
         }
     }
 }

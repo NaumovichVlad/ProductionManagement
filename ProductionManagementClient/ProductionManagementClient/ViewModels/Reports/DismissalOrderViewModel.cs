@@ -3,12 +3,8 @@ using ProductionManagementClient.Interfaces.Connection;
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Reports
@@ -21,8 +17,8 @@ namespace ProductionManagementClient.ViewModels.Reports
         private readonly IDialogService _dialogService;
         private readonly IApiClient _client;
 
-        public DismissalOrderModel DismissalOrder 
-        { 
+        public DismissalOrderModel DismissalOrder
+        {
             get => _dismissalOrder;
             set
             {
@@ -30,8 +26,8 @@ namespace ProductionManagementClient.ViewModels.Reports
                 OnPropertyChanged();
             }
         }
-        public string SavePath 
-        { 
+        public string SavePath
+        {
             get => _savePath;
             set
             {
@@ -113,7 +109,7 @@ namespace ProductionManagementClient.ViewModels.Reports
             _documentService.WriteLine("о прекращении действия трудового договора (контракта) с работником");
 
             _documentService.Aligment = ParagraphAlignment.Left;
-            
+
             _documentService.Font.Size = 12;
             _documentService.SkipLines(2);
             _documentService.WriteLine($"Уволить c {DismissalOrder.DismissalDate.ToShortDateString()}.");

@@ -6,18 +6,8 @@ using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Menus;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Json;
-using System.Net.Sockets;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Menus

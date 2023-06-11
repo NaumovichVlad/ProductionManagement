@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Models
 {
@@ -17,7 +13,7 @@ namespace ProductionManagementClient.Models
         private string _employeeSurname;
         private string _employeeName;
         private string _employeeMiddleName;
-        public int Id 
+        public int Id
         {
             get => _id;
             set
@@ -26,7 +22,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int EmployeeId 
+        public int EmployeeId
         {
             get => _employeeId;
             set
@@ -35,7 +31,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public DateTime PaymentDate 
+        public DateTime PaymentDate
         {
             get => _paymentDate;
             set
@@ -44,7 +40,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public double Accrued 
+        public double Accrued
         {
             get => _accrued;
             set
@@ -53,7 +49,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public double ToBePaid 
+        public double ToBePaid
         {
             get => _toBePaid;
             set
@@ -62,7 +58,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public double Paid 
+        public double Paid
         {
             get => _paid;
             set
@@ -71,7 +67,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string EmployeeName 
+        public string EmployeeName
         {
             get => _employeeName;
             set
@@ -80,7 +76,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string EmployeeSurname 
+        public string EmployeeSurname
         {
             get => _employeeSurname;
             set
@@ -89,7 +85,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string EmployeeMiddleName 
+        public string EmployeeMiddleName
         {
             get => _employeeMiddleName;
             set

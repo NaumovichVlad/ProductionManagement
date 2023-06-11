@@ -2,11 +2,7 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Users
@@ -18,8 +14,8 @@ namespace ProductionManagementClient.ViewModels.Users
         private EmployeeModel _selectedEmployee;
         private RoleModel _selectedRole;
 
-        public List<EmployeeModel> Employees 
-        { 
+        public List<EmployeeModel> Employees
+        {
             get => _employees;
             set
             {
@@ -27,8 +23,8 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public List<RoleModel> Roles 
-        { 
+        public List<RoleModel> Roles
+        {
             get => _roles;
             set
             {
@@ -36,8 +32,8 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public EmployeeModel SelectedEmployee 
-        { 
+        public EmployeeModel SelectedEmployee
+        {
             get => _selectedEmployee;
             set
             {
@@ -54,7 +50,7 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public UsersCreateViewModel(IApiClient client, IDialogService messageBoxService) 
+        public UsersCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         {
             Employees = _client.Get<List<EmployeeModel>>("employee/all").Result;

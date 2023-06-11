@@ -1,8 +1,4 @@
-﻿
-
-using System.Xml.Linq;
-
-namespace ProductionManagementClient.Models
+﻿namespace ProductionManagementClient.Models
 {
     public class MaterialPurchaseModel : ModelBase
     {
@@ -15,8 +11,8 @@ namespace ProductionManagementClient.Models
         private string materialName;
         private string purchaseNumber;
 
-        public int Id 
-        { 
+        public int Id
+        {
             get => id;
             set
             {
@@ -33,8 +29,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int PurchaseId 
-        { 
+        public int PurchaseId
+        {
             get => purchaseId;
             set
             {
@@ -42,8 +38,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public double Price 
-        { 
+        public double Price
+        {
             get => price;
             set
             {
@@ -51,8 +47,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int Count 
-        { 
+        public int Count
+        {
             get => count;
             set
             {
@@ -60,8 +56,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public bool IsAccepted 
-        { 
+        public bool IsAccepted
+        {
             get => isAccepted;
             set
             {

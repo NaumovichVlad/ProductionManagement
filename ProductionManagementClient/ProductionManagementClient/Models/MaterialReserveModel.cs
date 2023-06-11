@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProductionManagementClient.Models
+﻿namespace ProductionManagementClient.Models
 {
     public class MaterialReserveModel : ModelBase
     {
@@ -89,8 +83,8 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string MaterialName 
-        { 
+        public string MaterialName
+        {
             get => _materialName;
             set
             {

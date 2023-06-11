@@ -3,11 +3,8 @@ using ProductionManagementClient.Interfaces.Connection;
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Reports
@@ -79,8 +76,11 @@ namespace ProductionManagementClient.ViewModels.Reports
         private void CreateOrderDocument()
         {
             var salaries = _client.Get<List<SalaryModel>>($"salary/year/{int.Parse(Year)}").Result.GroupBy(s => s.EmployeeId)
-                .Select(g => new { Fio = g.Select(sl => $"{sl.EmployeeSurname} {sl.EmployeeName} {sl.EmployeeMiddleName}"), 
-                    Sum = g.Sum(sl => sl.Paid) });
+                .Select(g => new
+                {
+                    Fio = g.Select(sl => $"{sl.EmployeeSurname} {sl.EmployeeName} {sl.EmployeeMiddleName}"),
+                    Sum = g.Sum(sl => sl.Paid)
+                });
 
 
             _documentService.Font.Size = 12;

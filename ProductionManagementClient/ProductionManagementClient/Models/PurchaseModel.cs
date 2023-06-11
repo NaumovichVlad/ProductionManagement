@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
-using System.Xml.Linq;
 
 namespace ProductionManagementClient.Models
 {
@@ -17,8 +11,8 @@ namespace ProductionManagementClient.Models
         private int _counteragentId;
         private string _counteragentName;
 
-        public int Id 
-        { 
+        public int Id
+        {
             get => _id;
             set
             {
@@ -26,7 +20,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string OrderNumber 
+        public string OrderNumber
         {
             get => _orderNumber;
             set
@@ -36,7 +30,7 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public DateTime ManufactureDate 
+        public DateTime ManufactureDate
         {
             get => _manufactureDate;
             set
@@ -45,7 +39,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string ManufactureCountry 
+        public string ManufactureCountry
         {
             get => _manufactureCountry;
             set
@@ -54,7 +48,7 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public int CounteragentId 
+        public int CounteragentId
         {
             get => _counteragentId;
             set

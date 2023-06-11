@@ -2,18 +2,13 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Roles
 {
     public class RolesCreateViewModel : CreateViewModel<RoleModel>
     {
-        public RolesCreateViewModel(IApiClient client, IDialogService messageBoxService) 
+        public RolesCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         { }
 

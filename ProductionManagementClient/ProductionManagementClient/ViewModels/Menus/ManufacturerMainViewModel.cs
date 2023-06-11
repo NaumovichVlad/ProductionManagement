@@ -2,15 +2,10 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using ProductionManagementClient.Views.Counteragents;
 using ProductionManagementClient.Views.Products;
-using ProductionManagementClient.Views.Reports;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductionManagementClient.ViewModels.Menus
 {

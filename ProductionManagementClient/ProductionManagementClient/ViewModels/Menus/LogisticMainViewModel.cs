@@ -3,13 +3,9 @@ using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views.Reports;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductionManagementClient.ViewModels.Menus
 {
@@ -25,18 +21,18 @@ namespace ProductionManagementClient.ViewModels.Menus
 
         public Container Productions
         {
-            get 
-            { 
-                return _productsContainer; 
+            get
+            {
+                return _productsContainer;
             }
-            set 
-            { 
+            set
+            {
                 _productsContainer = value;
                 OnPropertyChanged();
             }
         }
-        public Container Materials 
-        { 
+        public Container Materials
+        {
             get => _materialsContainer;
             set
             {
@@ -220,10 +216,10 @@ namespace ProductionManagementClient.ViewModels.Menus
         {
             private DataTable _reserves;
             private DataTable _pendingUnloading;
-            
 
-            public DataTable Reserves 
-            { 
+
+            public DataTable Reserves
+            {
                 get => _reserves;
                 set
                 {
@@ -231,8 +227,8 @@ namespace ProductionManagementClient.ViewModels.Menus
                     OnPropertyChanged();
                 }
             }
-            public DataTable PendingUnloading 
-            { 
+            public DataTable PendingUnloading
+            {
                 get => _pendingUnloading;
                 set
                 {

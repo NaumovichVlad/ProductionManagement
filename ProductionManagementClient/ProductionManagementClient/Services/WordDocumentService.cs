@@ -1,12 +1,7 @@
 ﻿using Aspose.Words;
 using Aspose.Words.Tables;
 using ProductionManagementClient.Interfaces.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace ProductionManagementClient.Services
@@ -42,7 +37,7 @@ namespace ProductionManagementClient.Services
         public void WriteLine(string line)
         {
             _builder.Writeln(line);
-            
+
         }
 
         public void Write(string text)

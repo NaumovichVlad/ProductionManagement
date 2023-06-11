@@ -2,18 +2,13 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.StoragePlaces
 {
     public class StoragePlacesEditViewModel : EditViewModel<StoragePlaceModel>
     {
-        public StoragePlacesEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
+        public StoragePlacesEditViewModel(string id, IApiClient client, IDialogService messageBoxService)
             : base(id, client, messageBoxService)
         { }
 

@@ -10,8 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ProductionManagementClient.ViewModels.Menus
@@ -41,8 +39,8 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public DataContainer EmployeesContainer 
-        { 
+        public DataContainer EmployeesContainer
+        {
             get => _employeesContainer;
             set
             {
@@ -50,7 +48,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 OnPropertyChanged();
             }
         }
-        public DataContainer Salaries 
+        public DataContainer Salaries
         {
             get => _salaries;
             set
@@ -60,8 +58,8 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public int PageIndex 
-        { 
+        public int PageIndex
+        {
             get => _pageIndex;
             set
             {
@@ -74,8 +72,8 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public EmployeeModel SelectedEmployee 
-        { 
+        public EmployeeModel SelectedEmployee
+        {
             get => _selectedEmployee;
             set
             {
@@ -85,8 +83,8 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
-        public List<EmployeeModel> Employees 
-        { 
+        public List<EmployeeModel> Employees
+        {
             get => _employees;
             set
             {
@@ -115,7 +113,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             EmployeesContainer.PageSize = 10;
             EmployeesContainer.SortParam = "Id";
             EmployeesContainer.SortDirection = "asc";
-            
+
 
             FillEmployeesContainer();
             FillEmployees();
@@ -207,7 +205,7 @@ namespace ProductionManagementClient.ViewModels.Menus
                 return _createReportCommand ??
                     (_createReportCommand = new RelayCommand(param =>
                     {
-                        if(DismissalIsChecked)
+                        if (DismissalIsChecked)
                         {
                             _windowService.ShowWindowDialog<DismissalOrderWin>();
                         }

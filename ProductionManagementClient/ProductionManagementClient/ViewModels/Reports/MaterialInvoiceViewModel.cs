@@ -6,10 +6,7 @@ using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Reports
@@ -55,9 +52,9 @@ namespace ProductionManagementClient.ViewModels.Reports
         }
         public List<StoragePlaceModel> StoragePlaces
         {
-            get 
-            { 
-                return _storagePlaces; 
+            get
+            {
+                return _storagePlaces;
             }
             set
             {
@@ -131,7 +128,7 @@ namespace ProductionManagementClient.ViewModels.Reports
 
             FillMaterialOrder(orderId);
         }
-        
+
         private void FillMaterialOrder(int orderId)
         {
             MaterialOrder = _client.Get<MaterialPurchaseModel>($"material/purchaseMaterial/get/{orderId}").Result;

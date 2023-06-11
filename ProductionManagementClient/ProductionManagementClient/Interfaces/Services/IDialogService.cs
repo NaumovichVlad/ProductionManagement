@@ -1,7 +1,4 @@
-﻿using Microsoft.Win32;
-using System.DirectoryServices.ActiveDirectory;
-
-namespace ProductionManagementClient.Interfaces.Services
+﻿namespace ProductionManagementClient.Interfaces.Services
 {
     public interface IDialogService
     {

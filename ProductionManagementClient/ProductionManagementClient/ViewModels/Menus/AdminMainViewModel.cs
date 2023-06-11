@@ -3,7 +3,6 @@ using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services;
 using ProductionManagementClient.Services.Commands;
-using ProductionManagementClient.ViewModels.Products;
 using ProductionManagementClient.Views;
 using ProductionManagementClient.Views.Counteragents;
 using ProductionManagementClient.Views.Materials;
@@ -14,18 +13,8 @@ using ProductionManagementClient.Views.StoragePlaces;
 using ProductionManagementClient.Views.Users;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Diagnostics;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace ProductionManagementClient.ViewModels.Menus
 {
@@ -488,7 +477,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             var table = new DataTable();
             var idColumn = new DataColumn("Ид");
             idColumn.Caption = "Id";
-            
+
 
             var nameColumn = new DataColumn("Название");
             nameColumn.Caption = "Name";

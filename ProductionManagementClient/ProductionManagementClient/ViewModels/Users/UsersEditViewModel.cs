@@ -2,11 +2,8 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Users
@@ -54,7 +51,7 @@ namespace ProductionManagementClient.ViewModels.Users
                 OnPropertyChanged();
             }
         }
-        public UsersEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
+        public UsersEditViewModel(string id, IApiClient client, IDialogService messageBoxService)
             : base(id, client, messageBoxService)
         {
             Employees = _client.Get<List<EmployeeModel>>("employee/all").Result;

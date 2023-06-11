@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Models
 {
@@ -34,8 +28,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged(nameof(Login));
             }
         }
-        public string Password 
-        { 
+        public string Password
+        {
             get
             {
                 return _password;

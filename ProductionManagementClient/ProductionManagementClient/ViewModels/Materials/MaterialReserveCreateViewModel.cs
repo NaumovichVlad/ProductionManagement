@@ -2,11 +2,7 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Materials
@@ -28,8 +24,8 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public List<MaterialPurchaseModel> Materials 
-        { 
+        public List<MaterialPurchaseModel> Materials
+        {
             get => _materials;
             set
             {
@@ -66,7 +62,7 @@ namespace ProductionManagementClient.ViewModels.Materials
             }
         }
 
-        public MaterialReserveCreateViewModel(IApiClient client, IDialogService messageBoxService) 
+        public MaterialReserveCreateViewModel(IApiClient client, IDialogService messageBoxService)
             : base(client, messageBoxService)
         {
             Materials = _client.Get<List<MaterialPurchaseModel>>("material/purchaseMaterial/notAccepted").Result;
@@ -87,7 +83,7 @@ namespace ProductionManagementClient.ViewModels.Materials
                         Model.StoragePlaceId = SelectedStoragePlace.Id;
                         Model.Count = Count;
                         SelectedMaterial.IsAccepted = true;
-                        
+
                         _client.Put(SelectedMaterial, $"material/purchaseMaterial/edit");
                         _client.Post(Model, "material/reserve/insert");
 

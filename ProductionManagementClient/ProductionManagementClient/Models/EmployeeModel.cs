@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace ProductionManagementClient.Models
 {
@@ -25,8 +21,8 @@ namespace ProductionManagementClient.Models
                 OnPropertyChanged();
             }
         }
-        public string Surname 
-        { 
+        public string Surname
+        {
             get => _surname;
             set
             {

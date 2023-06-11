@@ -2,15 +2,9 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace ProductionManagementClient.ViewModels.Materials
 {
@@ -141,7 +135,7 @@ namespace ProductionManagementClient.ViewModels.Materials
 
                         });
                         _messageBoxService.ShowMessage("Успех", "Материал добавлен в заказ");
-                        
+
                     }));
             }
         }

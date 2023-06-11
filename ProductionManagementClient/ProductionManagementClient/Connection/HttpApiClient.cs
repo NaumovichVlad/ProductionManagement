@@ -1,12 +1,8 @@
 ﻿using ProductionManagementClient.Interfaces.Connection;
-using ProductionManagementClient.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductionManagementClient.Connection
@@ -19,7 +15,7 @@ namespace ProductionManagementClient.Connection
         {
             _apiUri = ApiConnection.GetConnectionString();
         }
-        
+
         public Task<HttpResponseMessage> Post<T>(T model, string uri)
         {
             uri = _apiUri + uri;

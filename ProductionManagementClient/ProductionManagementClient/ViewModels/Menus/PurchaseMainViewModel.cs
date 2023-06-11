@@ -4,12 +4,8 @@ using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
 using ProductionManagementClient.Views.Counteragents;
 using ProductionManagementClient.Views.Materials;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace ProductionManagementClient.ViewModels.Menus
@@ -298,7 +294,7 @@ namespace ProductionManagementClient.ViewModels.Menus
             var table = new DataTable();
 
             var nameColumn = new DataColumn("Материал");
-            var countColumn = new DataColumn("Количество");   
+            var countColumn = new DataColumn("Количество");
 
             table.Columns.Add(nameColumn);
             table.Columns.Add(countColumn);

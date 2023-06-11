@@ -2,11 +2,7 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Materials
@@ -18,8 +14,8 @@ namespace ProductionManagementClient.ViewModels.Materials
         private MaterialModel _selectedMaterial;
         private PurchaseModel _selectedPurchase;
 
-        public List<MaterialModel> Materials 
-        { 
+        public List<MaterialModel> Materials
+        {
             get => _materials;
             set
             {
@@ -27,7 +23,7 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public List<PurchaseModel> Purchases 
+        public List<PurchaseModel> Purchases
         {
             get => _purchases;
             set
@@ -36,8 +32,8 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public MaterialModel SelectedMaterial 
-        { 
+        public MaterialModel SelectedMaterial
+        {
             get => _selectedMaterial;
             set
             {
@@ -45,8 +41,8 @@ namespace ProductionManagementClient.ViewModels.Materials
                 OnPropertyChanged();
             }
         }
-        public PurchaseModel SelectedPurchase 
-        { 
+        public PurchaseModel SelectedPurchase
+        {
             get => _selectedPurchase;
             set
             {

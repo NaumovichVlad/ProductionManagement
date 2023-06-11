@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProductionManagementClient.Models
+﻿namespace ProductionManagementClient.Models
 {
     public class CounteragentModel : ModelBase
     {
@@ -17,8 +11,8 @@ namespace ProductionManagementClient.Models
         private string _phoneNumber;
         private string _registrationCountry;
 
-        public int Id 
-        { 
+        public int Id
+        {
             get => _id;
             set
             {
@@ -27,8 +21,8 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string Name 
-        { 
+        public string Name
+        {
             get => _name;
             set
             {
@@ -57,8 +51,8 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string Address 
-        { 
+        public string Address
+        {
             get => _address;
             set
             {
@@ -77,8 +71,8 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string PhoneNumber 
-        { 
+        public string PhoneNumber
+        {
             get => _phoneNumber;
             set
             {
@@ -87,8 +81,8 @@ namespace ProductionManagementClient.Models
             }
         }
 
-        public string RegistrationCountry 
-        { 
+        public string RegistrationCountry
+        {
             get => _registrationCountry;
             set
             {

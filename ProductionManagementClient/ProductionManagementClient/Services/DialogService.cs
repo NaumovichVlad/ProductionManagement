@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using ProductionManagementClient.Interfaces.Services;
+using System.Windows;
 
 namespace ProductionManagementClient.Services
 {

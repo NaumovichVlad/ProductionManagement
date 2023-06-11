@@ -6,9 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductionManagementClient.ViewModels.Products
 {
@@ -97,7 +94,7 @@ namespace ProductionManagementClient.ViewModels.Products
 
                         foreach (var product in SelectedProducts)
                         {
-                            
+
                             _client.Post($"product/finished/sale/insert/byProductName/{product.Name}/{product.Count}/{sale.Id}");
                         }
 
@@ -149,7 +146,7 @@ namespace ProductionManagementClient.ViewModels.Products
 
             table.Columns.Add(nameColumn);
             table.Columns.Add(idColumn);
-            
+
             foreach (var model in models)
             {
                 var newRow = table.NewRow();

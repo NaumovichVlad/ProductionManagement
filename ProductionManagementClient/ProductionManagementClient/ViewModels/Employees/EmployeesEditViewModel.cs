@@ -2,18 +2,13 @@
 using ProductionManagementClient.Interfaces.Services;
 using ProductionManagementClient.Models;
 using ProductionManagementClient.Services.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ProductionManagementClient.ViewModels.Employees
 {
     public class EmployeesEditViewModel : EditViewModel<EmployeeModel>
     {
-        public EmployeesEditViewModel(string id, IApiClient client, IDialogService messageBoxService) 
+        public EmployeesEditViewModel(string id, IApiClient client, IDialogService messageBoxService)
             : base(id, client, messageBoxService)
         { }
 
