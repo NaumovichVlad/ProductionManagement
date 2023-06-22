@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" d:DataContext="{d:DesignInstance Type=menus:LogisticMainViewModel}"
+        xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=menus:LogisticMainViewModel}"
         mc:Ignorable="d"
         Title="Окно логистики" Height="562" Width="863" ResizeMode="CanResize">
     <Grid>
@@ -14,7 +14,15 @@
                     <Label Content="Склад:" Margin="0,25,204,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="45"/>
                     <ComboBox ItemsSource="{Binding StoragePlaces}" SelectedItem="{Binding SelectedStoragePlaceMat}" Margin="0,27,26,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="173"/>
                     <Label Content="Материалы на складе" FontSize="20" HorizontalAlignment="Left" Margin="26,21,0,0" Height="37" VerticalAlignment="Top"/>
-                    <DataGrid Name="PendingTable" ItemsSource="{Binding Materials.PendingUnloading}" Margin="26,0,204,60" Height="163" VerticalAlignment="Bottom"/>
+                    <DataGrid Name="PendingTable" ItemsSource="{Binding Materials.PendingUnloading}" Margin="26,0,204,60" Height="163" VerticalAlignment="Bottom">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="AutoGeneratingColumn">
+                                <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
+                         PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGrid>
                     <Label Content="Ожидающие разгрузки" FontSize="20" HorizontalAlignment="Left" Margin="26,0,0,223" Height="37" VerticalAlignment="Bottom"/>
                     <Button Command="{Binding AddMaterialReserveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PendingTable}" Content="Разгрузить" HorizontalAlignment="Right" Margin="0,0,204,23" Width="81" Height="20" VerticalAlignment="Bottom"/>
                     <Button Command="{Binding UpdateCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTable}" Margin="0,0,204,228" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22">
@@ -36,7 +44,15 @@
                     <Label Content="Склад:" Margin="0,25,204,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="45"/>
                     <ComboBox ItemsSource="{Binding StoragePlaces}" SelectedItem="{Binding SelectedStoragePlaceProd}" Margin="0,27,26,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="173"/>
                     <Label Content="Продукция на складе" FontSize="20" HorizontalAlignment="Left" Margin="26,21,0,0" Height="37" VerticalAlignment="Top"/>
-                    <DataGrid Name="PendingTableProd" ItemsSource="{Binding Productions.PendingUnloading}" Margin="26,0,204,60" Height="163" VerticalAlignment="Bottom"/>
+                    <DataGrid Name="PendingTableProd" ItemsSource="{Binding Productions.PendingUnloading}" Margin="26,0,204,60" Height="163" VerticalAlignment="Bottom">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="AutoGeneratingColumn">
+                                <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
+                         PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGrid>
                     <Label Content="Ожидающие разгрузки" FontSize="20" HorizontalAlignment="Left" Margin="26,0,0,223" Height="37" VerticalAlignment="Bottom"/>
                     <Button Command="{Binding AddProductReserveCommand}" CommandParameter="{Binding SelectedItem, ElementName=PendingTableProd}" Content="Разгрузить" HorizontalAlignment="Right" Margin="0,0,204,23" Width="81" Height="20" VerticalAlignment="Bottom"/>
                     <Button Command="{Binding UpdateProductCommand}" CommandParameter="{Binding SelectedItem, ElementName=MainTable}" Margin="0,0,204,228" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22">

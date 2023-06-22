@@ -296,6 +296,24 @@ namespace ProductionManagementClient.ViewModels.Menus
             }
         }
 
+        private RelayCommand _skipColumnsCommand;
+        public RelayCommand SkipColumnsCommand
+        {
+            get
+            {
+                return _skipColumnsCommand ??
+                    (_skipColumnsCommand = new RelayCommand(args =>
+                    {
+                        var column = (DataGridAutoGeneratingColumnEventArgs)args;
+                        if (column.Column.Header == "Ид")
+                        {
+                            column.Cancel = true;
+                        }
+                    }
+                    ));
+            }
+        }
+
         private DataTable CreateEmployeeTable(List<EmployeeModel> models)
         {
             var table = new DataTable();

@@ -39,11 +39,6 @@
         <Grid Margin="223,0,0,0">
             <DataGrid Name="MainTable" ItemsSource="{Binding DataContainer.Table}" AutoGenerateColumns="True" Margin="22,58,31,82">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Sorting">
-                        <i:InvokeCommandAction 
-                         Command="{Binding SortCommand}"
-                         PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
                     <i:EventTrigger EventName="AutoGeneratingColumn">
                         <i:InvokeCommandAction 
                          Command="{Binding SkipColumnsCommand}"

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProductionManagementClient.Views.Menus" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:menus="clr-namespace:ProductionManagementClient.ViewModels.Menus" d:DataContext="{d:DesignInstance Type=menus:SaleMainViewModel}"
         mc:Ignorable="d"
-        Title="Отдел закупок" Height="595" Width="996">
+        Title="Отдел продаж" Height="595" Width="996">
     <Grid>
         <DataGrid ItemsSource="{Binding Sales}" Margin="27,69,322,350" RenderTransformOrigin="0.5,0.5"/>
         <Label Content="Заказы" FontSize="20" HorizontalAlignment="Left" Margin="27,23,0,0" Height="37" VerticalAlignment="Top"/>

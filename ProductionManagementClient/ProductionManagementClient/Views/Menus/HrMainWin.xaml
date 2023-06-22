@@ -17,6 +17,11 @@
                          Command="{Binding SortCommand}"
                          PassEventArgsToCommand="True" />
                             </i:EventTrigger>
+                            <i:EventTrigger EventName="AutoGeneratingColumn">
+                                <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
+                         PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </DataGrid>
                     <Button Command="{Binding PreviousPageCommand}" Content="Предыдущая" HorizontalAlignment="Right" Margin="0,0,152,43" Width="98" Height="20" VerticalAlignment="Bottom"/>
@@ -45,7 +50,15 @@
                     <Button Command="{Binding AddSalaryCommand}" HorizontalAlignment="Left" Margin="23,20,0,0" Width="22" Height="21" VerticalAlignment="Top">
                         <Image Source="../../Resources/plus.png"/>
                     </Button>
-                    <DataGrid ItemsSource="{Binding Salaries.Table}" Margin="23,49,23,75"/>
+                    <DataGrid ItemsSource="{Binding Salaries.Table}" Margin="23,49,23,75">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="AutoGeneratingColumn">
+                                <i:InvokeCommandAction 
+                         Command="{Binding SkipColumnsCommand}"
+                         PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGrid>
                     <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Margin="0,19,23,0" HorizontalAlignment="Right" Width="167" Height="22" VerticalAlignment="Top"/>
                     <Label Content="Сотрудник:" Margin="0,18,195,0" HorizontalAlignment="Right" Width="71" Height="26" VerticalAlignment="Top"/>
                     <Button Command="{Binding CreatePaySheetCommand}" Content="Расчётный лист" HorizontalAlignment="Left" Margin="23,0,0,35" Width="157" Height="20" VerticalAlignment="Bottom"/>

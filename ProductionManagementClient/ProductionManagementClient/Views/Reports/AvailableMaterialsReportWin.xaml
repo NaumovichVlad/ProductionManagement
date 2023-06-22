@@ -14,7 +14,7 @@
         </Button>
         <Label Content="Сохранить в:" HorizontalAlignment="Left" Margin="33,62,0,0" VerticalAlignment="Top"/>
         <Button Content="Создать" Command="{Binding CreateCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="306,102,0,0" VerticalAlignment="Top" Width="84"/>
+            AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="306,119,0,0" VerticalAlignment="Top" Width="84"/>
         <ComboBox ItemsSource="{Binding Materials}" SelectedItem="{Binding Material}" HorizontalAlignment="Left" Margin="118,24,0,0" VerticalAlignment="Top" Width="272"/>
     </Grid>
 </Window>
